@@ -75,6 +75,7 @@ router.get("/profile/:username", (req, res, next) => {
     res.render("users/user-profile", {
       username: data.username,
       email: data.email,
+      userInSession: req.session.currentUser,
     });
   });
 });
