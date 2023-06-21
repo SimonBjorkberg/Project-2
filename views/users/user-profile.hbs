@@ -1,23 +1,15 @@
 <nav>
-  <div class="nav-menu">
-    {{#if userInSession}}
-      <div class="nav-item nav-item-left">
-        <span class="username">{{userInSession.username}}</span>
-      </div>
-      <div class="nav-item nav-item-right">
-        <a href="/profile/ironhacker">User Profile</a>
-        <a href="/">Home</a>
-        <form action="/logout" method="post">
-          <button type="submit">Log out</button>
-        </form>
-      </div>
-    {{else}}
-      <div class="nav-item nav-item-right">
-        <a href="/login" class="log-in-button">Log in</a>
-        <a href="/signup">Sign up</a>
-      </div>
-    {{/if}}
-  </div>
+  {{#if userInSession}}
+    <a href="/">Home Page</a>
+    <a href="/profile/ironhacker">Profile</a>
+    <form id="logout-form" action="/logout" method="POST">
+      <button class="logout-button">Logout</button>
+    </form>
+  {{else}}
+    <a href="/">Home Page</a>
+    <a href="/signup">Sign up</a>
+    <a href="/login" class="login-button">Log in</a>
+  {{/if}}
 </nav>
 
 <h4>user profile:</h4>
