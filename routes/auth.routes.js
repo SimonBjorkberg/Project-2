@@ -73,13 +73,20 @@ router.post("/signup", (req, res, next) => {
 // USER PROFILE ROUTES
 // ####################
 router.get("/profile/:username", (req, res, next) => {
-  User.findOne({ username: req.params.username }).then((data) => {
-    res.render("users/user-profile", {
-      username: data.username,
-      email: data.email,
-      userInSession: req.session.currentUser,
-    });
-  });
+  User.findOne({ username: req.params.username })
+  .then((user) => {
+    if(!user) {
+      res.render('not-found')
+    }
+    else {
+      res.render("users/user-profile", {
+        username: user.username,
+        email: user.email,
+        userInSession: req.session.currentUser,
+      });
+    }
+  })
+  .catch(err => console.log(err))
 });
 
 // ##############
