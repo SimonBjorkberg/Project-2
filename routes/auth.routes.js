@@ -3,12 +3,14 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const User = require("../models/User.model");
 
+const { isLoggedIn, isLoggedOut } = require("../middleware/route-guard");
+
 const salt = 10;
 
 // ################
 // LOG IN ROUTES
 // ################
-router.get("/login", (req, res, next) => {
+router.get("/login", isLoggedOut, (req, res, next) => {
   res.render("auth/login");
 });
 
@@ -31,7 +33,7 @@ router.post("/login", (req, res, next) => {
 // ################
 // SIGN UP ROUTES
 // ################
-router.get("/signup", (req, res, next) => {
+router.get("/signup", isLoggedOut, (req, res, next) => {
   res.render("auth/signup");
 });
 
@@ -67,9 +69,9 @@ router.post("/signup", (req, res, next) => {
   });
 });
 
-// ################
+// ####################
 // USER PROFILE ROUTES
-// ################
+// ####################
 router.get("/profile/:username", (req, res, next) => {
   User.findOne({ username: req.params.username }).then((data) => {
     res.render("users/user-profile", {
@@ -83,7 +85,7 @@ router.get("/profile/:username", (req, res, next) => {
 // ##############
 // LOGOUT ROUTE
 // ##############
-router.post("/logout", (req, res, next) => {
+router.post("/logout", isLoggedIn, (req, res, next) => {
   req.session.destroy((err) => {
     if (err) next(err);
     res.redirect("/");
