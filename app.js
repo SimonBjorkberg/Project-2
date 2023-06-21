@@ -15,6 +15,11 @@ const hbs = require("hbs");
 
 const app = express();
 
+//#########################
+// SESSIONS/COOKIES IMPORT
+//#########################
+require('./config/sessions')(app)
+
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
 
