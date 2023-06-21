@@ -10,3 +10,64 @@ a {
 h1 {
   color: 15px;
 }
+
+.nav-menu {
+  display: flex;
+  justify-content: space-between;
+  background-color: #a5a5a5;
+  padding: 10px;
+  color: #fff;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item-left {
+  margin-right: auto;
+}
+
+.username {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.nav-item-right a {
+  margin-left: 10px;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-item-right form {
+  margin: 0 10px;
+}
+
+.nav-item-right a:hover {
+  color: #ffcc00;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #ffcc00;
+  color: #222;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.log-in-button {
+  padding: 8px 16px;
+  background-color: #ffcc00;
+  color: #222;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #ffdb4d;
+}
