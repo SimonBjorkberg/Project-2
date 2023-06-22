@@ -10,10 +10,9 @@ exports.createThread = async (req, res) => {
     console.log("req.body:", req.body)
     const newThread = new Thread({ title, content, author: req.session.currentUser })
     const savedThread = await newThread.save()
-    // res.status(201).json(savedThread)
-    res.redirect("/");
+    res.status(201).redirect("/");
   } catch (error) {
-    res.status(500).json({ error: "Failed to create a new thread" });
+    res.status(500).json({ error: "Failed to create a new thread" }); // we need to add a redirect here
   }
 };
 
@@ -27,7 +26,7 @@ exports.getThread = async (req, res) => {
     const thread = await Thread.findById(threadId);
     const populateThread = await thread.populate("author");
     if (!thread) {
-      return res.status(404).json({ error: "Thread not found" });
+      return res.status(404).json({ error: "Thread not found" }); // we need to add a redirect here
     }
     res.render("threads-posts/threads", {
       userInSession: req.session.currentUser,
@@ -35,7 +34,7 @@ exports.getThread = async (req, res) => {
       populateThread,
     });
   } catch (error) {
-    res.status(500).json({ error: "Failed to get thread" });
+    res.status(500).json({ error: "Failed to get thread" }); // we need to add a redirect here
   }
 };
 
@@ -53,11 +52,11 @@ exports.updateThread = async (req, res) => {
       { new: true }
     );
     if (!updatedThread) {
-      return res.status(404).json({ error: "Thread not found" });
+      return res.status(404).json({ error: "Thread not found" }); // we need to add a redirect here
     }
     res.json(updatedThread);
   } catch (error) {
-    res.status(500).json({ error: "Failed to update thread" });
+    res.status(500).json({ error: "Failed to update thread" }); // we need to add a redirect here
   }
 };
 
@@ -70,10 +69,10 @@ exports.deleteThread = async (req, res) => {
     const { threadId } = req.params;
     const deletedThread = await Thread.findByIdAndDelete(threadId);
     if (!deletedThread) {
-      return res.status(404).json({ error: "Thread not found" });
+      return res.status(404).json({ error: "Thread not found" }); // we need to add a redirect here
     }
     res.json({ message: "Thread deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete thread" });
+    res.status(500).json({ error: "Failed to delete thread" }); // we need to add a redirect here
   }
 };

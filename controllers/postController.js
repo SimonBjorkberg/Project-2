@@ -10,10 +10,9 @@ exports.createPost = async (req, res) => {
     console.log("req.body:", req.body)
     const newPost = new Post({ content, author: req.session.currentUser, thread })
     const savedPost = await newPost.save()
-    //res.status(201).json(savedPost)
-    res.redirect("/");
+    res.res.status(201).redirect("/");
   } catch (error) {
-    res.status(500).json({ error: "Failed to create a new post" });
+    res.status(500).json({ error: "Failed to create a new post" }); // we need to add a redirect here
   }
 };
 
@@ -27,7 +26,7 @@ exports.getPost = async (req, res) => {
     const post = await Post.findById(postId);
     const populatePost = await post.populate("author");
     if (!post) {
-      return res.status(404).json({ error: "Post not found" });
+      return res.status(404).json({ error: "Post not found" }); // we need to add a redirect here
     }
     res.render("add route here", {
       userInSession: req.session.currentUser,
@@ -35,7 +34,7 @@ exports.getPost = async (req, res) => {
       populatePost,
     });
   } catch (error) {
-    res.status(500).json({ error: "Failed to retrieve the post" });
+    res.status(500).json({ error: "Failed to retrieve the post" }); // we need to add a redirect here
   }
 };
 
@@ -53,11 +52,11 @@ exports.updatePost = async (req, res) => {
       { new: true }
     );
     if (!updatedPost) {
-      return res.status(404).json({ error: "Post not found" });
+      return res.status(404).json({ error: "Post not found" }); // we need to add a redirect here
     }
     res.json(updatedPost);
   } catch (error) {
-    res.status(500).json({ error: "Failed to update the post" });
+    res.status(500).json({ error: "Failed to update the post" }); // we need to add a redirect here
   }
 };
 
@@ -70,10 +69,10 @@ exports.deletePost = async (req, res) => {
     const { postId } = req.params;
     const deletedPost = await Post.findByIdAndDelete(postId);
     if (!deletedPost) {
-      return res.status(404).json({ error: "Post not found" });
+      return res.status(404).json({ error: "Post not found" }); // we need to add a redirect here
     }
     res.json({ message: "Post deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete the post" });
+    res.status(500).json({ error: "Failed to delete the post" }); // we need to add a redirect here
   }
 };
