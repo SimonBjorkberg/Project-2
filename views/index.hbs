@@ -16,10 +16,10 @@
   {{/if}}
 </nav>
 
-<div class="index-container">
-  <h1>{{title}}</h1>
-  {{#if userInSession}}
-  <p>Welcome {{userInSession.username}}</p>
-        <a href="/profile/ironhacker">Profile Page</a>
-  {{/if}}
-</div>
+<section class="thread-container">
+  <div class="thread">
+    <h2 class="thread-title">Thread Title</h2>
+    <p class="thread-content">Thread content</p>
+    <p class="thread-info">Posted by</p>
+  </div>
+</section>

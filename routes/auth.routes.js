@@ -69,9 +69,9 @@ router.post("/signup", (req, res, next) => {
   });
 });
 
-// ####################
+// ###################
 // USER PROFILE ROUTES
-// ####################
+// ###################
 router.get("/profile/:username", (req, res, next) => {
   User.findOne({ username: req.params.username })
   .then((user) => {
