@@ -14,6 +14,10 @@ const threadSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  likes: {
+    type: Number,
+    default: 0,
+  },
   createdAt: {
     type: Date,
     default: Date.now

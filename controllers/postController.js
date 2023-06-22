@@ -24,10 +24,11 @@ exports.getPost = async (req, res) => {
   try {
     const { postId } = req.params
     const post = await Post.findById(postId)
+    const populatePost = await post.populate('author')
     if (!post) {
       return res.status(404).json({ error: 'Post not found' })
     }
-    res.json(post)
+    res.render('add route here', { userInSession: req.session.currentUser, post, populatePost })
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve the post' })
   }
