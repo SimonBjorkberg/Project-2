@@ -5,7 +5,7 @@
   </form>
   {{#if userInSession}}
     <a href="/">Home Page</a>
-    <a href="/profile/ironhacker">Profile</a>
+    <a href="/profile/{{userInSession.username}}">Profile</a>
     <form id="logout-form" action="/logout" method="POST">
       <button class="logout-button">Logout</button>
     </form>
@@ -23,7 +23,7 @@
 </form>
 {{#each thread}}
   <section class="thread-container">
-    <div class="thread" onclick="threadClick()">
+    <div class="thread" onclick="threadClick('{{this._id}}')">
       <h2 class="thread-title">{{this.title}}</h2>
       <p class="thread-content">{{this.content}}</p>
       <div class="thread-info-div">
