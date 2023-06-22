@@ -24,10 +24,11 @@ exports.getThread = async (req, res) => {
   try {
     const { threadId } = req.params
     const thread = await Thread.findById(threadId)
+    const populateThread = await thread.populate('author')
     if (!thread) {
       return res.status(404).json({ error: 'Thread not found' })
     }
-    res.json(thread)
+    res.render('threads/threads', { userInSession: req.session.currentUser, thread, populateThread })
   } catch (error) {
     res.status(500).json({ error: 'Failed to get thread' })
   }
