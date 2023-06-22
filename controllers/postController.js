@@ -6,13 +6,10 @@ const Post = require("../models/post.model");
 
 exports.createPost = async (req, res) => {
   try {
-    const { content, author, thread } = req.body;
-    const newPost = new Post({
-      content,
-      author: req.session.currentUser,
-      thread,
-    });
-    const savedPost = await newPost.save();
+    const { content, thread } = req.body
+    console.log("req.body:", req.body)
+    const newPost = new Post({ content, author: req.session.currentUser, thread })
+    const savedPost = await newPost.save()
     //res.status(201).json(savedPost)
     res.redirect("/");
   } catch (error) {

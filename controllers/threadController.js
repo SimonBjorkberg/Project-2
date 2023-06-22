@@ -6,13 +6,10 @@ const Thread = require("../models/thread.model");
 
 exports.createThread = async (req, res) => {
   try {
-    const { title, content, author } = req.body;
-    const newThread = new Thread({
-      title,
-      content,
-      author: req.session.currentUser,
-    });
-    const savedThread = await newThread.save();
+    const { title, content } = req.body
+    console.log("req.body:", req.body)
+    const newThread = new Thread({ title, content, author: req.session.currentUser })
+    const savedThread = await newThread.save()
     // res.status(201).json(savedThread)
     res.redirect("/");
   } catch (error) {
