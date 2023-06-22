@@ -9,7 +9,8 @@ exports.createThread = async (req, res) => {
     const { title, content, author } = req.body
     const newThread = new Thread({ title, content, author: req.session.currentUser })
     const savedThread = await newThread.save()
-    res.status(201).json(savedThread)
+    // res.status(201).json(savedThread)
+    res.redirect('/')
   } catch (error) {
     res.status(500).json({ error: 'Failed to create a new thread' })
   }

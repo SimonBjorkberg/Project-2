@@ -1,5 +1,5 @@
 body {
-  background-color: #e5e5e5;
+  background-color: #cecece;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   width: 75%;
@@ -198,7 +198,7 @@ nav a {
 }
 
 .thread-container {
-  margin: 10px auto;
+  margin: 0 auto;
 }
 
 .thread {
@@ -207,6 +207,12 @@ nav a {
   margin-bottom: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s; /* Add transition effect for smooth color change */
+}
+
+.thread:hover {
+  background-color: #e6e6e6; /* Grey background color on hover */
 }
 
 .thread-title {
@@ -217,6 +223,11 @@ nav a {
 
 .thread-content {
   color: #666;
+}
+
+.thread-info-div {
+  display: flex;
+  justify-content: space-between;
 }
 
 .thread-info {

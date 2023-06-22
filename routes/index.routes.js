@@ -9,7 +9,6 @@ router.get("/", (req, res, next) => {
     .populate("author")
     .then((thread) => {
       res.render("index", { userInSession: req.session.currentUser, thread });
-      console.log(thread);
     })
     .catch((err) => console.log("err", err));
 });
