@@ -1,13 +1,13 @@
 const Thread = require('../models/thread.model');
 
-// ###########
+// ###################################
 // function that creates a new thread
-// ###########
+// ###################################
 
 exports.createThread = async (req, res) => {
   try {
     const { title, content, author } = req.body
-    const newThread = new Thread({ title, content, author })
+    const newThread = new Thread({ title, content, author: req.session.currentUser })
     const savedThread = await newThread.save()
     res.status(201).json(savedThread)
   } catch (error) {
@@ -15,9 +15,9 @@ exports.createThread = async (req, res) => {
   }
 }
 
-// ###########
+// ######################################
 // function that gets a thread by its ID
-// ###########
+// ######################################
 
 exports.getThread = async (req, res) => {
   try {
@@ -32,9 +32,9 @@ exports.getThread = async (req, res) => {
   }
 }
 
-// ###########
+// ###################################
 // function that updates thread by ID
-// ###########
+// ###################################
 
 exports.updateThread = async (req, res) => {
   try {
@@ -50,9 +50,9 @@ exports.updateThread = async (req, res) => {
     }
   }
 
-// ###########
+// ###################################
 // function that deletes thread by ID
-// ###########
+// ###################################
 
 exports.deleteThread = async (req, res) => {
   try {
