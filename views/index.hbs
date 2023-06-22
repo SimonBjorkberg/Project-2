@@ -16,17 +16,17 @@
   {{/if}}
 </nav>
 
-<section class="thread-container">
-  <div class="thread">
-    <h2 class="thread-title">Thread Title</h2>
-    <p class="thread-content">Thread content</p>
-    <p class="thread-info">Posted by</p>
-  </div>
-</section>
-
-
 <form action="/threads" method="post">
   <input type="text" name="title" placeholder="title" required>
   <input type="text" name="content" placeholder="content" required>
   <button type="submit">Create Thread</button>
 </form>
+{{#each thread}}
+<section class="thread-container">
+  <div class="thread">
+    <h2 class="thread-title">{{this.title}}</h2>
+    <p class="thread-content">{{this.content}}</p>
+    <p class="thread-info">Posted by <span style="font-weight: bolder;">{{this.author.username}}</span></p>
+  </div>
+</section>
+{{/each}}
