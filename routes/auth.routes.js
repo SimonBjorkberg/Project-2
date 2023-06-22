@@ -74,19 +74,18 @@ router.post("/signup", (req, res, next) => {
 // ###################
 router.get("/profile/:username", (req, res, next) => {
   User.findOne({ username: req.params.username })
-  .then((user) => {
-    if(!user) {
-      res.render('not-found')
-    }
-    else {
-      res.render("users/user-profile", {
-        username: user.username,
-        email: user.email,
-        userInSession: req.session.currentUser,
-      });
-    }
-  })
-  .catch(err => console.log(err))
+    .then((user) => {
+      if (!user) {
+        res.render("not-found");
+      } else {
+        res.render("users/user-profile", {
+          username: user.username,
+          email: user.email,
+          userInSession: req.session.currentUser,
+        });
+      }
+    })
+    .catch((err) => console.log(err));
 });
 
 // ##############
@@ -102,18 +101,17 @@ router.post("/logout", isLoggedIn, (req, res, next) => {
 // ################
 // SEARCH ROUTE
 // ################
-router.post('/search', (req, res, next) => {
+router.post("/search", (req, res, next) => {
   User.findOne({ username: req.body.search })
-  .then((user) => {
-    if (user === null) {
-      res.redirect('/not-found')
-    }
-    else {
-      res.redirect(`/profile/${user.username}`)
-    }
-  })
-  .catch(err => console.log('err', err))
-})
+    .then((user) => {
+      if (user === null) {
+        res.redirect("/not-found");
+      } else {
+        res.redirect(`/profile/${user.username}`);
+      }
+    })
+    .catch((err) => console.log("err", err));
+});
 
 // ################
 // EXPORTS

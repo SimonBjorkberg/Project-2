@@ -4,5 +4,5 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function threadClick(threadId) {
-  window.location.href = '/threads/' + threadId
+  window.location.href = "/threads/" + threadId;
 }
