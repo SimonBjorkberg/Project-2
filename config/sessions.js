@@ -11,7 +11,7 @@ module.exports = (app) => {
         resave: true,
         saveUninitialized: false,
       cookie: {
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        sameSite: process.env.NODE_ENV === "production",
         secure: process.env.NODE_ENV === "production",
         httpOnly: true,
       },

@@ -100,6 +100,22 @@ router.post("/logout", isLoggedIn, (req, res, next) => {
 });
 
 // ################
+// SEARCH ROUTE
+// ################
+router.post('/search', (req, res, next) => {
+  User.findOne({ username: req.body.search })
+  .then((user) => {
+    if (user === null) {
+      res.redirect('/not-found')
+    }
+    else {
+      res.redirect(`/profile/${user.username}`)
+    }
+  })
+  .catch(err => console.log('err', err))
+})
+
+// ################
 // EXPORTS
 // ################
 module.exports = router;

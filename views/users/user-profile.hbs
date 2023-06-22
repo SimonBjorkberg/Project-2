@@ -1,4 +1,8 @@
 <nav>
+  <form action="/search" method="post" id="search-form">
+    <input type="text" name="search" id="search-input" required>
+    <button type="submit" id="search-button">Search</button>
+  </form>
   {{#if userInSession}}
     <a href="/">Home Page</a>
     <a href="/profile/ironhacker">Profile</a>
