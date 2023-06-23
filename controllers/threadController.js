@@ -8,7 +8,7 @@ const createThread = async (req, res) => {
   try {
     const { title, content } = req.body;
     const newThread = new Thread({ title, content, author: req.session.currentUser });
-    const savedThread = await newThread.save();
+    await newThread.save();
     res.redirect("/");
   } catch (error) {
     console.log(error)
@@ -29,7 +29,7 @@ const getThread = async (req, res) => {
       return res.redirect("/not-found");
     }
     res.render("threads-posts/threads", {
-      userInSession: req.session.currentUser,
+      // userInSession: req.session.currentUser,
       thread,
       populateThread: thread,
     });

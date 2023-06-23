@@ -4,7 +4,7 @@ const Post = require("../models/post.model");
 // function that creates a new post
 // ###################################
 
-exports.createPost = async (req, res) => {
+const createPost = async (req, res) => {
   try {
     const { content, thread } = req.body;
     console.log("req.body:", req.body);
@@ -21,7 +21,7 @@ exports.createPost = async (req, res) => {
 // function that gets a post by its ID
 // ###################################
 
-exports.getPost = async (req, res) => {
+const getPost = async (req, res) => {
   try {
     const { postId } = req.params;
     const post = await Post.findById(postId).populate("author");
@@ -44,7 +44,7 @@ exports.getPost = async (req, res) => {
 // function that updates a post
 // ###################################
 
-exports.updatePost = async (req, res) => {
+const updatePost = async (req, res) => {
   try {
     const { postId } = req.params;
     const { content } = req.body;
@@ -64,7 +64,7 @@ exports.updatePost = async (req, res) => {
 // function that deletes a post
 // ###################################
 
-exports.deletePost = async (req, res) => {
+const deletePost = async (req, res) => {
   try {
     const { postId } = req.params;
     const deletedPost = await Post.findByIdAndDelete(postId);
@@ -78,3 +78,10 @@ exports.deletePost = async (req, res) => {
     res.redirect("/error");
   }
 };
+
+module.exports = {
+  getPost,
+  createPost,
+  updatePost,
+  deletePost
+}
