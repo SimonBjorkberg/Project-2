@@ -6,13 +6,14 @@ const Post = require("../models/post.model");
 
 exports.createPost = async (req, res) => {
   try {
-    const { content, thread } = req.body
-    console.log("req.body:", req.body)
-    const newPost = new Post({ content, author: req.session.currentUser, thread })
-    const savedPost = await newPost.save()
-    res.res.status(201).redirect("/");
+    const { content, thread } = req.body;
+    console.log("req.body:", req.body);
+    const newPost = new Post({ content, author: req.session.currentUser, thread });
+    const savedPost = await newPost.save();
+    res.redirect("/");
   } catch (error) {
-    res.status(500).json({ error: "Failed to create a new post" }); // we need to add a redirect here
+    console.log(error);
+    res.redirect("/error");
   }
 };
 
@@ -23,18 +24,19 @@ exports.createPost = async (req, res) => {
 exports.getPost = async (req, res) => {
   try {
     const { postId } = req.params;
-    const post = await Post.findById(postId);
-    const populatePost = await post.populate("author");
+    const post = await Post.findById(postId).populate("author");
     if (!post) {
-      return res.status(404).json({ error: "Post not found" }); // we need to add a redirect here
+      console.log("Post not found")
+      return res.redirect("/not-found");
     }
-    res.render("add route here", {
+    res.render("add post route when you create it", {
       userInSession: req.session.currentUser,
       post,
-      populatePost,
+      populatePost: post,
     });
   } catch (error) {
-    res.status(500).json({ error: "Failed to retrieve the post" }); // we need to add a redirect here
+    console.log(error);
+    res.redirect("/error");
   }
 };
 
@@ -46,17 +48,15 @@ exports.updatePost = async (req, res) => {
   try {
     const { postId } = req.params;
     const { content } = req.body;
-    const updatedPost = await Post.findByIdAndUpdate(
-      postId,
-      { content },
-      { new: true }
-    );
+    const updatedPost = await Post.findByIdAndUpdate(postId, { content }, { new: true });
     if (!updatedPost) {
-      return res.status(404).json({ error: "Post not found" }); // we need to add a redirect here
+      console.log("Post not found")
+      return res.redirect("/not-found");
     }
-    res.json(updatedPost);
+    res.redirect("/posts");
   } catch (error) {
-    res.status(500).json({ error: "Failed to update the post" }); // we need to add a redirect here
+    console.log(error);
+    res.redirect("/error");
   }
 };
 
@@ -69,10 +69,12 @@ exports.deletePost = async (req, res) => {
     const { postId } = req.params;
     const deletedPost = await Post.findByIdAndDelete(postId);
     if (!deletedPost) {
-      return res.status(404).json({ error: "Post not found" }); // we need to add a redirect here
+      console.log("Post not found")
+      return res.redirect("/not-found");
     }
-    res.json({ message: "Post deleted successfully" });
+    console.log("Post deleted successfully");
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete the post" }); // we need to add a redirect here
+    console.log(error);
+    res.redirect("/error");
   }
 };

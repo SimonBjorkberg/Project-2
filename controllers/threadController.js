@@ -4,15 +4,15 @@ const Thread = require("../models/thread.model");
 // function that creates a new thread
 // ###################################
 
-exports.createThread = async (req, res) => {
+const createThread = async (req, res) => {
   try {
-    const { title, content } = req.body
-    console.log("req.body:", req.body)
-    const newThread = new Thread({ title, content, author: req.session.currentUser })
-    const savedThread = await newThread.save()
-    res.status(201).redirect("/");
+    const { title, content } = req.body;
+    const newThread = new Thread({ title, content, author: req.session.currentUser });
+    const savedThread = await newThread.save();
+    res.redirect("/");
   } catch (error) {
-    res.status(500).json({ error: "Failed to create a new thread" }); // we need to add a redirect here
+    console.log(error)
+    res.redirect("/error");
   }
 };
 
@@ -20,43 +20,41 @@ exports.createThread = async (req, res) => {
 // function that gets a thread by its ID
 // ######################################
 
-exports.getThread = async (req, res) => {
+const getThread = async (req, res) => {
   try {
     const { threadId } = req.params;
-    const thread = await Thread.findById(threadId);
-    const populateThread = await thread.populate("author");
+    const thread = await Thread.findById(threadId).populate("author");
     if (!thread) {
-      return res.status(404).json({ error: "Thread not found" }); // we need to add a redirect here
+      console.log("Thread not found")
+      return res.redirect("/not-found");
     }
     res.render("threads-posts/threads", {
       userInSession: req.session.currentUser,
       thread,
-      populateThread,
+      populateThread: thread,
     });
   } catch (error) {
-    res.status(500).json({ error: "Failed to get thread" }); // we need to add a redirect here
+    console.log(error)
+    res.redirect("/error");
   }
 };
-
 // ###################################
 // function that updates thread by ID
 // ###################################
 
-exports.updateThread = async (req, res) => {
+const updateThread = async (req, res) => {
   try {
     const { threadId } = req.params;
     const { title, content } = req.body;
-    const updatedThread = await Thread.findByIdAndUpdate(
-      threadId,
-      { title, content },
-      { new: true }
-    );
+    const updatedThread = await Thread.findByIdAndUpdate(threadId, { title, content }, { new: true });
     if (!updatedThread) {
-      return res.status(404).json({ error: "Thread not found" }); // we need to add a redirect here
+      console.log("Thread not found")
+      return res.redirect("/not-found");
     }
-    res.json(updatedThread);
+    res.redirect("/threads");
   } catch (error) {
-    res.status(500).json({ error: "Failed to update thread" }); // we need to add a redirect here
+    console.log(error)
+    res.redirect("/error");
   }
 };
 
@@ -64,15 +62,24 @@ exports.updateThread = async (req, res) => {
 // function that deletes thread by ID
 // ###################################
 
-exports.deleteThread = async (req, res) => {
+const deleteThread = async (req, res) => {
   try {
     const { threadId } = req.params;
     const deletedThread = await Thread.findByIdAndDelete(threadId);
     if (!deletedThread) {
-      return res.status(404).json({ error: "Thread not found" }); // we need to add a redirect here
+      console.log("Thread not found")
+      return res.redirect("/not-found");
     }
-    res.json({ message: "Thread deleted successfully" });
+    console.log("Thread deleted successfully")
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete thread" }); // we need to add a redirect here
+    console.log(error)
+    res.redirect("/error");
   }
 };
+
+module.exports = {
+  createThread,
+  getThread,
+  updateThread,
+  deleteThread
+}
