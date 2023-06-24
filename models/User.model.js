@@ -19,6 +19,15 @@ const userSchema = new mongoose.Schema({
     enum: ["admin", "moderator", "user"],
     default: "user",
   },
-});
+  image: {
+    type: String,
+    default: "/images/default.png",
+    timestamps: true
+  }, 
+},
+{
+  timestamps: true,
+}
+);
 
 module.exports = mongoose.model("User", userSchema);
