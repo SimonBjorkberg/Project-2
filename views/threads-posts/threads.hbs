@@ -16,13 +16,24 @@
   {{/if}}
 </nav>
 
-<section class="thread-container">
+<section>
+  <div class="thread-container">
     <div class="thread">
       <h2 class="thread-title">{{thread.title}}</h2>
       <p class="thread-content">{{thread.content}}</p>
       <div class="thread-info-div">
-        <p class="thread-info">Posted by <span style="font-weight: bolder;">{{populateThread.author.username}}</span></p>
+        <p class="thread-info">Posted by
+          <span
+            style="font-weight: bolder;"
+          >{{populateThread.author.username}}</span></p>
         <p class="thread-info">Posted: {{thread.createdAt}}</p>
       </div>
     </div>
-  </section>
+  </div>
+  <div>
+    <form action="/post" method="post">
+      <input type="text" name="post" id="" />
+      <button type="submit">Post</button>
+    </form>
+  </div>
+</section>

@@ -29,7 +29,7 @@ const getThread = async (req, res) => {
       return res.redirect("/not-found");
     }
     res.render("threads-posts/threads", {
-      // userInSession: req.session.currentUser,
+      userInSession: req.session.currentUser,
       thread,
       populateThread: thread,
     });
