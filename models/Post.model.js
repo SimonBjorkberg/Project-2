@@ -10,7 +10,7 @@ const postSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  thread: {
+  comment: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Thread",
     required: true,

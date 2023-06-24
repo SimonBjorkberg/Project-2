@@ -1,4 +1,4 @@
-const Thread = require("../models/thread.model");
+const Thread = require("../models/Thread.model");
 
 // ###################################
 // function that creates a new thread

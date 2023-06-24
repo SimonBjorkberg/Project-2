@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Thread = require("../models/thread.model");
+const Thread = require("../models/Thread.model");
 const User = require("../models/User.model");
 
 /* GET home page */
