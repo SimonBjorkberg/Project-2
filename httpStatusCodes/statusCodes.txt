@@ -1,3 +1,0 @@
-404: not found
-500: internal server error (The server has encountered a situation it does not know how to handle.)
-201: created (The request succeeded, and a new resource was created as a result. This is typically the response sent after POST requests, or some PUT requests.)
