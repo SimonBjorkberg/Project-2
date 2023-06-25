@@ -19,10 +19,9 @@ const userSchema = new mongoose.Schema({
     enum: ["admin", "moderator", "user"],
     default: "user",
   },
-  image: {
+  profilePicture: {
     type: String,
     default: "/images/default.png",
-    timestamps: true
   }, 
 },
 {

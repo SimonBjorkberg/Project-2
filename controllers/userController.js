@@ -1,5 +1,7 @@
 const User = require('../models/User.model');
 const bcrypt = require("bcryptjs");
+const cloudinary = require('cloudinary').v2;
+
 
 const updatePassword = async (req, res) => {
   try {
@@ -28,18 +30,25 @@ const updatePassword = async (req, res) => {
 
 
 const updateProfilePicture = async (req, res) => {
-    try {
-        const { currentProfilePicture, newProfilePicture } = req.body // add the form of the new password
-        const user = await User.findById(req.session.currentUser);
-        if (!user || !newProfilePicture ) {
-            res.redirect('/error')
-        }
-        
-    }
-    catch (error ){
-        console.log(error)
-    }
-}
+  try {
+    const userId = req.session.currentUser; 
+    const file = req.file; // Get the uploaded file from the request
+
+    // Upload the file to Cloudinary
+    const result = await cloudinary.uploader.upload(file.path);
+
+    // Update the user's profile picture URL in the database
+    await User.findByIdAndUpdate(
+      userId,
+      { profilePicture: result.secure_url },
+      { new: true }
+    );
+
+    return res.redirect("/users/user-profile");
+  } catch (error) {
+    console.log(error)
+  }
+};
 
 module.exports = {
     updatePassword,
