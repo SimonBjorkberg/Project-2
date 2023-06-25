@@ -9,6 +9,18 @@
     <form id="logout-form" action="/logout" method="POST">
       <button class="logout-button">Logout</button>
     </form>
+    <h4>Update Password</h4>
+<form action="/users/update-password" method="post">
+  <div>
+    <label for="currentPassword">new Password:</label>
+    <input type="password" id="currentPassword" name="currentPassword" required>
+  </div>
+  <div>
+    <label for="newPassword">Re-type Password:</label>
+    <input type="password" id="newPassword" name="newPassword" required>
+  </div>
+  <button type="submit">Update Password</button>
+</form>
   {{else}}
     <a href="/">Home Page</a>
     <a href="/signup">Sign up</a>
