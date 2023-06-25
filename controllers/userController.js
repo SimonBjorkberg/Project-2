@@ -13,8 +13,11 @@ const updatePassword = async (req, res) => {
     if (!user) {
       return res.redirect('/users/user-profile');
     }
+    console.log('Current Password:', currentPassword);
+    console.log('User Password:', user.password);
     if (bcrypt.compareSync(currentPassword, user.password)) {
-      alert("This password is already being used");
+      console.log('Passwords match!');
+      return res.redirect('/')
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -22,7 +25,7 @@ const updatePassword = async (req, res) => {
 
     await User.findByIdAndUpdate(user._id, { password: hashedPassword });
 
-    res.redirect('/users/user-profile');
+    res.redirect(`/profile/${user.username}`);
   } catch (error) {
     console.log(error);
   }
