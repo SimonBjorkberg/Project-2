@@ -80,17 +80,30 @@ const userProfile = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.params.username });
     if (!user) {
-      res.render("not-found");
-    } else {
-      res.render("users/user-profile", {
+      return res.render("not-found");
+    }
+    if (
+      req.session.currentUser &&
+      req.session.currentUser.username === user.username
+    ) {
+      return res.render("users/user-profile", {
+        auth: true,
         username: user.username,
         email: user.email,
         avatar: user.profilePicture,
         userInSession: req.session.currentUser,
       });
     }
+    res.render("users/user-profile", {
+      auth: false,
+      username: user.username,
+      email: user.email,
+      avatar: user.profilePicture,
+      userInSession: req.session.currentUser,
+    });
   } catch (err) {
     console.log("err", err);
+    next(err);
   }
 };
 
@@ -129,15 +142,21 @@ const search = async (req, res, next) => {
 // #########################
 const updatePassword = async (req, res, next) => {
   try {
-    const user = await User.findOne({ username: req.params.username });
-    res.render("auth/change-password", {
-      userInSession: req.session.currentUser,
-    });
+    if (req.params.username === req.session.currentUser.username) {
+      res.render("auth/change-password", {
+        userInSession: req.session.currentUser,
+      });
+    } else {
+      next();
+    }
   } catch (err) {
     console.log("err", err);
   }
 };
 
+// ##########################
+// UPDATE PASSWORD POST ROUTE
+// ##########################
 const updatePostPassword = async (req, res, next) => {
   try {
     const { currentPassword, newPassword } = req.body;
@@ -147,9 +166,15 @@ const updatePostPassword = async (req, res, next) => {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(newPassword, salt);
       await User.findByIdAndUpdate(user._id, { password: hashedPassword });
-      return res.render(`auth/change-password`, { message: 'Password Changed', userInSession: user });
+      return res.render(`auth/change-password`, {
+        message: "Password Changed",
+        userInSession: user,
+      });
     } else {
-      res.render('auth/change-password', { errorMessage: 'Incorrect current Password', userInSession: user });
+      res.render("auth/change-password", {
+        errorMessage: "Incorrect current Password",
+        userInSession: user,
+      });
     }
   } catch (error) {
     console.log(error);
