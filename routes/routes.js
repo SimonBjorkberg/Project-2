@@ -17,7 +17,7 @@ router.route("/signup")
 
 // LOG IN ROUTES
 router.route("/login")
-.get(isLoggedOut, loginLimiter, (req, res) => {
+  .get(isLoggedOut, loginLimiter, (req, res) => {
     const errorMessage = req.session.loginErrorMessage; // Retrieve the error message from the session
     req.session.loginErrorMessage = null; // Clear the error message from the session
 
