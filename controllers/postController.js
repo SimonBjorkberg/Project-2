@@ -78,11 +78,18 @@ const updatePost = async (req, res) => {
 const deletePost = async (req, res) => {
   try {
     const { postId } = req.params;
-    const deletedPost = await Post.findByIdAndDelete(postId);
-    if (!deletedPost) {
+    const { userId } = req.session;
+
+    const post = await Post.findById(postId);
+    if (!post) {
       console.log("Post not found");
       return res.redirect("/not-found");
     }
+    if (post.author.toString() !== userId) {
+      console.log("You are not authorized to delete this post");
+      return res.redirect("/not-authorized");
+    }
+    await Post.findByIdAndDelete(postId);
     console.log("Post deleted successfully");
     return res.redirect("/");
   } catch (error) {

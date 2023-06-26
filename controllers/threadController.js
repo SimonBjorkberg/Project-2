@@ -82,27 +82,22 @@ const deleteThread = async (req, res) => {
     const { userId } = req.session;
 
     const thread = await Thread.findById(threadId);
-
     if (!thread) {
       console.log("Thread not found");
       return res.redirect("/not-found");
     }
-
-    // Check if the current user is the author of the thread
     if (thread.author.toString() !== userId) {
       console.log("You are not authorized to delete this thread");
       return res.redirect("/not-authorized");
     }
-
-    // Delete the thread
     await Thread.findByIdAndDelete(threadId);
-
     console.log("Thread deleted successfully");
     return res.redirect("/");
   } catch (error) {
     console.log(error);
     res.redirect("/error");
   }
+  
 };
 module.exports = {
   createThread,
