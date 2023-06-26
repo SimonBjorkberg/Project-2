@@ -3,46 +3,53 @@ const router = express.Router();
 const upload = require("../config/cloudinary.config");
 const { isLoggedIn, isLoggedOut, isUser } = require("../middleware/route-guard");
 
+// CONTROLLERS
+const authController = require('../controllers/authController');
+const threadController = require('../controllers/threadController');
+const postController = require('../controllers/postController');
+const indexController = require('../controllers/indexController');
 
-//SIGN UP ROUTES ----------------------------------
-const { signUp, signUpPost } = require('../controllers/authController')
-router.get("/signup", isLoggedOut, signUp);
-router.post("/signup", isLoggedOut, signUpPost);
+// SIGN UP ROUTES
+router.route("/signup")
+  .get(isLoggedOut, authController.signUp)
+  .post(isLoggedOut, authController.signUpPost)
 
-//LOG IN ROUTES -----------------------------------
-const { login, loginPost } = require('../controllers/authController')
-router.get("/login", isLoggedOut, login);
-router.post("/login", isLoggedOut, loginPost);
+// LOG IN ROUTES
+router.route("/login")
+  .get(isLoggedOut, authController.login)
+  .post(isLoggedOut, authController.loginPost)
 
-//GENERAL USER ROUTES -----------------------------
-const { userProfile, updatePassword, updatePostPassword, updateProfilePicture, logOut } = require('../controllers/authController')
-router.get("/profile/:username", userProfile);
-router.get("/profile/:username/change-password", isLoggedIn, updatePassword);
-router.post("/change-password", isLoggedIn, updatePostPassword);
-router.post("/profile-picture",upload.single("profilePicture"),updateProfilePicture);
-router.post("/logout", isLoggedIn, logOut);
+// USER PROFILE ROUTES
+router.get("/profile/:username", authController.userProfile)
+router.get("/profile/:username/change-password", isLoggedIn, authController.updatePassword)
+router.post("/change-password", isLoggedIn, authController.updatePostPassword)
+router.post("/profile-picture", upload.single("profilePicture"), authController.updateProfilePicture)
+router.post("/logout", isLoggedIn, authController.logOut)
 
-//INDEX ROUTES ------------------------------------
-const { index, search } = require('../controllers/indexController')
-router.get("/", index)
-router.post("/search", search);
+// SEARCH ROUTE
+router.post("/search", authController.search)
 
-//THREAD ROUTES -----------------------------------
-const { createThread, getThread, updateThread, deleteThread } = require('../controllers/threadController')
-router.post("/threads", createThread);
-router.get("/threads/:threadId", getThread);
-router.put("/threads/:threadId", updateThread);
-router.delete("/threads/:threadId", deleteThread);
+// THREAD ROUTES
+router.route("/threads")
+  .post(threadController.createThread)
 
-//POST ROUTES -------------------------------------
-const { createPost, getPost, updatePost, deletePost } = require('../controllers/postController')
-router.post("/posts", createPost);
-router.get("/posts/:postId", getPost);
-router.put("/posts/:postId", updatePost);
-router.delete("/posts/:postId", deletePost);
+router.route("/threads/:threadId")
+  .get(threadController.getThread)
+  .put(threadController.updateThread)
+  .delete(threadController.deleteThread)
 
+// POST ROUTES
+router.route("/posts")
+  .post(postController.createPost)
 
-// ################
-// EXPORTS
-// ################
+router.route("/posts/:postId")
+  .get(postController.getPost)
+  .put(postController.updatePost)
+  .delete(postController.deletePost)
+
+// INDEX ROUTES
+router.get("/", indexController.index)
+router.post("/search", indexController.search)
+
+// Export the router
 module.exports = router;
