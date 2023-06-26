@@ -26,7 +26,8 @@ const loginPost = async (req, res, next) => {
       req.session.currentUser = user;
       res.redirect(`/profile/${username}`);
     } else {
-      res.render("auth/login", { errorMessage: "Incorrect password " });
+      req.session.loginErrorMessage = 'Incorrect password'; // Set the error message in the session
+      res.redirect('/login');
     }
   } catch (err) {
     console.log("err", err);
