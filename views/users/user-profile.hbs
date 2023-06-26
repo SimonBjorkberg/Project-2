@@ -19,15 +19,4 @@
 <h4>user profile:</h4>
 <h2>{{username}}</h2>
 <hr>
-<form action="/update-password" method="post">
-  <input type="text" name="currentPassword" placeholder="Current Password" required />
-  <input type="text" name="newPassword" placeholder="New Password" required />
-  <button type="submit">Update Password</button>
-</form>
-<p>if successful it keeps u on this page, if unsuccessful it sends you to the
-  index route '/'</p>
-  <hr>
-
-{{#if passwordChanged }}
-  <p>{{ passwordChanged }}</p>
-{{/if}}
+  <a href="/change-password">Change Password</a>

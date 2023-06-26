@@ -11,6 +11,7 @@ const {
   logOut,
   search,
   updatePassword,
+  updatePostPassword,
   updateProfilePicture,
 } = require("../controllers/authController");
 const { isLoggedIn, isLoggedOut } = require("../middleware/route-guard");
@@ -23,8 +24,13 @@ router.post("/signup", isLoggedOut, signUpPost);
 router.post("/logout", isLoggedIn, logOut);
 router.post("/search", search);
 
-router.post("/update-password", updatePassword);
-router.post("/profile-picture", upload.single("profilePicture"),updateProfilePicture);
+router.get("/change-password", isLoggedIn, updatePassword);
+router.post("/change-password", isLoggedIn, updatePostPassword);
+router.post(
+  "/profile-picture",
+  upload.single("profilePicture"),
+  updateProfilePicture
+);
 
 // ################
 // EXPORTS

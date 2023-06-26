@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/User.model");
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require("cloudinary").v2;
 
 // ################
 // LOG IN GET ROUTE
@@ -97,65 +97,70 @@ const userProfile = async (req, res, next) => {
 // LOGOUT ROUTE
 // ############
 const logOut = async (req, res, next) => {
-    try {
-        req.session.destroy((err) => {
-            if (err) next(err);
-            res.redirect('/')
-        })
-    }
-    catch (err) {
-        console.log('err', err)
-    }
-}
+  try {
+    req.session.destroy((err) => {
+      if (err) next(err);
+      res.redirect("/");
+    });
+  } catch (err) {
+    console.log("err", err);
+  }
+};
 
 // ############
 // SEARCH ROUTE
 // ############
 const search = async (req, res, next) => {
-    try {
-        const user = await User.findOne({ username: req.body.search })
-        if (user === null) {
-            res.redirect('/not-found')
-        }
-        else {
-            res.redirect(`/profile/${user.username}`);
-        }
+  try {
+    const user = await User.findOne({ username: req.body.search });
+    if (user === null) {
+      res.redirect("/not-found");
+    } else {
+      res.redirect(`/profile/${user.username}`);
     }
-    catch (err) {
-        console.log('err', err)
-    }
-}
+  } catch (err) {
+    console.log("err", err);
+  }
+};
 
-// #####################
-// UPDATE PASSWORD ROUTE
-// #####################
-const updatePassword = async (req, res) => {
+// #########################
+// UPDATE PASSWORD GET ROUTE
+// #########################
+const updatePassword = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    res.render("auth/change-password", {
+      userInSession: req.session.currentUser,
+    });
+  } catch (err) {
+    console.log("err", err);
+  }
+};
+
+const updatePostPassword = async (req, res, next) => {
   try {
     const { currentPassword, newPassword } = req.body;
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(newPassword, salt);
-
     const user = await User.findById(req.session.currentUser);
 
     if (bcrypt.compareSync(currentPassword, user.password)) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
       await User.findByIdAndUpdate(user._id, { password: hashedPassword });
-      return res.redirect(`/profile/${user.username}`);
-    }
-    else {
-      res.redirect('/');
+      return res.render(`auth/change-password`, { message: 'Password Changed', userInSession: user });
+    } else {
+      res.render('auth/change-password', { errorMessage: 'Incorrect current Password', userInSession: user });
     }
   } catch (error) {
     console.log(error);
   }
-}
-
+};
 
 // ############################
 // UPDATE PROFILE PICTURE ROUTE
 // ############################
 const updateProfilePicture = async (req, res) => {
   try {
-    const userId = req.session.currentUser; 
+    const userId = req.session.currentUser;
     const file = req.file; // Get the uploaded file from the request
 
     // Upload the file to Cloudinary
@@ -170,7 +175,7 @@ const updateProfilePicture = async (req, res) => {
 
     return res.redirect("/users/user-profile");
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
@@ -186,5 +191,6 @@ module.exports = {
   logOut,
   search,
   updatePassword,
+  updatePostPassword,
   updateProfilePicture,
 };
