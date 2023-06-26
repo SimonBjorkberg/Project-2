@@ -39,10 +39,30 @@ const getThread = async (req, res) => {
       console.log("Thread not found");
       return res.redirect("/not-found");
     }
-    res.render("threads-posts/threads", {
-      userInSession: req.session.currentUser,
-      thread: thread,
-    });
+    if (req.session.currentUser) {
+      if (thread.posts.length === 0) {
+        return res.render("threads-posts/threads", {
+          userInSession: req.session.currentUser,
+          thread: thread,
+          auth: true,
+        });
+      }
+      thread.posts.forEach((post) => {
+        if (post.author.username === req.session.currentUser.username) {
+          return res.render("threads-posts/threads", {
+            userInSession: req.session.currentUser,
+            thread: thread,
+            auth: true,
+          });
+        }
+      });
+    } else {
+      return res.render("threads-posts/threads", {
+        userInSession: req.session.currentUser,
+        thread: thread,
+        auth: false,
+      });
+    }
   } catch (error) {
     console.log(error);
     res.redirect("/error");

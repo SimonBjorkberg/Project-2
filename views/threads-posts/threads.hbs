@@ -32,16 +32,26 @@
   </div>
   <div>
     <form action="/post/{{thread._id}}" method="post">
-      <input type="text" name="content" required/>
+      <input type="text" name="content" required />
       <button type="submit">Post</button>
     </form>
   </div>
-  {{#each thread.posts}}
-  <p>{{this.content}}</p>
-  <p>Posted by: <span style="font-weight: bolder;">{{this.author.username}}</span></p>
-  <form action="/posts/{{this._id}}" method="post">
-  <button type="submit">Delete</button>
-  </form>
-  <hr>
-  {{/each}}
+  {{#if auth}}
+    {{#each thread.posts}}
+      <p>{{this.content}}</p>
+      <p>Posted by:
+        <span style="font-weight: bolder;">{{this.author.username}}</span></p>
+      <form action="/posts/{{this._id}}" method="post">
+        <button type="submit">Delete</button>
+      </form>
+      <hr />
+    {{/each}}
+  {{else}}
+    {{#each thread.posts}}
+      <p>{{this.content}}</p>
+      <p>Posted by:
+        <span style="font-weight: bolder;">{{this.author.username}}</span></p>
+      <hr />
+    {{/each}}
+  {{/if}}
 </section>
