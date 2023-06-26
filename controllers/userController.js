@@ -6,26 +6,18 @@ const cloudinary = require('cloudinary').v2;
 const updatePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
-    if (!newPassword) {
-      return res.redirect('/users/user-profile');
-    }
-    const user = await User.findById(req.session.currentUser);
-    if (!user) {
-      return res.redirect('/users/user-profile');
-    }
-    console.log('Current Password:', currentPassword);
-    console.log('User Password:', user.password);
-    if (bcrypt.compareSync(currentPassword, user.password)) {
-      console.log('Passwords match!');
-      return res.redirect('/')
-    }
-
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
 
-    await User.findByIdAndUpdate(user._id, { password: hashedPassword });
+    const user = await User.findById(req.session.currentUser);
 
-    res.redirect(`/profile/${user.username}`);
+    if (bcrypt.compareSync(currentPassword, user.password)) {
+      await User.findByIdAndUpdate(user._id, { password: hashedPassword });
+      return res.redirect(`/profile/${user.username}`);
+    }
+    else {
+      res.redirect('/');
+    }
   } catch (error) {
     console.log(error);
   }

@@ -5,28 +5,29 @@
   </form>
   {{#if userInSession}}
     <a href="/">Home Page</a>
-    <a href="/profile/ironhacker">Profile</a>
+    <a href="/profile/{{userInSession.username}}">Profile</a>
     <form id="logout-form" action="/logout" method="POST">
       <button class="logout-button">Logout</button>
     </form>
-    <h4>Update Password</h4>
-<form action="/users/update-password" method="post">
-  <div>
-    <label for="currentPassword">new Password:</label>
-    <input type="password" id="currentPassword" name="currentPassword" required>
-  </div>
-  <div>
-    <label for="newPassword">Re-type Password:</label>
-    <input type="password" id="newPassword" name="newPassword" required>
-  </div>
-  <button type="submit">Update Password</button>
-</form>
   {{else}}
     <a href="/">Home Page</a>
     <a href="/signup">Sign up</a>
     <a href="/login" class="login-button">Log in</a>
   {{/if}}
 </nav>
-
+<hr>
 <h4>user profile:</h4>
 <h2>{{username}}</h2>
+<hr>
+<form action="/users/update-password" method="post">
+  <input type="text" name="currentPassword" placeholder="Current Password" required />
+  <input type="text" name="newPassword" placeholder="New Password" required />
+  <button type="submit">Update Password</button>
+</form>
+<p>if successful it keeps u on this page, if unsuccessful it sends you to the
+  index route '/'</p>
+  <hr>
+
+{{#if passwordChanged }}
+  <p>{{ passwordChanged }}</p>
+{{/if}}
