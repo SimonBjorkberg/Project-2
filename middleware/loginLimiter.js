@@ -7,7 +7,8 @@ const loginLimiter = rateLimit({
     message: 'Too many login attempts from this IP, please try again after 60 seconds',
     handler: (req, res, next, options) => {
         logEvents(`Too Many Requests: ${options.message}\t${req.method}\t${req.url}\t${req.header.origin}`, 'errLog.log');
-        res.status(options.statusCode).send(options.message);
+        req.session.loginErrorMessage = options.message; // Store the error message in express session
+        res.redirect('/login');
     },
     standardHeaders: true, // Return rate limit info to the RateLimit-* header
     legacyHeaders: false, // Disable the X-RateLimit-* headers
