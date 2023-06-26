@@ -26,6 +26,7 @@ const createThread = async (req, res) => {
 
 const getThread = async (req, res) => {
   try {
+    const currentUser = req.session.currentUser;
     const { threadId } = req.params;
     const thread = await Thread.findById(threadId)
       .populate("author")
@@ -35,34 +36,22 @@ const getThread = async (req, res) => {
           path: "author",
         },
       });
-    if (!thread) {
-      console.log("Thread not found");
-      return res.redirect("/not-found");
-    }
-    if (req.session.currentUser) {
-      if (thread.posts.length === 0) {
-        return res.render("threads-posts/threads", {
-          userInSession: req.session.currentUser,
-          thread: thread,
-          auth: true,
-        });
-      }
-      thread.posts.forEach((post) => {
-        if (post.author.username === req.session.currentUser.username) {
-          return res.render("threads-posts/threads", {
-            userInSession: req.session.currentUser,
-            thread: thread,
-            auth: true,
-          });
+
+    let auth = false;
+
+    if (currentUser) {
+      thread.posts.forEach(post => {
+        if (post.author.username === currentUser.username) {
+          auth = true;
         }
-      });
-    } else {
-      return res.render("threads-posts/threads", {
-        userInSession: req.session.currentUser,
-        thread: thread,
-        auth: false,
-      });
+      })
     }
+
+    return res.render("threads-posts/threads", {
+      userInSession: req.session.currentUser,
+      thread: thread,
+      auth: auth,
+    });
   } catch (error) {
     console.log(error);
     res.redirect("/error");

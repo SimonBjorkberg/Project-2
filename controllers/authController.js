@@ -68,7 +68,7 @@ const signUpPost = async (req, res, next) => {
       email: email,
       password: hashedPassword,
     });
-    return res.redirect(`/profile/${username}`);
+    return res.redirect(`/login`);
   } catch (err) {
     console.log("err", err);
   }
