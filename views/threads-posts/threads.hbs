@@ -47,11 +47,17 @@
       <hr />
     {{/each}}
   {{else}}
-    {{#each thread.posts}}
-      <p>{{this.content}}</p>
-      <p>Posted by:
-        <span style="font-weight: bolder;">{{this.author.username}}</span></p>
-      <hr />
-    {{/each}}
+{{#each thread.posts}}
+  <p>{{this.content}}</p>
+  <p>Posted by:
+    <span style="font-weight: bolder;">{{this.author.username}}</span>
+  </p>
+  {{#if isAuthor}}
+    <form action="/posts/{{this._id}}" method="post">
+      <button type="submit">Delete</button>
+    </form>
+  {{/if}}
+  <hr />
+{{/each}}
   {{/if}}
 </section>

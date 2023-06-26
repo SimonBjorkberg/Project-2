@@ -37,20 +37,18 @@ const getThread = async (req, res) => {
         },
       });
 
-    let auth = false;
+    let posts = thread.posts;
 
     if (currentUser) {
-      thread.posts.forEach(post => {
-        if (post.author.username === currentUser.username) {
-          auth = true;
-        }
-      })
+      posts = thread.posts.map(post => {
+        const isAuthor = post.author.username === currentUser.username;
+        return { ...post.toObject(), isAuthor };
+      });
     }
 
     return res.render("threads-posts/threads", {
       userInSession: req.session.currentUser,
-      thread: thread,
-      auth: auth,
+      thread: { ...thread.toObject(), posts },
     });
   } catch (error) {
     console.log(error);
