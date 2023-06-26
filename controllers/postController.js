@@ -84,6 +84,7 @@ const deletePost = async (req, res) => {
       return res.redirect("/not-found");
     }
     console.log("Post deleted successfully");
+    return res.redirect("/");
   } catch (error) {
     console.log(error);
     res.redirect("/error");
