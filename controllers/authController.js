@@ -85,6 +85,7 @@ const userProfile = async (req, res, next) => {
       res.render("users/user-profile", {
         username: user.username,
         email: user.email,
+        avatar: user.profilePicture,
         userInSession: req.session.currentUser,
       });
     }

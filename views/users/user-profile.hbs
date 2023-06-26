@@ -15,8 +15,10 @@
     <a href="/login" class="login-button">Log in</a>
   {{/if}}
 </nav>
-<hr>
-<h4>user profile:</h4>
-<h2>{{username}}</h2>
-<hr>
-  <a href="/change-password">Change Password</a>
+
+<div class="profile">
+  <h2 id="username">{{username}}</h2>
+  <h2 id="email">{{email}}</h2>
+  <img src="{{avatar}}" alt="Profile Picture" id="avatar" />
+  <a href="/change-password" class="change-password">Change Password</a>
+</div>
