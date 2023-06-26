@@ -17,7 +17,7 @@ const createPost = async (req, res) => {
       { $push: { posts: post } },
       { new: true }
     );
-    res.redirect(`/threads/${thread._id}`)
+    res.redirect(`/threads/${thread._id}`);
   } catch (error) {
     console.log(error);
     res.redirect("/error");
@@ -77,14 +77,10 @@ const updatePost = async (req, res) => {
 
 const deletePost = async (req, res) => {
   try {
-    const { postId } = req.params;
-    const deletedPost = await Post.findByIdAndDelete(postId);
-    if (!deletedPost) {
-      console.log("Post not found");
-      return res.redirect("/not-found");
-    }
-    console.log("Post deleted successfully");
-    return res.redirect("/");
+    const postId = req.params.postId;
+    const thread = await Thread.findOne({ posts: postId });
+    await Post.findByIdAndDelete(postId);
+    res.redirect(`/threads/${thread._id}`);
   } catch (error) {
     console.log(error);
     res.redirect("/error");
