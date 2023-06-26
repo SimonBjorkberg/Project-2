@@ -162,6 +162,13 @@ const updatePostPassword = async (req, res, next) => {
     const { currentPassword, newPassword } = req.body;
     const user = await User.findById(req.session.currentUser);
 
+    if (bcrypt.compareSync(currentPassword, user.password) && bcrypt.compareSync(newPassword, user.password)) {
+      return res.render(`auth/change-password`, {
+        errorMessage: "Can not change to the same password",
+        userInSession: user,
+      });
+    }
+
     if (bcrypt.compareSync(currentPassword, user.password)) {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(newPassword, salt);

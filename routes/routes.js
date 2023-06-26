@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const upload = require("../config/cloudinary.config");
-const { isLoggedIn, isLoggedOut, isUser } = require("../middleware/route-guard");
+const { isLoggedIn, isLoggedOut } = require("../middleware/route-guard");
 
 // CONTROLLERS
 const authController = require('../controllers/authController');
