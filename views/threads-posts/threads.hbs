@@ -52,7 +52,7 @@
   <p>Posted by:
     <span style="font-weight: bolder;">{{this.author.username}}</span>
   </p>
-  {{#if isAuthor}}
+  {{#if auth}}
     <form action="/posts/{{this._id}}" method="post">
       <button type="submit">Delete</button>
     </form>

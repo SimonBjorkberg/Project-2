@@ -36,13 +36,11 @@ const getThread = async (req, res) => {
           path: "author",
         },
       });
-
     let posts = thread.posts;
-
     if (currentUser) {
-      posts = thread.posts.map(post => {
-        const isAuthor = post.author.username === currentUser.username;
-        return { ...post.toObject(), isAuthor };
+      posts = thread.posts.map((post) => {
+        const auth = post.author.username === currentUser.username;
+        return { ...post.toObject(), auth };
       });
     }
 
