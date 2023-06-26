@@ -9,3 +9,6 @@ npm-debug.log
 
 # Status codes
 httpStatusCodes
+
+# Logs
+logs

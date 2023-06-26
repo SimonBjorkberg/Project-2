@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const upload = require("../config/cloudinary.config");
 const { isLoggedIn, isLoggedOut } = require("../middleware/route-guard");
+const loginLimiter = require('../middleware/loginLimiter')
 
 // CONTROLLERS
 const authController = require('../controllers/authController');
@@ -16,8 +17,8 @@ router.route("/signup")
 
 // LOG IN ROUTES
 router.route("/login")
-  .get(isLoggedOut, authController.login)
-  .post(isLoggedOut, authController.loginPost)
+  .get(isLoggedOut, loginLimiter, authController.login)
+  .post(isLoggedOut, loginLimiter, authController.loginPost)
 
 // USER PROFILE ROUTES
 router.get("/profile/:username", authController.userProfile)
