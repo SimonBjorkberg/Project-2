@@ -39,7 +39,7 @@
   {{#each thread.posts}}
   <p>{{this.content}}</p>
   <p>Posted by: <span style="font-weight: bolder;">{{this.author.username}}</span></p>
-  <form action="/posts/{{this._id}}" method="post">
+  <form action="/posts/{{this._id}}/delete" method="post">
   <button type="submit">Delete</button>
   </form>
   <hr>
