@@ -23,7 +23,9 @@ const loginPost = async (req, res, next) => {
     if (!user) {
       res.render("auth/login", { errorMessage: "User not found" });
     } else if (bcrypt.compareSync(password, user.password)) {
+      req.session.currentUser = user;
       req.session.userId = user._id;
+
       res.redirect(`/profile/${username}`);
     } else {
       req.session.loginErrorMessage = 'Incorrect password'; // Set the error message in the session

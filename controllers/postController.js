@@ -31,8 +31,7 @@ const createPost = async (req, res) => {
 const getPost = async (req, res) => {
   try {
     const { postId } = req.params;
-    const { userId } = req.session
-    const post = await Post.findById({_id: postId, author: userId}).populate("author");
+    const post = await Post.findById(postId).populate("author");
     if (!post) {
       console.log("Post not found");
       return res.redirect("/not-found");
