@@ -16,23 +16,24 @@
   {{/if}}
 </nav>
 
-{{#if userInSession}}
-<form action="/threads" method="post">
-  <input type="text" name="title" placeholder="title" required />
-  <input type="text" name="content" placeholder="content" required />
-  <button type="submit">Create Thread</button>
-</form>
-{{/if}}
-{{#each thread}}
-  <section class="thread-container">
-    <div class="index-thread" onclick="threadClick('{{this._id}}')">
-      <h2 class="thread-title">{{this.title}}</h2>
-      <p class="thread-content">{{this.content}}</p>
+<section>
+  <div class="thread-container">
+    <div class="thread">
+      <h2 class="thread-title">{{thread.title}}</h2>
+      <p class="thread-content">{{thread.content}}</p>
       <div class="thread-info-div">
         <p class="thread-info">Posted by
-          <span style="font-weight: bolder;">{{this.author.username}}</span></p>
-        <p class="thread-info">Posted: {{this.createdAt}}</p>
+          <span
+            style="font-weight: bolder;"
+          >{{populateThread.author.username}}</span></p>
+        <p class="thread-info">Posted: {{thread.createdAt}}</p>
       </div>
     </div>
-  </section>
-{{/each}}
+  </div>
+  <div>
+    <form action="/post" method="post">
+      <input type="text" name="post" id="" />
+      <button type="submit">Post</button>
+    </form>
+  </div>
+</section>
