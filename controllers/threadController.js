@@ -7,11 +7,15 @@ const Thread = require("../models/Thread.model");
 const createThread = async (req, res) => {
   try {
     const { title, content } = req.body;
-    const newThread = new Thread({ title, content, author: req.session.currentUser });
+    const newThread = new Thread({
+      title,
+      content,
+      author: req.session.currentUser,
+    });
     await newThread.save();
     res.redirect("/");
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.redirect("/error");
   }
 };
@@ -23,18 +27,24 @@ const createThread = async (req, res) => {
 const getThread = async (req, res) => {
   try {
     const { threadId } = req.params;
-    const thread = await Thread.findById(threadId).populate("author");
+    const thread = await Thread.findById(threadId)
+      .populate("author")
+      .populate({
+        path: "posts",
+        populate: {
+          path: "author",
+        },
+      });
     if (!thread) {
-      console.log("Thread not found")
+      console.log("Thread not found");
       return res.redirect("/not-found");
     }
     res.render("threads-posts/threads", {
       userInSession: req.session.currentUser,
-      thread,
-      populateThread: thread,
+      thread: thread,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.redirect("/error");
   }
 };
@@ -46,14 +56,18 @@ const updateThread = async (req, res) => {
   try {
     const { threadId } = req.params;
     const { title, content } = req.body;
-    const updatedThread = await Thread.findByIdAndUpdate(threadId, { title, content }, { new: true });
+    const updatedThread = await Thread.findByIdAndUpdate(
+      threadId,
+      { title, content },
+      { new: true }
+    );
     if (!updatedThread) {
-      console.log("Thread not found")
+      console.log("Thread not found");
       return res.redirect("/not-found");
     }
     res.redirect("/threads");
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.redirect("/error");
   }
 };
@@ -67,12 +81,12 @@ const deleteThread = async (req, res) => {
     const { threadId } = req.params;
     const deletedThread = await Thread.findByIdAndDelete(threadId);
     if (!deletedThread) {
-      console.log("Thread not found")
+      console.log("Thread not found");
       return res.redirect("/not-found");
     }
-    console.log("Thread deleted successfully")
+    console.log("Thread deleted successfully");
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.redirect("/error");
   }
 };
@@ -81,5 +95,5 @@ module.exports = {
   createThread,
   getThread,
   updateThread,
-  deleteThread
-}
+  deleteThread,
+};

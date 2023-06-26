@@ -25,15 +25,20 @@
         <p class="thread-info">Posted by
           <span
             style="font-weight: bolder;"
-          >{{populateThread.author.username}}</span></p>
+          >{{thread.author.username}}</span></p>
         <p class="thread-info">Posted: {{thread.createdAt}}</p>
       </div>
     </div>
   </div>
   <div>
-    <form action="/post" method="post">
-      <input type="text" name="post" id="" />
+    <form action="/post/{{thread._id}}" method="post">
+      <input type="text" name="content" required/>
       <button type="submit">Post</button>
     </form>
   </div>
+  {{#each thread.posts}}
+  <p>{{this.content}}</p>
+  <p>Posted by: <span style="font-weight: bolder;">{{this.author.username}}</span></p>
+  <hr>
+  {{/each}}
 </section>

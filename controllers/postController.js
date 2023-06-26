@@ -1,4 +1,5 @@
 const Post = require("../models/Post.model");
+const Thread = require("../models/Thread.model");
 
 // ###################################
 // function that creates a new post
@@ -6,11 +7,17 @@ const Post = require("../models/Post.model");
 
 const createPost = async (req, res) => {
   try {
-    const { content, thread } = req.body;
-    console.log("req.body:", req.body);
-    const newPost = new Post({ content, author: req.session.currentUser, thread });
-    const savedPost = await newPost.save();
-    res.redirect("/");
+    const content = req.body.content;
+    const post = await Post.create({
+      content: content,
+      author: req.session.currentUser,
+    });
+    const thread = await Thread.findByIdAndUpdate(
+      req.params.threadId,
+      { $push: { posts: post } },
+      { new: true }
+    );
+    res.redirect(`/threads/${thread._id}`)
   } catch (error) {
     console.log(error);
     res.redirect("/error");
@@ -26,7 +33,7 @@ const getPost = async (req, res) => {
     const { postId } = req.params;
     const post = await Post.findById(postId).populate("author");
     if (!post) {
-      console.log("Post not found")
+      console.log("Post not found");
       return res.redirect("/not-found");
     }
     res.render("add post route when you create it", {
@@ -48,9 +55,13 @@ const updatePost = async (req, res) => {
   try {
     const { postId } = req.params;
     const { content } = req.body;
-    const updatedPost = await Post.findByIdAndUpdate(postId, { content }, { new: true });
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
+      { content },
+      { new: true }
+    );
     if (!updatedPost) {
-      console.log("Post not found")
+      console.log("Post not found");
       return res.redirect("/not-found");
     }
     res.redirect("/posts");
@@ -69,7 +80,7 @@ const deletePost = async (req, res) => {
     const { postId } = req.params;
     const deletedPost = await Post.findByIdAndDelete(postId);
     if (!deletedPost) {
-      console.log("Post not found")
+      console.log("Post not found");
       return res.redirect("/not-found");
     }
     console.log("Post deleted successfully");
@@ -83,5 +94,5 @@ module.exports = {
   getPost,
   createPost,
   updatePost,
-  deletePost
-}
+  deletePost,
+};

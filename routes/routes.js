@@ -39,7 +39,7 @@ router.route("/threads/:threadId")
   .delete(threadController.deleteThread)
 
 // POST ROUTES
-router.route("/posts")
+router.route("/post/:threadId")
   .post(postController.createPost)
 
 router.route("/posts/:postId")
