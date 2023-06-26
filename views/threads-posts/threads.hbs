@@ -44,4 +44,8 @@
   </form>
   <hr>
   {{/each}}
+
+  <form action="/threads/{{thread._id}}/delete" method="post">
+    <button type="submit">Delete Thread</button>
+  </form>
 </section>

@@ -41,7 +41,9 @@ router.route("/threads")
 
 router.route("/threads/:threadId")
   .get(threadController.getThread)
-  .put(threadController.updateThread)
+  .post(threadController.updateThread)
+
+router.route("/threads/:threadId/delete")
   .post(threadController.deleteThread)
 
 

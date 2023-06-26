@@ -85,6 +85,7 @@ const deleteThread = async (req, res) => {
       return res.redirect("/not-found");
     }
     console.log("Thread deleted successfully");
+    return res.redirect("/");
   } catch (error) {
     console.log(error);
     res.redirect("/error");
