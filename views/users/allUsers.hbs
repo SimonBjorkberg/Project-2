@@ -1,0 +1,30 @@
+    <nav>
+      <form action="/search" method="post" id="search-form">
+        <input type="text" name="search" id="search-input" required />
+        <button type="submit" id="search-button">Search</button>
+      </form>
+      {{#if userInSession}}
+        <a href="/">Home Page</a>
+        <a href="/profile/ironhacker">Profile</a>
+        <form id="logout-form" action="/logout" method="POST">
+          <button class="logout-button">Logout</button>
+        </form>
+      {{else}}
+        <a href="/">Home Page</a>
+        <a href="/signup">Sign up</a>
+        <a href="/login" class="login-button">Log in</a>
+      {{/if}}
+    </nav>
+  </header>
+
+<ul>
+  {{#each users}}
+    <li>
+      {{this.username}}
+      <form action="/users" method="POST" style="display: inline;">
+        <input type="hidden" name="userId" value="{{this._id}}">
+        <button type="submit">Delete</button>
+      </form>
+    </li>
+  {{/each}}
+</ul>

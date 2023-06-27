@@ -47,7 +47,7 @@
       <span style="font-weight: bolder;">{{this.author.username}}</span>
     </p>
     {{#if auth}}
-      <form action="/posts/{{this._id}}/delete" method="post">
+      <form action="/posts/{{this._id}}" method="post">
         <button type="submit">Delete Post</button>
       </form>
       <form action="">
