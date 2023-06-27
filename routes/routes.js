@@ -39,10 +39,9 @@ router.post("/search", authController.search)
 router.route("/threads")
   .post(threadController.createThread)
 
-router.route("/threads/:threadId")
-  .get(threadController.getThread)
-  .post(threadController.updateThread)
-  .post(threadController.deleteThread)
+router.get('/threads/:threadId', threadController.getThread)
+router.post(threadController.updateThread)
+router.post('/threads/:threadId', threadController.deleteThread)
 
 
 // POST ROUTES

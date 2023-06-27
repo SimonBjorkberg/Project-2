@@ -27,6 +27,11 @@
             style="font-weight: bolder;"
           >{{thread.author.username}}</span></p>
         <p class="thread-info">Posted: {{thread.createdAt}}</p>
+        {{#if thread.auth}}
+          <form action="/threads/{{thread._id}}" method="post">
+            <button type="submit">Delete Thread</button>
+          </form>
+        {{/if}}
       </div>
     </div>
   </div>
@@ -36,28 +41,19 @@
       <button type="submit">Post</button>
     </form>
   </div>
-  {{#if auth}}
-    {{#each thread.posts}}
-      <p>{{this.content}}</p>
-      <p>Posted by:
-        <span style="font-weight: bolder;">{{this.author.username}}</span></p>
-      <form action="/posts/{{this._id}}" method="post">
-        <button type="submit">Delete</button>
+  {{#each thread.posts}}
+    <p>{{this.content}}</p>
+    <p>Posted by:
+      <span style="font-weight: bolder;">{{this.author.username}}</span>
+    </p>
+    {{#if auth}}
+      <form action="/posts/{{this._id}}/delete" method="post">
+        <button type="submit">Delete Post</button>
       </form>
-      <hr />
-    {{/each}}
-  {{else}}
-{{#each thread.posts}}
-  <p>{{this.content}}</p>
-  <p>Posted by:
-    <span style="font-weight: bolder;">{{this.author.username}}</span>
-  </p>
-  {{#if auth}}
-    <form action="/posts/{{this._id}}" method="post">
-      <button type="submit">Delete</button>
-    </form>
-  {{/if}}
-  <hr />
-{{/each}}
-  {{/if}}
+      <form action="">
+        <button type="submit">Edit Post</button>
+      </form>
+    {{/if}}
+    <hr />
+  {{/each}}
 </section>

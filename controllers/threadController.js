@@ -27,7 +27,7 @@ const createThread = async (req, res) => {
 const getThread = async (req, res) => {
   try {
     const currentUser = req.session.currentUser;
-    const { threadId } = req.params;
+    const threadId = req.params.threadId;
     const thread = await Thread.findById(threadId)
       .populate("author")
       .populate({
@@ -36,17 +36,22 @@ const getThread = async (req, res) => {
           path: "author",
         },
       });
+
     let posts = thread.posts;
     if (currentUser) {
+      const auth = thread.author.username === currentUser.username || currentUser.role === 'admin' && 'moderator'
+      thread.auth = auth
+
       posts = thread.posts.map((post) => {
-        const auth = post.author.username === currentUser.username;
-        return { ...post.toObject(), auth };
+        const auth = post.author.username === currentUser.username || currentUser.role === 'admin' && 'moderator'
+        post.auth = auth
+        return post
       });
     }
 
     return res.render("threads-posts/threads", {
       userInSession: req.session.currentUser,
-      thread: { ...thread.toObject(), posts },
+      thread: thread,
     });
   } catch (error) {
     console.log(error);
@@ -81,18 +86,13 @@ const updateThread = async (req, res) => {
 // function that deletes thread by ID
 // ###################################
 
-const deleteThread = async (req, res) => {
+const deleteThread = async (req, res, next) => {
   try {
-    const { threadId } = req.params;
-    const deletedThread = await Thread.findByIdAndDelete(threadId);
-    if (!deletedThread) {
-      console.log("Thread not found");
-      return res.redirect("/not-found");
-    }
-    console.log("Thread deleted successfully");
-  } catch (error) {
-    console.log(error);
-    res.redirect("/error");
+    await Thread.findByIdAndDelete(req.params.threadId)
+    res.redirect('/')
+  }
+  catch (err) {
+    console.log('err', err)
   }
 };
 

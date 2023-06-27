@@ -16,6 +16,10 @@
   {{/if}}
 </nav>
 
+{{#if message}}
+<p>{{message}}</p>
+{{/if}}
+
 {{#if userInSession}}
 <form action="/threads" method="post">
   <input class="centered-text" type="text" name="title" placeholder="title" required />
