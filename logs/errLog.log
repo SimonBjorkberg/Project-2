@@ -134,3 +134,6 @@
 20230627	16:25:38	2c2eb2a7-9db7-478a-bd8b-c178f4a55a96	Too Many Requests: Too many login attempts from this IP, please try again after 60 seconds	GET	/login	undefined
 20230627	16:26:08	64e79323-6229-489a-bb5b-c10fb386e308	Too Many Requests: Too many login attempts from this IP, please try again after 60 seconds	GET	/login	undefined
 20230627	16:28:30	c5886729-b359-4b1a-b581-e4818ef213c9	Too Many Requests: Too many login attempts from this IP, please try	GET	/login	undefined
+20230627	18:35:45	fe229d51-6ece-4ba3-a342-bddb363a65e9	Too Many Requests: Too many login attempts from this IP, please try again	POST	/login	undefined
+20230627	20:52:57	2c63edd9-ca42-4fbd-9d66-555bcaf8d3f8	Too Many Requests: Too many login attempts from this IP, please try again	GET	/login	undefined
+20230627	20:53:28	0ac651b2-c58b-40fc-8e34-d92a1bea8a85	Too Many Requests: Too many login attempts from this IP, please try again	GET	/login	undefined
