@@ -3,12 +3,14 @@ const router = express.Router();
 const upload = require("../config/cloudinary.config");
 const { isLoggedIn, isLoggedOut } = require("../middleware/route-guard");
 const loginLimiter = require('../middleware/loginLimiter')
+const { isAdmin } = require('../middleware/admin')
 
 // CONTROLLERS
 const authController = require('../controllers/authController');
 const threadController = require('../controllers/threadController');
 const postController = require('../controllers/postController');
 const indexController = require('../controllers/indexController');
+const usersController = require('../controllers/usersController');
 
 // SIGN UP ROUTES
 router.route("/signup")
@@ -17,7 +19,7 @@ router.route("/signup")
 
 // LOG IN ROUTES
 router.route("/login")
-.get(isLoggedOut, loginLimiter, (req, res) => {
+  .get(isLoggedOut, loginLimiter, (req, res, next) => {
     const errorMessage = req.session.loginErrorMessage; // Retrieve the error message from the session
     req.session.loginErrorMessage = null; // Clear the error message from the session
 
@@ -25,12 +27,21 @@ router.route("/login")
   })
   .post(isLoggedOut, loginLimiter, authController.loginPost)
 
+// DISABLE LOGIN
+router.get('/login-disabled', (req, res) => {
+  res.render('auth/login-disabled');
+});
+
 // USER PROFILE ROUTES
 router.get("/profile/:username", authController.userProfile)
 router.get("/profile/:username/change-password", isLoggedIn, authController.updatePassword)
 router.post("/change-password", isLoggedIn, authController.updatePostPassword)
 router.post("/profile-picture", upload.single("profilePicture"), authController.updateProfilePicture)
 router.post("/logout", isLoggedIn, authController.logOut)
+
+// ALL USERS ADMIN ROUTE
+router.get("/users", isAdmin, usersController.getAllUsers)
+router.post("/users", isAdmin, usersController.deleteUser)
 
 // SEARCH ROUTE
 router.post("/search", authController.search)
