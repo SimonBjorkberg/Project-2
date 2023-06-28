@@ -285,3 +285,48 @@ nav a {
 .centered-text {
   text-align: center;
 }
+
+.create-thread {
+  text-align: center;
+  margin: 20px;
+}
+
+.create-thread form {
+  display: inline-block;
+  margin: 0px;
+}
+
+.create-thread .form-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.create-thread .form-group {
+  margin-bottom: 10px;
+}
+
+.create-thread label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.create-thread input[type="text"] {
+  padding: 10px;
+  margin: 5px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.create-thread button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.create-thread button:hover {
+  background-color: #45a049;
+}
