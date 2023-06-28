@@ -10,11 +10,6 @@ const postSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  /*????? comment: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Thread",
-    required: true, 
-  }, ?????*/
   likes: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -29,6 +24,11 @@ const postSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  threadParent:
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Thread",
+    },
 });
 
 module.exports = mongoose.model("Post", postSchema);

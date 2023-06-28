@@ -11,6 +11,7 @@ const createPost = async (req, res) => {
     const post = await Post.create({
       content: content,
       author: req.session.currentUser,
+      threadParent: req.params.threadId,
     });
     const thread = await Thread.findByIdAndUpdate(
       req.params.threadId,
@@ -30,16 +31,12 @@ const createPost = async (req, res) => {
 
 const getPost = async (req, res) => {
   try {
-    const { postId } = req.params;
-    const post = await Post.findById(postId).populate("author");
-    if (!post) {
-      console.log("Post not found");
-      return res.redirect("/not-found");
-    }
-    res.render("add post route when you create it", {
+    const postId = req.params.postId;
+    const post = await Post.findById(postId);
+
+    res.render("threads-posts/edit-posts", {
       userInSession: req.session.currentUser,
-      post,
-      populatePost: post,
+      post: post,
     });
   } catch (error) {
     console.log(error);
@@ -55,16 +52,12 @@ const updatePost = async (req, res) => {
   try {
     const { postId } = req.params;
     const { content } = req.body;
-    const updatedPost = await Post.findByIdAndUpdate(
+    const post = await Post.findByIdAndUpdate(
       postId,
-      { content },
+      { content: content },
       { new: true }
-    );
-    if (!updatedPost) {
-      console.log("Post not found");
-      return res.redirect("/not-found");
-    }
-    res.redirect("/posts");
+    ).populate("threadParent");
+    res.redirect(`/threads/${post.threadParent._id}`);
   } catch (error) {
     console.log(error);
     res.redirect("/error");

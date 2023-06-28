@@ -59,8 +59,8 @@ router.post('/threads/:threadId', threadController.deleteThread)
 router.route("/post/:threadId")
   .post(postController.createPost)
 
-router.get("/posts/:postId", postController.getPost)
-router.post(postController.updatePost)
+router.get("/edit-post/:postId", postController.getPost)
+router.post('/edit-post/:postId', postController.updatePost)
 router.post("/posts/:postId", postController.deletePost)
 
 // INDEX ROUTES
