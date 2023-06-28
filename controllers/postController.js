@@ -51,13 +51,18 @@ const getPost = async (req, res) => {
 const updatePost = async (req, res) => {
   try {
     const { postId } = req.params;
+    const post = await Post.findById(postId).populate("threadParent");
     const { content } = req.body;
-    const post = await Post.findByIdAndUpdate(
-      postId,
-      { content: content },
-      { new: true }
-    ).populate("threadParent");
-    res.redirect(`/threads/${post.threadParent._id}`);
+    if (content === "") {
+      return res.redirect(`/threads/${post.threadParent._id}`);
+    } else {
+      const post = await Post.findByIdAndUpdate(
+        postId,
+        { content: content },
+        { new: true }
+      ).populate("threadParent");
+      return res.redirect(`/threads/${post.threadParent._id}`);
+    }
   } catch (error) {
     console.log(error);
     res.redirect("/error");
