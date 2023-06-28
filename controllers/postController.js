@@ -32,12 +32,17 @@ const createPost = async (req, res) => {
 const getPost = async (req, res) => {
   try {
     const postId = req.params.postId;
-    const post = await Post.findById(postId);
-
-    res.render("threads-posts/edit-posts", {
-      userInSession: req.session.currentUser,
-      post: post,
-    });
+    const post = await Post.findById(postId).populate('threadParent').populate('author');
+    if (req.session.currentUser.username === post.author.username || req.session.currentUser.role === 'admin') {
+      res.render("threads-posts/edit-posts", {
+        userInSession: req.session.currentUser,
+        post: post,
+        threadId: post.threadParent._id,
+      });
+    }
+    else {
+      res.redirect(`/threads/${post.threadParent._id}`)
+    }
   } catch (error) {
     console.log(error);
     res.redirect("/error");
@@ -56,7 +61,7 @@ const updatePost = async (req, res) => {
     if (content === "") {
       return res.redirect(`/threads/${post.threadParent._id}`);
     } else {
-      const post = await Post.findByIdAndUpdate(
+      await Post.findByIdAndUpdate(
         postId,
         { content: content },
         { new: true }

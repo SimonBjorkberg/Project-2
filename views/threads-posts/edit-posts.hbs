@@ -1,8 +1,9 @@
 <div class="edit-post-container">
   <div class="form-container">
     <form action="/post/edit/{{post._id}}" method="post">
-      <input type="text" name="content" value="{{post.content}}" required/>
+      <input type="text" name="content" value="{{post.content}}"/>
       <button type="submit">Edit</button>
     </form>
+    <a href="/threads/{{threadId}}">Go back</a>
   </div>
 </div>
