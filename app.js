@@ -28,7 +28,7 @@ const generalRoutes = require('./routes/general-routes')
 app.use('/', generalRoutes)
 
 const threadRoutes = require('./routes/thread-routes')
-app.use('/', threadRoutes)
+app.use('/threads', threadRoutes)
 
 
 

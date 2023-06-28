@@ -1,3 +1,4 @@
+const PostModel = require("../models/Post.model");
 const Thread = require("../models/Thread.model");
 
 // ###################################
@@ -20,11 +21,23 @@ const createThread = async (req, res) => {
   }
 };
 
+const editThread = async (req, res) => {
+  try {
+    const { threadId } = req.params;
+    const thread = await Thread.findById(threadId).populate("author");
+    if (
+      thread.author.username === req.session.currentUser.username ||
+      req.session.currentUser.role === "admin"
+    ) {
+      res.render("threads-posts/edit-thread", { thread: thread });
+    }
+  } catch {}
+};
+
 // ######################################
 // function that gets a thread by its ID
 // ######################################
-
-const getThread = async (req, res) => {
+const viewThread = async (req, res) => {
   try {
     const currentUser = req.session.currentUser;
     const threadId = req.params.threadId;
@@ -39,13 +52,17 @@ const getThread = async (req, res) => {
 
     let posts = thread.posts;
     if (currentUser) {
-      const auth = thread.author.username === currentUser.username || currentUser.role === 'admin' && 'moderator'
-      thread.auth = auth
+      const auth =
+        thread.author.username === currentUser.username ||
+        (currentUser.role === "admin" && "moderator");
+      thread.auth = auth;
 
       posts = thread.posts.map((post) => {
-        const auth = post.author.username === currentUser.username || currentUser.role === 'admin' && 'moderator'
-        post.auth = auth
-        return post
+        const auth =
+          post.author.username === currentUser.username ||
+          (currentUser.role === "admin" && "moderator");
+        post.auth = auth;
+        return post;
       });
     }
 
@@ -88,17 +105,16 @@ const updateThread = async (req, res) => {
 
 const deleteThread = async (req, res, next) => {
   try {
-    await Thread.findByIdAndDelete(req.params.threadId)
-    res.redirect('/')
+    await Thread.findByIdAndDelete(req.params.threadId);
+    res.redirect("/");
+  } catch (err) {
+    console.log("err", err);
   }
-  catch (err) {
-    console.log('err', err)
-  }
-  
 };
 module.exports = {
   createThread,
-  getThread,
+  viewThread,
   updateThread,
   deleteThread,
+  editThread,
 };

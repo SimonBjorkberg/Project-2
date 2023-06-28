@@ -2,6 +2,9 @@
   <p>{{thread.title}}</p>
   <p>{{thread.content}}</p>
   <form action="/">
-    <input type="text" placeholder="">
+    <input type="text" value="{{thread.title}}">
+    <input type="text" value="{{thread.content}}">
+    <button type="submit">Edit</button>
   </form>
+  <a href="/threads/{{thread._id}}">Go back</a>
 </div>

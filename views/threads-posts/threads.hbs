@@ -29,7 +29,10 @@
         <p class="thread-info">Posted: {{thread.createdAt}}</p>
         {{#if thread.auth}}
           <form action="/threads/{{thread._id}}" method="post">
-            <button type="submit">Delete Thread</button>
+            <button type="submit">Delete</button>
+          </form>
+          <form action="/threads/{{thread._id}}/edit" method="get">
+            <button type="submit">Edit</button>
           </form>
         {{/if}}
       </div>
@@ -48,10 +51,10 @@
     </p>
     {{#if auth}}
       <form action="/post/edit/{{this._id}}/delete" method="post">
-        <button type="submit">Delete Post</button>
+        <button type="submit">Delete</button>
       </form>
       <form action="/post/edit/{{this._id}}" method="get">
-        <button type="submit">Edit Post</button>
+        <button type="submit">Edit</button>
       </form>
     {{/if}}
     <hr />
