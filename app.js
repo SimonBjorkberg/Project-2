@@ -19,7 +19,7 @@ const signupRoutes = require('./routes/signup-routes')
 app.use('/signup', signupRoutes)
 
 const postRoutes = require('./routes/post-routes')
-app.use('/', postRoutes)
+app.use('/post', postRoutes)
 
 const authRoutes = require('./routes/auth-routes')
 app.use('/', authRoutes)

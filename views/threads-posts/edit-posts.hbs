@@ -1,6 +1,6 @@
 <div>
   <p>{{post.content}}</p>
-  <form action="/edit-post/{{post._id}}" method="post">
+  <form action="/post/edit/{{post._id}}" method="post">
     <input type="text" name="content" placeholder="{{post.content}}" />
     <button type="submit">Edit</button>
   </form>
