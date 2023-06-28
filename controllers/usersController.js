@@ -10,13 +10,12 @@ const getAllUsers = async (req, res) => {
     }
 }
 
-
 const deleteUser = async (req, res) => {
     try {
         const { userId } = req.body
         await User.findByIdAndDelete(userId)
         console.log("User was deleted succesfully")
-        res.redirect('users/allUsers')
+        res.redirect('/users')
     }
     catch (error) {
         console.log(error)
