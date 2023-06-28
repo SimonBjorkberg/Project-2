@@ -1,7 +1,8 @@
-<div>
-  <p>{{post.content}}</p>
-  <form action="/post/edit/{{post._id}}" method="post">
-    <input type="text" name="content" placeholder="{{post.content}}" />
-    <button type="submit">Edit</button>
-  </form>
+<div class="edit-post-container">
+  <div class="form-container">
+    <form action="/post/edit/{{post._id}}" method="post">
+      <input type="text" name="content" value="{{post.content}}" required/>
+      <button type="submit">Edit</button>
+    </form>
+  </div>
 </div>
