@@ -22,10 +22,11 @@
       <h2 class="thread-title">{{thread.title}}</h2>
       <p class="thread-content">{{thread.content}}</p>
       <div class="thread-info-div">
+        <img src="{{thread.author.profilePicture}}" alt="PP" />
         <p class="thread-info">Posted by
-          <span
-            style="font-weight: bolder;"
-          >{{thread.author.username}}</span></p>
+          <span style="font-weight: bolder;"><a
+              href="/profile/{{thread.author.username}}"
+            >{{thread.author.username}}</a></span></p>
         <p class="thread-info">Posted: {{thread.createdAt}}</p>
         {{#if thread.auth}}
           <form action="/threads/{{thread._id}}/delete" method="post">
@@ -38,25 +39,38 @@
       </div>
     </div>
   </div>
+  {{#each thread.posts}}
+    <div class="posts-in-thread">
+      <div class="profile-info">
+        <img src="{{this.author.profilePicture}}" alt="PP" />
+        <p>Posted by:
+          <span style="font-weight: bolder;">
+            <a
+              href="/profile/{{this.author.username}}"
+            >{{this.author.username}}</a>
+          </span>
+        </p>
+      </div>
+      <div class="posts-in-thread-content">
+        <p>{{this.content}}</p>
+      </div>
+      <div class="post-in-thread-edit-delete">
+        {{#if auth}}
+          <form action="/post/{{this._id}}/edit" method="get">
+            <button type="submit">Edit</button>
+          </form>
+          <form action="/post/{{this._id}}/delete" method="post">
+            <button type="submit">Delete</button>
+          </form>
+        {{/if}}
+      </div>
+    </div>
+  {{/each}}
+</section>
+
   <div>
     <form action="/post/{{thread._id}}" method="post">
       <input type="text" name="content" required />
       <button type="submit">Post</button>
     </form>
   </div>
-  {{#each thread.posts}}
-    <p>{{this.content}}</p>
-    <p>Posted by:
-      <span style="font-weight: bolder;">{{this.author.username}}</span>
-    </p>
-    {{#if auth}}
-      <form action="/post/{{this._id}}/delete" method="post">
-        <button type="submit">Delete</button>
-      </form>
-      <form action="/post/{{this._id}}/edit" method="get">
-        <button type="submit">Edit</button>
-      </form>
-    {{/if}}
-    <hr />
-  {{/each}}
-</section>

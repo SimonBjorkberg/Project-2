@@ -204,7 +204,7 @@ nav a {
 .index-thread {
   background-color: #f2f2f2;
   padding: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 2px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
@@ -228,6 +228,9 @@ nav a {
 .thread-info-div {
   display: flex;
   justify-content: space-between;
+}
+.thread-info-div img {
+  width: 3%;
 }
 
 .thread-info {
@@ -374,4 +377,65 @@ nav a {
   text-decoration: none;
   color: #333;
   font-size: 16px;
+}
+
+.posts-in-thread {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.profile-info {
+  width: 20%;
+  display: flex;
+  align-items: center;
+}
+
+.profile-info img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.posts-in-thread-content {
+  flex-grow: 1;
+  margin: 0 10px;
+}
+
+.posts-in-thread p {
+  margin: 0;
+}
+
+.post-in-thread-edit-delete {
+  width: 10%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.post-in-thread-edit-delete form {
+  margin: 0;
+}
+
+.posts-in-thread a {
+  text-decoration: none;
+  color: #000;
+}
+
+.posts-in-thread button {
+  padding: 5px 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.posts-in-thread hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
 }

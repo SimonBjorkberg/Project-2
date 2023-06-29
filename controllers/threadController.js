@@ -50,7 +50,7 @@ const getThread = async (req, res) => {
           path: "author",
         },
       });
-
+      console.log(thread)
     let posts = thread.posts;
     if (currentUser) {
       const auth =
