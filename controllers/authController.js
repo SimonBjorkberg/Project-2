@@ -71,7 +71,7 @@ const updateProfilePicture = async (req, res) => {
       { new: true }
     );
 
-    return res.redirect("/users/user-profile");
+    return res.redirect("/");
   } catch (error) {
     console.log(error);
   }
