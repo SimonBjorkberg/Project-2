@@ -16,6 +16,7 @@ router
 
 // DISABLE LOGIN
 router.get("/login-disabled", (req, res) => {
+  console.log("Rendering login-disabled page");
   res.render("auth/login-disabled");
 });
 

@@ -1,7 +1,7 @@
 const User = require("../models/User.model");
 const Thread = require("../models/Thread.model");
 const Post = require("../models/Post.model");
-const { el } = require("date-fns/locale");
+
 
 const isThreadAuthor = async (req, res, next) => {
   try {

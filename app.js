@@ -30,7 +30,8 @@ app.use('/', generalRoutes)
 const threadRoutes = require('./routes/thread-routes')
 app.use('/threads', threadRoutes)
 
-
+const messageRoutes = require('./routes/message-routes')
+app.use('/', messageRoutes)
 
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes

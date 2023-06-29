@@ -1,0 +1,85 @@
+ <style>
+    /* Custom CSS */
+    body {
+      background-color: #f8f9fa;
+    }
+    .navbar {
+      background-color: #ffffff; /* Cool shade of blue */
+      padding: 10px;
+    }
+    .navbar .nav-link {
+      margin-right: 10px;
+      color: #333333;
+    }
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .container h2 {
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-control {
+      width: 100%;
+    }
+    .btn-primary {
+      width: 100%;
+    }
+    .error-message {
+      color: #dc3545;
+    }
+  </style>
+<nav class="navbar navbar-expand-md">
+  <a class="navbar-brand" href="/">Home Page</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end"> <!-- Add justify-content-end class here -->
+    <ul class="navbar-nav">
+      {{#if userInSession}}
+        <li class="nav-item">
+          <a class="nav-link font-weight-bold" href="/profile/ironhacker">Profile</a>
+        </li>
+        <li class="nav-item">
+          <form id="logout-form" action="/logout" method="POST">
+            <button class="btn btn-primary logout-button">Logout</button>
+          </form>
+        </li>
+      {{else}}
+        <li class="nav-item">
+          <a class="nav-link font-weight-bold" href="/signup">Sign up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link font-weight-bold" href="/login">Log in</a>
+        </li>
+      {{/if}}
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <h2>Direct Messages</h2>
+  <div class="dm-container">
+    <div class="received-messages">
+      <div class="message">
+        <p>Routing hell</p>
+        <small>Sent by: Simon</small>
+      </div>
+    </div>
+    <div class="send-message">
+      <form action="/send-message" method="post">
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button>
+      </form>
+    </div>
+  </div>
+</div>
