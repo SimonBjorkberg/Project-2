@@ -1,17 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const postController = require("../controllers/postController");
+const { getEditPost, editPost, delPost } = require('../middleware/post-guards')
 
 router
   .route("/:threadId")
   .post(postController.createPost);
 
 router
-  .route("/edit/:postId")
-  .get(postController.getPost)
-  .post(postController.updatePost)
+  .route("/:postId/edit")
+  .get(getEditPost, postController.getPost)
+  .post(editPost, postController.updatePost)
 
-router.route('/edit/:postId/delete')
-  .post(postController.deletePost);
+router.route('/:postId/delete')
+  .post(delPost, postController.deletePost);
 
 module.exports = router;

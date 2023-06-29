@@ -50,10 +50,10 @@
       <span style="font-weight: bolder;">{{this.author.username}}</span>
     </p>
     {{#if auth}}
-      <form action="/post/edit/{{this._id}}/delete" method="post">
+      <form action="/post/{{this._id}}/delete" method="post">
         <button type="submit">Delete</button>
       </form>
-      <form action="/post/edit/{{this._id}}" method="get">
+      <form action="/post/{{this._id}}/edit" method="get">
         <button type="submit">Edit</button>
       </form>
     {{/if}}
