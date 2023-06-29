@@ -41,7 +41,7 @@ const editThread = async (req, res) => {
 const getThread = async (req, res) => {
   try {
     const currentUser = req.session.currentUser;
-    const threadId = req.params.threadId;
+    const { threadId } = req.params
     const thread = await Thread.findById(threadId)
       .populate("author")
       .populate({
