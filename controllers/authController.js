@@ -60,10 +60,12 @@ const updateProfilePicture = async (req, res) => {
   try {
     const userId = req.session.currentUser;
     const file = req.file; // Get the uploaded file from the request
-
+    if (!file) {
+      return res.redirect('/error')
+    }
     // Upload the file to Cloudinary
     const result = await cloudinary.uploader.upload(file.path);
-
+    
     // Update the user's profile picture URL in the database
     await User.findByIdAndUpdate(
       userId,
@@ -71,7 +73,7 @@ const updateProfilePicture = async (req, res) => {
       { new: true }
     );
 
-    return res.redirect("/users/user-profile");
+    return res.redirect("/");
   } catch (error) {
     console.log(error);
   }

@@ -22,5 +22,9 @@
   <img src="{{avatar}}" alt="Profile Picture" id="avatar" />
   {{#if auth}}
     <a href="/profile/{{username}}/change-password" class="change-password">Change Password</a>
+    <form action="/profile-picture" method="post" enctype="multipart/form-data">
+      <input type="file" name="profilePicture" accept="image/*" />
+      <button type="submit">Upload Profile Picture</button>
+    </form>
   {{/if}}
 </div>
