@@ -1,9 +1,9 @@
 const Post = require("../models/Post.model");
 const Thread = require("../models/Thread.model");
 
-// ###################################
-// function that creates a new post
-// ###################################
+// #################################
+// FUNCTION THAT CREATES A NEW POST
+// #################################
 
 const createPost = async (req, res) => {
   try {
@@ -25,9 +25,9 @@ const createPost = async (req, res) => {
   }
 };
 
-// ###################################
-// function that gets a post by its ID
-// ###################################
+// #####################################
+// FUNCTION THAT GETS A POST BY IT'S ID
+// #####################################
 
 const getPost = async (req, res) => {
   try {
@@ -49,9 +49,9 @@ const getPost = async (req, res) => {
   }
 };
 
-// ###################################
-// function that updates a post
-// ###################################
+// #############################
+// FUNCTION THAT UPDATES A POST
+// #############################
 
 const updatePost = async (req, res) => {
   try {
@@ -74,9 +74,9 @@ const updatePost = async (req, res) => {
   }
 };
 
-// ###################################
-// function that deletes a post
-// ###################################
+// #############################
+// FUNCTION THAT DELETES A POST
+// #############################
 
 const deletePost = async (req, res) => {
   try {

@@ -1,18 +1,17 @@
 const Thread = require("../models/Thread.model");
 
 // ###################################
-// function that creates a new thread
+// FUNCTION THAT CREATES A NEW THREAD
 // ###################################
 
 const createThread = async (req, res) => {
   try {
     const { title, content } = req.body;
-    const newThread = new Thread({
-      title,
-      content,
+    await Thread.create({
+      title: title,
+      content: content,
       author: req.session.currentUser,
     });
-    await newThread.save();
     res.redirect("/");
   } catch (error) {
     console.log(error);
@@ -20,6 +19,9 @@ const createThread = async (req, res) => {
   }
 };
 
+//#############################################################
+// FUNCTION THAT FINDS A THREAD AND SENDS YOU TO THE EDIT PAGE
+//#############################################################
 const editThread = async (req, res) => {
   try {
     const { threadId } = req.params;
@@ -33,9 +35,9 @@ const editThread = async (req, res) => {
   } catch {}
 };
 
-// ######################################
-// function that gets a thread by its ID
-// ######################################
+// #######################################
+// FUNCTION THAT GETS A THREAD BY IT'S ID
+// #######################################
 const getThread = async (req, res) => {
   try {
     const currentUser = req.session.currentUser;
@@ -75,9 +77,9 @@ const getThread = async (req, res) => {
   }
 };
 
-// ###################################
-// function that deletes thread by ID
-// ###################################
+// ##########################################
+// FUNCTION THAT DELETES A THREAD BY IT'S ID
+// ##########################################
 
 const deleteThread = async (req, res, next) => {
   try {
@@ -88,6 +90,9 @@ const deleteThread = async (req, res, next) => {
   }
 };
 
+//################################
+// FUNCTION THAT UPDATES A THREAD
+//################################
 const updateThread = async (req, res, next) => {
   try {
     const { title, content } = req.body;
@@ -98,12 +103,10 @@ const updateThread = async (req, res, next) => {
       if (title === "") {
         await Thread.findByIdAndUpdate(threadId, { content: content });
         return res.redirect(`/threads/${threadId}`);
-      }
-      else if (content === ''){
+      } else if (content === "") {
         await Thread.findByIdAndUpdate(threadId, { title: title });
         return res.redirect(`/threads/${threadId}`);
-      }
-      else {
+      } else {
         await Thread.findByIdAndUpdate(
           threadId,
           { title: title, content: content },

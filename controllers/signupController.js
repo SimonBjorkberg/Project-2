@@ -1,9 +1,9 @@
 const User = require("../models/User.model");
 const bcrypt = require("bcryptjs");
 
-// #################
-// SIGN UP GET ROUTE
-// #################
+// ############################################
+// SIGN UP FUNCTION FOR THE 'SIGNUP' GET ROUTE
+// ############################################
 const signUp = async (req, res, next) => {
     try {
       res.render("auth/signup");
@@ -12,9 +12,9 @@ const signUp = async (req, res, next) => {
     }
   };
   
-  // ##################
-  // SIGN UP POST ROUTE
-  // ##################
+  // #############################################
+  // SIGN UP FUNCTION FOR THE 'SIGNUP' POST ROUTE
+  // #############################################
   const signUpPost = async (req, res, next) => {
     const { username, email, password } = req.body;
     try {
