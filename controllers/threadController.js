@@ -1,4 +1,3 @@
-const PostModel = require("../models/Post.model");
 const Thread = require("../models/Thread.model");
 
 // ###################################
@@ -37,7 +36,7 @@ const editThread = async (req, res) => {
 // ######################################
 // function that gets a thread by its ID
 // ######################################
-const viewThread = async (req, res) => {
+const getThread = async (req, res) => {
   try {
     const currentUser = req.session.currentUser;
     const threadId = req.params.threadId;
@@ -75,29 +74,6 @@ const viewThread = async (req, res) => {
     res.redirect("/error");
   }
 };
-// ###################################
-// function that updates thread by ID
-// ###################################
-
-const updateThread = async (req, res) => {
-  try {
-    const { threadId } = req.params;
-    const { title, content } = req.body;
-    const updatedThread = await Thread.findByIdAndUpdate(
-      threadId,
-      { title, content },
-      { new: true }
-    );
-    if (!updatedThread) {
-      console.log("Thread not found");
-      return res.redirect("/not-found");
-    }
-    res.redirect("/threads");
-  } catch (error) {
-    console.log(error);
-    res.redirect("/error");
-  }
-};
 
 // ###################################
 // function that deletes thread by ID
@@ -111,10 +87,40 @@ const deleteThread = async (req, res, next) => {
     console.log("err", err);
   }
 };
+
+const updateThread = async (req, res, next) => {
+  try {
+    const { title, content } = req.body;
+    console.log(title, content);
+    const { threadId } = req.params;
+    const thread = await Thread.findById(threadId).populate("author");
+    if (thread.author.username === req.session.currentUser.username) {
+      if (title === "") {
+        await Thread.findByIdAndUpdate(threadId, { content: content });
+        return res.redirect(`/threads/${threadId}`);
+      }
+      else if (content === ''){
+        await Thread.findByIdAndUpdate(threadId, { title: title });
+        return res.redirect(`/threads/${threadId}`);
+      }
+      else {
+        await Thread.findByIdAndUpdate(
+          threadId,
+          { title: title, content: content },
+          { new: true }
+        );
+        return res.redirect(`/threads/${threadId}`);
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   createThread,
-  viewThread,
-  updateThread,
+  getThread,
   deleteThread,
   editThread,
+  updateThread,
 };

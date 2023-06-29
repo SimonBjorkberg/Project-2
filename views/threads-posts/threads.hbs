@@ -28,7 +28,7 @@
           >{{thread.author.username}}</span></p>
         <p class="thread-info">Posted: {{thread.createdAt}}</p>
         {{#if thread.auth}}
-          <form action="/threads/{{thread._id}}" method="post">
+          <form action="/threads/{{thread._id}}/delete" method="post">
             <button type="submit">Delete</button>
           </form>
           <form action="/threads/{{thread._id}}/edit" method="get">
