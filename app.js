@@ -13,7 +13,7 @@ const userRoutes = require("./routes/user-routes");
 app.use("/", userRoutes);
 
 const loginRoutes = require('./routes/login-routes')
-app.use('/login', loginRoutes)
+app.use('/', loginRoutes)
 
 const signupRoutes = require('./routes/signup-routes')
 app.use('/signup', signupRoutes)

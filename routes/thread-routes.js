@@ -1,5 +1,5 @@
 const threadController = require("../controllers/threadController");
-const { isThreadAuthor, isLoggedIn, isLoggedOut } = require('../middleware/route-guard')
+const { isThreadAuthor } = require('../middleware/thread-guards')
 const express = require("express");
 const router = express.Router();
 
