@@ -7,7 +7,7 @@ const Thread = require("../models/Thread.model");
 
 const createPost = async (req, res) => {
   try {
-    const { content } = req.body
+    const { content } = req.body;
     const post = await Post.create({
       content: content,
       author: req.session.currentUser,
@@ -31,17 +31,21 @@ const createPost = async (req, res) => {
 
 const getPost = async (req, res) => {
   try {
-    const { postId } = req.params
-    const post = await Post.findById(postId).populate('threadParent').populate('author');
-    if (req.session.currentUser.username === post.author.username || req.session.currentUser.role === 'admin') {
+    const { postId } = req.params;
+    const post = await Post.findById(postId)
+      .populate("threadParent")
+      .populate("author");
+    if (
+      req.session.currentUser.username === post.author.username ||
+      req.session.currentUser.role === "admin"
+    ) {
       res.render("threads-posts/edit-posts", {
         userInSession: req.session.currentUser,
         post: post,
         threadId: post.threadParent._id,
       });
-    }
-    else {
-      res.redirect(`/threads/${post.threadParent._id}`)
+    } else {
+      res.redirect(`/threads/${post.threadParent._id}`);
     }
   } catch (error) {
     console.log(error);
@@ -80,7 +84,7 @@ const updatePost = async (req, res) => {
 
 const deletePost = async (req, res) => {
   try {
-    const { postId } = req.params
+    const { postId } = req.params;
     const thread = await Thread.findOne({ posts: postId });
     await Post.findByIdAndDelete(postId);
     res.redirect(`/threads/${thread._id}`);

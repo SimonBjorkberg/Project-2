@@ -1,12 +1,13 @@
 const threadController = require("../controllers/threadController");
-const { isThreadAuthor } = require('../middleware/thread-guards')
+const { canEditThread } = require('../middleware/thread-guards')
+const { isLoggedIn, isLoggedOut } = require('../middleware/route-guard')
 const express = require("express");
 const router = express.Router();
 
 router.get("/:threadId", threadController.getThread);
-router.post("/create", threadController.createThread);
-router.get('/:threadId/edit', isThreadAuthor, threadController.editThread)
-router.post("/:threadId/delete", isThreadAuthor, threadController.deleteThread);
-router.post('/:threadId/update', isThreadAuthor, threadController.updateThread);
+router.post("/create", isLoggedIn, threadController.createThread);
+router.get('/:threadId/edit', canEditThread, threadController.editThread)
+router.post("/:threadId/delete", canEditThread, threadController.deleteThread);
+router.post('/:threadId/update', canEditThread, threadController.updateThread);
 
 module.exports = router;
