@@ -5,6 +5,10 @@ const topicSchema = new Schema({
     type: String,
     required: true,
   },
+  desc: {
+    type: String,
+    required: true,
+  },
   threads: [
     {
       type: Schema.Types.ObjectId,
