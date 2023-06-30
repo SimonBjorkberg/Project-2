@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const { model, Schema } = require("mongoose");
 
-const threadSchema = new mongoose.Schema({
+const threadSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -10,13 +10,13 @@ const threadSchema = new mongoose.Schema({
     required: true,
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
   posts: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Post",
     },
   ],
@@ -34,4 +34,4 @@ const threadSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Thread", threadSchema);
+module.exports = model("Thread", threadSchema);
