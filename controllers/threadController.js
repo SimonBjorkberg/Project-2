@@ -41,7 +41,7 @@ const editThread = async (req, res) => {
 const getThread = async (req, res) => {
   try {
     const currentUser = req.session.currentUser;
-    const { threadId } = req.params
+    const { threadId } = req.params;
     const thread = await Thread.findById(threadId)
       .populate("author")
       .populate({
@@ -49,9 +49,8 @@ const getThread = async (req, res) => {
         populate: {
           path: "author",
         },
-      });
-      console.log(thread)
-    let posts = thread.posts;
+      })
+      .populate("likes");
     if (currentUser) {
       const auth =
         thread.author.username === currentUser.username ||
@@ -96,7 +95,6 @@ const deleteThread = async (req, res, next) => {
 const updateThread = async (req, res, next) => {
   try {
     const { title, content } = req.body;
-    console.log(title, content);
     const { threadId } = req.params;
     const thread = await Thread.findById(threadId).populate("author");
     if (thread.author.username === req.session.currentUser.username) {
@@ -120,7 +118,28 @@ const updateThread = async (req, res, next) => {
   }
 };
 
+const likeThread = async (req, res, next) => {
+  try {
+    const { threadId } = req.params;
+    userId = req.session.currentUser._id;
+    const thread = await Thread.findById(threadId);
+
+    const hasLiked = thread.likes.indexOf(userId);
+    if (hasLiked !== -1) {
+      thread.likes.splice(hasLiked, 1);
+      await thread.save();
+    } else {
+      thread.likes.push(userId);
+      await thread.save();
+    }
+    res.redirect(`/threads/${threadId}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
+  likeThread,
   createThread,
   getThread,
   deleteThread,

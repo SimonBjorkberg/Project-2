@@ -12,6 +12,7 @@ const topicSchema = new Schema({
   threads: [
     {
       type: Schema.Types.ObjectId,
+      ref: "Thread",
     },
   ],
 });

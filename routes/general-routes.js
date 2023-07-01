@@ -8,4 +8,6 @@ router.get("/", generalController.index);
 router.get("/profile/:username", generalController.userProfile);
 router.post("/logout", isLoggedIn, generalController.logOut);
 
+router.post('/create-topic', generalController.createTopic);
+
 module.exports = router;

@@ -20,10 +20,12 @@ const threadSchema = new Schema({
       ref: "Post",
     },
   ],
-  likes: {
-    type: Number,
-    default: 0,
-  },
+  likes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,

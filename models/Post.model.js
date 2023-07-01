@@ -24,11 +24,10 @@ const postSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  threadParent:
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Thread",
-    },
+  threadParent: {
+    type: Schema.Types.ObjectId,
+    ref: "Thread",
+  },
 });
 
 module.exports = model("Post", postSchema);

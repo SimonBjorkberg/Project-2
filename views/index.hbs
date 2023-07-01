@@ -55,12 +55,35 @@
     <div class="index-thread" onclick="threadClick('{{this._id}}')">
       <h2 class="thread-title">{{this.title}}</h2>
       <p class="thread-content">{{this.content}}</p>
-      <div class="thread-info-div"> 
-        <img src="{{this.author.profilePicture}}" alt="PP">
+      <div class="thread-info-div">
+        <img src="{{this.author.profilePicture}}" alt="PP" />
         <p class="thread-info">Posted by
-          <span style="font-weight: bolder;"><a href="/profile/{{this.author.username}}">{{this.author.username}}</a></span></p>
+          <span style="font-weight: bolder;"><a
+              href="/profile/{{this.author.username}}"
+            >{{this.author.username}}</a></span></p>
         <p class="thread-info">Posted: {{this.createdAt}}</p>
       </div>
     </div>
   </section>
 {{/each}}
+
+<section>
+  {{#if admin}}
+    <div>
+      <form action="/create-topic" method="post">
+        <input type="text" name="title" placeholder="title" />
+        <input type="text" name="desc" placeholder="desc" />
+        <button type="submit">
+          create new topic
+        </button>
+      </form>
+    </div>
+  {{/if}}
+  <div>
+    {{#each topic}}
+      <div>
+        <p>{{this.title}}</p>
+      </div>
+    {{/each}}
+  </div>
+</section>
