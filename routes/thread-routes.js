@@ -9,5 +9,6 @@ router.post("/create", isLoggedIn, threadController.createThread);
 router.get('/:threadId/edit', canEditThread, threadController.editThread)
 router.post("/:threadId/delete", canEditThread, threadController.deleteThread);
 router.post('/:threadId/update', canEditThread, threadController.updateThread);
+router.post('/:threadId/like', isLoggedIn, threadController.likeThread)
 
 module.exports = router;

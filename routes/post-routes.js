@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const postController = require("../controllers/postController");
 const { getEditPost, editPost, delPost } = require('../middleware/post-guards')
+const { isLoggedIn } = require('../middleware/route-guard')
 
 router
   .route("/:threadId")
@@ -14,5 +15,7 @@ router
 
 router.route('/:postId/delete')
   .post(delPost, postController.deletePost);
+
+router.post('/:postId/like', isLoggedIn, postController.likePost)
 
 module.exports = router;

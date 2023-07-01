@@ -1,16 +1,32 @@
 const Thread = require("../models/Thread.model");
 const User = require("../models/User.model");
+const Topic = require("../models/Topic.model");
 
 // ###########
 // INDEX ROUTE
 // ###########
 const index = async (req, res, next) => {
   try {
+    const user = req.session.currentUser;
     const thread = await Thread.find({}).populate("author");
-    res.render("index", {
-      userInSession: req.session.currentUser,
-      thread,
-    });
+    const topic = await Topic.find({});
+    if (user && user.role === "admin") {
+      admin = true;
+      return res.render("index", {
+        userInSession: user,
+        thread,
+        topic,
+        admin,
+      });
+    } else {
+      admin = false;
+      res.render("index", {
+        userInSession: req.session.currentUser,
+        thread,
+        topic,
+        admin,
+      });
+    }
   } catch (err) {
     console.log("err", err);
   }
@@ -79,7 +95,20 @@ const logOut = async (req, res, next) => {
   }
 };
 
+const createTopic = async (req, res, next) => {
+  try {
+    if (req.session.currentUser.role === "admin") {
+      const { title, desc } = req.body;
+      await Topic.create({ title: title, desc: desc });
+    }
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
+  createTopic,
   index,
   search,
   logOut,

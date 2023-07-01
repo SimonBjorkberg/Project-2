@@ -1,18 +1,18 @@
-const mongoose = require("mongoose");
+const { model, Schema } = require("mongoose");
 
-const postSchema = new mongoose.Schema({
+const postSchema = new Schema({
   content: {
     type: String,
     required: true,
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
   likes: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
     },
   ],
@@ -24,11 +24,10 @@ const postSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  threadParent:
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Thread",
-    },
+  threadParent: {
+    type: Schema.Types.ObjectId,
+    ref: "Thread",
+  },
 });
 
-module.exports = mongoose.model("Post", postSchema);
+module.exports = model("Post", postSchema);
