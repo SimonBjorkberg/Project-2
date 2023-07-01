@@ -14,7 +14,7 @@ const index = async (req, res, next) => {
     const topic = await Topic.find({});
     if (user && user.role === "admin") {
       admin = true;
-      return res.render("index", {
+      return res.render("mainindex", {
         userInSession: user,
         thread,
         topic,
@@ -23,7 +23,7 @@ const index = async (req, res, next) => {
       });
     } else {
       admin = false;
-      res.render("index", {
+      res.render("mainindex", {
         userInSession: req.session.currentUser,
         thread,
         topic,
@@ -36,21 +36,6 @@ const index = async (req, res, next) => {
   }
 };
 
-// ############
-// SEARCH ROUTE
-// ############
-const search = async (req, res, next) => {
-  try {
-    const user = await User.findOne({ username: req.body.search });
-    if (user === null) {
-      res.redirect("/not-found");
-    } else {
-      res.redirect(`/profile/${user.username}`);
-    }
-  } catch (err) {
-    console.log("err", err);
-  }
-};
 // ###################
 // USER PROFILE ROUTES
 // ###################
@@ -114,7 +99,6 @@ const createTopic = async (req, res, next) => {
 module.exports = {
   createTopic,
   index,
-  search,
   logOut,
   userProfile,
 };
