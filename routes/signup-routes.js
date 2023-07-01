@@ -5,7 +5,6 @@ const signupController = require("../controllers/signupController");
 
 
 router.route("/")
-  .get(isLoggedOut, signupController.signUp)
   .post(isLoggedOut, signupController.signUpPost);
 
 module.exports = router;
