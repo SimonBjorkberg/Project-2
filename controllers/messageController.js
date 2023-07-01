@@ -25,7 +25,7 @@ const sendMessage = async (req, res) => {
       const message = new Message({
         sender: req.session.currentUser._id,
         recipient: recipientUser._id,
-        content: [content]
+        content: content
       });
       // save it in the database
       await message.save();
@@ -41,9 +41,21 @@ const recievedMessage = async (req, res) => {
       const userId = req.session.currentUser._id
       console.log(userId)
 
-      const receivedMessages = await Message.find({ recipient: userId })
-      console.log(receivedMessages)
-      res.json({ receivedMessages })
+      const receivedMessages = await Message.find({ recipient: userId }).populate('sender', 'username')
+      // console.log(receivedMessages)
+
+      const content = receivedMessages.map(message => ({
+        sender: message.sender.username,
+        content: message.content,
+      }));
+      console.log(content)
+
+      res.json({ receivedMessages: content })
+
+      if (receivedMessages.length === 0) {
+        console.log('No messages were recieved')
+      }
+
     }
     catch (error) {
         console.log(error)
