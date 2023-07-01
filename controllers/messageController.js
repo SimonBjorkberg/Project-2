@@ -44,13 +44,13 @@ const recievedMessage = async (req, res) => {
       const receivedMessages = await Message.find({ recipient: userId }).populate('sender', 'username')
       // console.log(receivedMessages)
 
-      const content = receivedMessages.map(message => ({
+      const messages = receivedMessages.map(message => ({
         sender: message.sender.username,
         content: message.content,
       }));
-      console.log(content)
+      console.log(messages)
 
-      res.json({ receivedMessages: content })
+      res.render('dms/dmpage', { messages, userInSession: req.session.currentUser });
 
       if (receivedMessages.length === 0) {
         console.log('No messages were recieved')
