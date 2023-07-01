@@ -1,19 +1,24 @@
 <nav class="flex bg-teal-700 text-white py-4">
   <div class="flex justify-between items-center w-full">
     {{#if userInSession}}
-      <a
-        href="/"
-        class="ml-3 text-white font-bold hover:text-teal-300 transition-colors m-0"
-      ><img src="../../public/images/Project-logo.png" alt="PP" /></a>
-      <a
-        href="/profile/{{userInSession.username}}"
-        class="mr-3 text-white hover:text-teal-300 transition-colors font-bold m-0"
-      >Profile</a>
-      <form action="/logout" method="POST">
-        <button
-          class="mr-3 bg-transparent text-white border border-white rounded px-4 py-2 hover:bg-teal-500 hover:border-teal-500 transition-colors"
-        >Logout</button>
-      </form>
+      <div class="items-center">
+        <a href="/"><img
+            src="/images/Project-logo.png"
+            alt="PP"
+            class="max-h-10 ml-3"
+          /></a>
+      </div>
+      <div class="flex">
+        <a
+          href="/profile/{{userInSession.username}}"
+          class="mr-3 text-white hover:text-teal-300 transition-colors font-bold px-4 py-2"
+        >Profile</a>
+        <form action="/logout" method="POST">
+          <button
+            class="bg-transparent text-white border border-white rounded px-4 py-2 hover:bg-teal-500 hover:border-teal-500 transition-colors"
+          >Logout</button>
+        </form>
+      </div>
     {{else}}
       <div class="items-center">
         <a href="/"><img
@@ -35,6 +40,7 @@
     {{/if}}
   </div>
 </nav>
+
 
 <dialog id="loginModal" class="bg-white rounded-lg p-4">
   <div>
