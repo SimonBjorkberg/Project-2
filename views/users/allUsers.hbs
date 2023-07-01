@@ -5,7 +5,7 @@
       </form>
       {{#if userInSession}}
         <a href="/">Home Page</a>
-        <a href="/profile/ironhacker">Profile</a>
+        <a href="/profile/{{userInSession.username}}">Profile</a>
         <form id="logout-form" action="/logout" method="POST">
           <button class="logout-button">Logout</button>
         </form>
