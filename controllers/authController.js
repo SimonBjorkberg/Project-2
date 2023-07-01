@@ -61,7 +61,7 @@ const updateProfilePicture = async (req, res) => {
     const userId = req.session.currentUser;
     const file = req.file; // Get the uploaded file from the request
     if (!file) {
-      return res.redirect('/error')
+      return res.redirect('/')
     }
     // Upload the file to Cloudinary
     const result = await cloudinary.uploader.upload(file.path);
