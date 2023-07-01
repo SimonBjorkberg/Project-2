@@ -20,15 +20,14 @@ const loginPost = async (req, res, next) => {
   try {
     const user = await User.findOne({ username });
     if (!user) {
-      res.render("auth/login", { errorMessage: "User not found" });
+      return res.render("index", { errorMessage: "User not found", loginError: true });
     } else if (bcrypt.compareSync(password, user.password)) {
       req.session.currentUser = user;
       req.session.userId = user._id;
 
-      res.redirect(`/profile/${username}`);
+      return res.redirect(`/profile/${username}`);
     } else {
-      req.session.loginErrorMessage = "Incorrect password";
-      res.redirect("/login");
+      return res.render('index', { errorMessage: "Incorrect password", loginError: true })
     }
   } catch (err) {
     console.log("err", err);

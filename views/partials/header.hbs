@@ -1,0 +1,59 @@
+<nav>
+  {{#if userInSession}}
+    <a href="/">Home Page</a>
+    <a href="/profile/{{userInSession.username}}">Profile</a>
+    <form id="logout-form" action="/logout" method="POST">
+      <button class="logout-button">Logout</button>
+    </form>
+  {{else}}
+    <a href="/">Home Page</a>
+    <button id="signup-modal-button">Sign up</button>
+    <button id="login-modal-button" class="login-button">Log in</button>
+  {{/if}}
+</nav>
+
+<dialog id="loginModal">
+  <button id="login-close-modal" class="text-right w-full">X</button>
+  <div class="login-container">
+  <h2>Log in</h2>
+  <form action="/login" method="post">
+      <input class="centered-text" type="text" name="username" placeholder="Username" required />
+      <input class="centered-text" type="password" name="password" placeholder="*******" required />
+    <button type="submit">Log in</button>
+  </form>
+  {{#if errorMessage}}
+    <p>{{errorMessage}}</p>
+  {{/if}}
+</div>
+</dialog>
+
+<dialog id="signupModal">
+    <button id="signup-close-modal" class="text-right w-full">X</button>
+  <div class="signup-container">
+  <h2>Sign-up</h2>
+  <form action="/signup" method="post">
+    <label>
+      <input class="centered-text" type="text" name="username" placeholder="Username" required />
+    </label>
+    <label>
+      <input class="centered-text" type="email" name="email" placeholder="email" required />
+    </label>
+    <label>
+      <input class="centered-text" type="password" name="password" placeholder="Password" required />
+    </label>
+    <button type="submit">Sign up</button>
+  </form>
+  {{#if errorMessage}}
+    <p>{{errorMessage}}</p>
+  {{/if}}
+</div>
+</dialog>
+
+<script>
+  const loginError = {{loginError}}
+
+  if (loginError) {
+    const loginModal = document.getElementById('loginModal');
+    loginModal.showModal()
+  }
+</script>
