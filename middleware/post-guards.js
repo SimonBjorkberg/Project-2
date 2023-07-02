@@ -60,6 +60,8 @@ const likePost = async (req, res, next) => {
     const thread = await Thread.findOne({ posts: postId });
     if (!req.session.currentUser) {
       return res.redirect(`/threads/${thread._id}`);
+    } else {
+      next();
     }
   } catch (error) {
     console.log(error);
