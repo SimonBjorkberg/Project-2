@@ -51,17 +51,13 @@ const userProfile = async (req, res, next) => {
     ) {
       return res.render("users/user-profile", {
         auth: true,
-        username: user.username,
-        email: user.email,
-        avatar: user.profilePicture,
+        user: user,
         userInSession: req.session.currentUser,
       });
     }
     res.render("users/user-profile", {
       auth: false,
-      username: user.username,
-      email: user.email,
-      avatar: user.profilePicture,
+      user: user,
       userInSession: req.session.currentUser,
     });
   } catch (err) {

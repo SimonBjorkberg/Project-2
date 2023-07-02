@@ -2,23 +2,6 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User.model");
 const cloudinary = require("cloudinary").v2;
 
-// #########################
-// UPDATE PASSWORD GET ROUTE
-// #########################
-const updatePassword = async (req, res, next) => {
-  try {
-    if (req.params.username === req.session.currentUser.username) {
-      res.render("auth/change-password", {
-        userInSession: req.session.currentUser,
-      });
-    } else {
-      next(); //???????????????????????????
-    }
-  } catch (err) {
-    console.log("err", err);
-  }
-};
-
 // ##########################
 // UPDATE PASSWORD POST ROUTE
 // ##########################
@@ -38,9 +21,11 @@ const updatePostPassword = async (req, res, next) => {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(newPassword, salt);
       await User.findByIdAndUpdate(user._id, { password: hashedPassword });
-      return res.render(`auth/change-password`, {
+      return res.render(`users/user-profile`, {
         message: "Password Changed",
-        userInSession: user,
+        auth: true,
+        user: user,
+        userinSession: req.session.currentUser
       });
     } else {
       res.render("auth/change-password", {
@@ -83,7 +68,6 @@ const updateProfilePicture = async (req, res) => {
 // EXPORTS
 // #######
 module.exports = {
-  updatePassword,
   updatePostPassword,
   updateProfilePicture,
 };
