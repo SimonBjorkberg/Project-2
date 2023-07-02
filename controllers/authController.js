@@ -10,8 +10,11 @@ const updatePostPassword = async (req, res, next) => {
     const { currentPassword, newPassword } = req.body;
     const user = await User.findById(req.session.currentUser);
 
-    if (bcrypt.compareSync(currentPassword, user.password) && bcrypt.compareSync(newPassword, user.password)) {
-      return res.render(`user/user-profile`, {
+    if (
+      bcrypt.compareSync(currentPassword, user.password) &&
+      bcrypt.compareSync(newPassword, user.password)
+    ) {
+      return res.render(`users/user-profile`, {
         auth: true,
         user: user,
         errorMessage: "Can not change to the same password",
@@ -28,7 +31,7 @@ const updatePostPassword = async (req, res, next) => {
         message: "Password Changed",
         auth: true,
         user: user,
-        userinSession: req.session.currentUser
+        userinSession: req.session.currentUser,
       });
     } else {
       res.render("users/user-profile", {
@@ -52,11 +55,11 @@ const updateProfilePicture = async (req, res) => {
     const userId = req.session.currentUser;
     const file = req.file; // Get the uploaded file from the request
     if (!file) {
-      return res.redirect('/')
+      return res.redirect("/");
     }
     // Upload the file to Cloudinary
     const result = await cloudinary.uploader.upload(file.path);
-    
+
     // Update the user's profile picture URL in the database
     await User.findByIdAndUpdate(
       userId,
