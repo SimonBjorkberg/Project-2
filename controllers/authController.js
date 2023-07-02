@@ -34,7 +34,7 @@ const updatePostPassword = async (req, res, next) => {
       res.render("users/user-profile", {
         auth: true,
         user: user,
-        errorMessage: "Incorrect current Password",
+        errorMessage: "Incorrect Current Password",
         userInSession: user,
         changePasswordError: true,
       });
