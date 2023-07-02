@@ -28,7 +28,10 @@
         </div>
         <div class="flex items-center space-x-2">
           {{#if thread.auth}}
-              <button id="editThreadButtonOpen" class="text-teal-500">Edit</button>
+            <button
+              id="editThreadButtonOpen"
+              class="text-teal-500"
+            >Edit</button>
             <form action="/threads/{{thread._id}}/delete" method="post">
               <button type="submit" class="text-teal-500">Delete</button>
             </form>
@@ -73,9 +76,22 @@
       </div>
       <div class="flex items-center mt-2 justify-end">
         {{#if auth}}
-          <form action="/post/{{this._id}}/edit" method="get">
-            <button type="submit" class="text-teal-500 mr-2">Edit</button>
-          </form>
+          <button
+            id="editPostButtonOpen-{{this._id}}"
+            class="text-teal-500 mr-2"
+          >Edit</button>
+          <dialog id="editPostModal-{{this._id}}">
+            <div>
+              <p>Edit Post</p>
+              <button id="editPostButtonClose-{{this._id}}">x</button>
+            </div>
+            <div>
+              <form action="/post/{{this._id}}/edit" method="post">
+                <input type="text" name="content" value="{{this.content}}" />
+                <button type="submit">Edit</button>
+              </form>
+            </div>
+          </dialog>
           <form action="/post/{{this._id}}/delete" method="post">
             <button type="submit" class="text-teal-500 mr-2">Delete</button>
           </form>
@@ -121,34 +137,57 @@
   <div>
     <div class="flex justify-between mb-4">
       <p class="font-bold">Edit Thread</p>
-      <button id="editThreadButtonClose" class="text-gray-600 text-xl font-bold">x</button>
+      <button
+        id="editThreadButtonClose"
+        class="text-gray-600 text-xl font-bold"
+      >x</button>
     </div>
     <form action="/threads/{{thread._id}}/update" method="post">
       <div class="mb-4">
-        <input type="text" name="title" value="{{thread.title}}" class="w-full border border-gray-400 rounded px-3 py-2" />
+        <input
+          type="text"
+          name="title"
+          value="{{thread.title}}"
+          class="w-full border border-gray-400 rounded px-3 py-2"
+        />
       </div>
       <div class="mb-4">
-        <textarea name="content" class="w-full border border-gray-400 rounded px-3 py-2">{{thread.content}}</textarea>
+        <textarea
+          name="content"
+          class="w-full border border-gray-400 rounded px-3 py-2"
+        >{{thread.content}}</textarea>
       </div>
       <div class="flex justify-end">
-        <button type="submit" class="bg-teal-700 text-white rounded px-4 py-2">Edit</button>
+        <button
+          type="submit"
+          class="bg-teal-700 text-white rounded px-4 py-2"
+        >Edit</button>
       </div>
     </form>
   </div>
-</dialog>
-
-
-<dialog id="editPostModal">
-
 </dialog>
 
 <script>
   const editThreadButtonOpen = document.getElementById('editThreadButtonOpen')
   const editThreadButtonClose = document.getElementById('editThreadButtonClose')
   editThreadButtonOpen.addEventListener('click', () => {
-    editThreadModal.showModal();
-  })
+  editThreadModal.showModal(); })
   editThreadButtonClose.addEventListener('click', () => {
-    editThreadModal.close()
-  })
+  editThreadModal.close(); })
+</script>
+
+<script>
+  {{#each thread.posts}}
+    const editPostButtonOpen_{{this._id}}
+    = document.getElementById('editPostButtonOpen-{{this._id}}'); const
+    editPostButtonClose_{{this._id}}
+    = document.getElementById('editPostButtonClose-{{this._id}}');
+    editPostButtonOpen_{{this._id}}.addEventListener('click', () => { const
+    editPostModal_{{this._id}}
+    = document.getElementById('editPostModal-{{this._id}}'); editPostModal_{{this._id}}.showModal();
+    }); editPostButtonClose_{{this._id}}.addEventListener('click', () => { const
+    editPostModal_{{this._id}}
+    = document.getElementById('editPostModal-{{this._id}}'); editPostModal_{{this._id}}.close();
+    });
+  {{/each}}
 </script>
