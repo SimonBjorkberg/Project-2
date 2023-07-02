@@ -11,8 +11,11 @@ const updatePostPassword = async (req, res, next) => {
     const user = await User.findById(req.session.currentUser);
 
     if (bcrypt.compareSync(currentPassword, user.password) && bcrypt.compareSync(newPassword, user.password)) {
-      return res.render(`auth/change-password`, {
+      return res.render(`user/user-profile`, {
+        auth: true,
+        user: user,
         errorMessage: "Can not change to the same password",
+        changePasswordError: true,
         userInSession: user,
       });
     }
@@ -28,9 +31,12 @@ const updatePostPassword = async (req, res, next) => {
         userinSession: req.session.currentUser
       });
     } else {
-      res.render("auth/change-password", {
+      res.render("users/user-profile", {
+        auth: true,
+        user: user,
         errorMessage: "Incorrect current Password",
         userInSession: user,
+        changePasswordError: true,
       });
     }
   } catch (error) {
