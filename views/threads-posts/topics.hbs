@@ -1,33 +1,43 @@
-<div class=" py-4 my-5 sm:w-3/4 w-5/6 m-auto border-teal-700 border-2 rounded-md">
+<div
+  class="py-4 my-5 sm:w-3/4 w-5/6 m-auto border-teal-700 border-2 rounded-md"
+>
   <p class="text-teal-700 text-center text-2xl font-bold">{{topic.title}}</p>
 </div>
 
-
 {{#each thread}}
-  <section class="p-4 rounded-md mb-4 w-4/5 sm:w-2/3 m-auto hover:bg-zinc-300 hover:border-teal-500 transition-colors border-teal-500 border">
-  <div onclick="threadClick('{{this._id}}')" class="cursor-pointer">
-    <div>
-      <h2 class="text-2xl text-teal-900 font-bold mb-1">{{this.title}}</h2>
-      <p>{{thread.likes.length}}</p>
-    </div>
-    <p>{{this.content}}</p>
-    <div class="flex sm:flex-row mt-2 justify-between flex-col">
-      <div class="flex items-center">
-        <img src="{{this.author.profilePicture}}" alt="PP" class="w-8 h-8 rounded-full mr-2">
-        <p>Posted by
-          <span class="font-semibold">
-            <a href="/profile/{{this.author.username}}" class="text-teal-900 hover:underline">
-              {{this.author.username}}
-            </a>
-          </span>
-        </p>
+  <section
+    class="p-4 rounded-md mb-4 w-4/5 sm:w-2/3 m-auto hover:bg-zinc-300 hover:border-teal-500 transition-colors border-teal-500 border"
+  >
+    <div onclick="threadClick('{{this._id}}')" class="cursor-pointer">
+      <div>
+        <h2 class="text-2xl text-teal-900 font-bold mb-1">{{this.title}}</h2>
+        <p>{{thread.likes.length}}</p>
       </div>
-      <div class="flex items-center">
-        <p>Posted: {{this.createdAt}}</p>
+      <p>{{this.content}}</p>
+      <div class="flex sm:flex-row mt-2 justify-between flex-col">
+        <div class="flex items-center">
+          <img
+            src="{{this.author.profilePicture}}"
+            alt="PP"
+            class="w-8 h-8 rounded-full mr-2"
+          />
+          <p>Posted by
+            <span class="font-semibold">
+              <a
+                href="/profile/{{this.author.username}}"
+                class="text-teal-900 hover:underline"
+              >
+                {{this.author.username}}
+              </a>
+            </span>
+          </p>
+        </div>
+        <div class="flex items-center">
+          <p>Posted: {{this.createdAt}}</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 {{/each}}
 
 {{#if userInSession}}
@@ -55,7 +65,10 @@
         </div>
       </div>
       <div class="mt-4">
-        <button type="submit" class="bg-teal-700 text-white py-2 px-4 rounded-md hover:bg-teal-600 hover:border-teal-600 transition-colors">
+        <button
+          type="submit"
+          class="bg-teal-700 text-white py-2 px-4 rounded-md hover:bg-teal-600 hover:border-teal-600 transition-colors"
+        >
           Create Thread
         </button>
       </div>

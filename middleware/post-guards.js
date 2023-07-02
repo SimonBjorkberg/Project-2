@@ -1,25 +1,20 @@
-const User = require("../models/User.model");
-const Thread = require("../models/Thread.model");
 const Post = require("../models/Post.model");
 
-const getEditPost = async (req, res, next) => {
+const createPost = async (req, res, next) => {
   try {
-    const { postId } = req.params;
-    const post = await Post.findById(postId)
-      .populate("author")
-      .populate("threadParent");
-    if (
-      post.author.username === req.session.currentUser.username ||
-      req.session.currentUser.role === "admin"
-    ) {
+    const { currentUser } = req.session
+    const { threadId } = req.params
+    if (currentUser) {
       next();
-    } else {
-      return res.redirect(`/threads/${post.threadParent._id}`);
     }
-  } catch (error) {
-    console.log(error);
+    else {
+      res.redirect(`/threads/${threadId}`)
+    }
   }
-};
+  catch (error) {
+    console.log(error)
+  }
+}
 
 const editPost = async (req, res, next) => {
   try {
@@ -60,7 +55,7 @@ const delPost = async (req, res, next) => {
 };
 
 module.exports = {
+  createPost,
   delPost,
   editPost,
-  getEditPost,
 };
