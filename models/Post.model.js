@@ -17,12 +17,20 @@ const postSchema = new Schema({
     },
   ],
   createdAt: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: () => {
+      const now = new Date();
+      const options = { year: "numeric", month: "short", day: "2-digit" };
+      return now.toLocaleDateString(undefined, options);
+    },
   },
   updatedAt: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: () => {
+      const now = new Date();
+      const options = { year: "numeric", month: "short", day: "2-digit" };
+      return now.toLocaleDateString(undefined, options);
+    },
   },
   threadParent: {
     type: Schema.Types.ObjectId,

@@ -7,28 +7,26 @@ const Topic = require("../models/Topic.model");
 // ###########
 const index = async (req, res, next) => {
   try {
-    let date = new Date()
+    let date = new Date();
     let year = date.getFullYear();
     const user = req.session.currentUser;
     const thread = await Thread.find({}).populate("author");
     const topic = await Topic.find({});
     if (user && user.role === "admin") {
       admin = true;
-      return res.render("mainindex", {
+      return res.render("index", {
         userInSession: user,
         thread,
         topic,
         admin,
-        currentYear: year
       });
     } else {
       admin = false;
-      res.render("mainindex", {
+      res.render("index", {
         userInSession: req.session.currentUser,
         thread,
         topic,
         admin,
-        currentYear: year,
       });
     }
   } catch (err) {
@@ -92,7 +90,31 @@ const createTopic = async (req, res, next) => {
   }
 };
 
+const getTopic = async (req, res, next) => {
+  try {
+    const { title } = req.params;
+    const topic = await Topic.findOne({ title: title })
+      .populate("threads")
+      .populate({
+        path: "threads",
+        populate: {
+          path: "author",
+        },
+      });
+    const thread = topic.threads;
+    console.log(thread);
+    res.render("threads-posts/topics", {
+      topic: topic,
+      thread: thread,
+      userInSession: req.session.currentUser,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
+  getTopic,
   createTopic,
   index,
   logOut,

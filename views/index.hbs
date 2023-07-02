@@ -1,67 +1,12 @@
-{{#if userInSession}}
-  <div class="create-thread">
-    <form action="/threads/create" method="post">
-      <div class="form-row">
-        <div class="form-group">
-          <input
-            type="text"
-            id="title"
-            name="title"
-            placeholder="Title"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="text"
-            id="content"
-            name="content"
-            placeholder="Content"
-            required
-          />
-        </div>
-      </div>
-      <div class="form-group">
-        <button type="submit">Create Thread</button>
-      </div>
-    </form>
-  </div>
-
-{{/if}}
-{{#each thread}}
-  <section class="thread-container">
-    <div class="index-thread" onclick="threadClick('{{this._id}}')">
-      <h2 class="thread-title">{{this.title}}</h2>
-      <p class="thread-content">{{this.content}}</p>
-      <div class="thread-info-div">
-        <img src="{{this.author.profilePicture}}" alt="PP" />
-        <p class="thread-info">Posted by
-          <span style="font-weight: bolder;"><a
-              href="/profile/{{this.author.username}}"
-            >{{this.author.username}}</a></span></p>
-        <p class="thread-info">Posted: {{this.createdAt}}</p>
-      </div>
+<div class="flex flex-col lg:flex-row lg:w-auto mt-6 justify-around max-w-5xl items-center m-auto lg:mt-72">
+  {{#each topic}}
+    <div class="w-72 bg-gray-100 text-gray-800 p-4 rounded-lg shadow-md text-center mb-4 flex flex-col">
+      <a
+        href="/topic/{{this.title}}"
+        class="mb-2 text-center bg-teal-700 hover:bg-teal-500 text-white border border-white rounded-r px-4 py-2 transition-colors">
+        {{this.title}}
+      </a>
+      <p class="text-gray-800 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </div>
-  </section>
-{{/each}}
-
-<section>
-  {{#if admin}}
-    <div>
-      <form action="/create-topic" method="post">
-        <input type="text" name="title" placeholder="title" />
-        <input type="text" name="desc" placeholder="desc" />
-        <button type="submit">
-          create new topic
-        </button>
-      </form>
-    </div>
-  {{/if}}
-  <div>
-    {{#each topic}}
-      <div>
-        <p>{{this.title}}</p>
-      </div>
-    {{/each}}
-  </div>
-</section>
+  {{/each}}
+</div>

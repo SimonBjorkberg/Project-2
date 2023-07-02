@@ -12,7 +12,7 @@ const loginPost = async (req, res, next) => {
     const user = await User.findOne({ username });
     const topic = await Topic.find({});
     if (!user) {
-      return res.render("mainindex", {
+      return res.render("index", {
         loginErrorMessage: "User not found",
         loginError: true,
         topic,
@@ -23,7 +23,7 @@ const loginPost = async (req, res, next) => {
 
       return res.redirect(`/profile/${username}`);
     } else {
-      return res.render("mainindex", {
+      return res.render("index", {
         loginErrorMessage: "Incorrect password",
         loginError: true,
         topic,

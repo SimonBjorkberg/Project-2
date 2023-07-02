@@ -26,13 +26,25 @@ const threadSchema = new Schema({
       ref: "User",
     },
   ],
+  topicParent: {
+    type: Schema.Types.ObjectId,
+    ref: "Topic",
+  },
   createdAt: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: () => {
+      const now = new Date();
+      const options = { year: "numeric", month: "short", day: "2-digit" };
+      return now.toLocaleDateString(undefined, options);
+    },
   },
   updatedAt: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: () => {
+      const now = new Date();
+      const options = { year: "numeric", month: "short", day: "2-digit" };
+      return now.toLocaleDateString(undefined, options);
+    },
   },
 });
 

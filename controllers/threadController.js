@@ -1,4 +1,5 @@
 const Thread = require("../models/Thread.model");
+const Topic = require("../models/Topic.model");
 
 // ###################################
 // FUNCTION THAT CREATES A NEW THREAD
@@ -7,12 +8,18 @@ const Thread = require("../models/Thread.model");
 const createThread = async (req, res) => {
   try {
     const { title, content } = req.body;
-    await Thread.create({
+    const thread = await Thread.create({
       title: title,
       content: content,
       author: req.session.currentUser,
+      topicParent: req.params.topicId,
     });
-    res.redirect("/");
+    const topic = await Topic.findByIdAndUpdate(
+      req.params.topicId,
+      { $push: { threads: thread } },
+      { new: true }
+    );
+    res.redirect(`/topic/${topic.title}`);
   } catch (error) {
     console.log(error);
     res.redirect("/error");
