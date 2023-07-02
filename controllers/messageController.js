@@ -19,6 +19,7 @@ const sendMessage = async (req, res) => {
       if (!recipientUser) {
         console.log('Recipient doesnt exist');
         res.redirect('/error');
+        return;
       }
   
       // create a new message
@@ -45,7 +46,7 @@ const recievedMessage = async (req, res) => {
       // console.log(receivedMessages)
 
       const messages = receivedMessages.map(message => ({
-        sender: message.sender.username,
+        sender: message.sender?.username || 'Unknown User',
         content: message.content,
       }));
       console.log(messages)
