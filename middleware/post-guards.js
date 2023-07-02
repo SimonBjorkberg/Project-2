@@ -1,20 +1,20 @@
+const e = require("express");
 const Post = require("../models/Post.model");
+const Thread = require("../models/Thread.model");
 
 const createPost = async (req, res, next) => {
   try {
-    const { currentUser } = req.session
-    const { threadId } = req.params
+    const { currentUser } = req.session;
+    const { threadId } = req.params;
     if (currentUser) {
       next();
+    } else {
+      res.redirect(`/threads/${threadId}`);
     }
-    else {
-      res.redirect(`/threads/${threadId}`)
-    }
+  } catch (error) {
+    console.log(error);
   }
-  catch (error) {
-    console.log(error)
-  }
-}
+};
 
 const editPost = async (req, res, next) => {
   try {
@@ -54,7 +54,20 @@ const delPost = async (req, res, next) => {
   }
 };
 
+const likePost = async (req, res, next) => {
+  try {
+    const { postId } = req.params;
+    const thread = await Thread.findOne({ posts: postId });
+    if (!req.session.currentUser) {
+      return res.redirect(`/threads/${thread._id}`);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
+  likePost,
   createPost,
   delPost,
   editPost,

@@ -7,8 +7,6 @@ const Topic = require("../models/Topic.model");
 // ###########
 const index = async (req, res, next) => {
   try {
-    let date = new Date();
-    let year = date.getFullYear();
     const user = req.session.currentUser;
     const thread = await Thread.find({}).populate("author");
     const topic = await Topic.find({});

@@ -70,8 +70,8 @@ const likePost = async (req, res, next) => {
   try {
     const { postId } = req.params;
     const thread = await Thread.findOne({ posts: postId });
-    userId = req.session.currentUser._id;
     const post = await Post.findById(postId);
+    userId = req.session.currentUser._id;
 
     const hasLiked = post.likes.indexOf(userId);
     if (hasLiked !== -1) {
