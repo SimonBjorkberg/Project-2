@@ -26,22 +26,6 @@ const createThread = async (req, res) => {
   }
 };
 
-//#############################################################
-// FUNCTION THAT FINDS A THREAD AND SENDS YOU TO THE EDIT PAGE
-//#############################################################
-const editThread = async (req, res) => {
-  try {
-    const { threadId } = req.params;
-    const thread = await Thread.findById(threadId).populate("author");
-    if (
-      thread.author.username === req.session.currentUser.username ||
-      req.session.currentUser.role === "admin"
-    ) {
-      res.render("threads-posts/edit-thread", { thread: thread });
-    }
-  } catch {}
-};
-
 // #######################################
 // FUNCTION THAT GETS A THREAD BY IT'S ID
 // #######################################
@@ -150,6 +134,5 @@ module.exports = {
   createThread,
   getThread,
   deleteThread,
-  editThread,
   updateThread,
 };
