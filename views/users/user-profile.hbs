@@ -1,12 +1,92 @@
-<div class="profile">
-  <h2 id="username">{{username}}</h2>
-  <h2 id="email">{{email}}</h2>
-  <img src="{{avatar}}" alt="Profile Picture" id="avatar" />
+<div class="profile flex flex-col items-center justify-center mt-6">
+  <h2 id="username" class="text-2xl font-bold text-teal-700">{{username}}</h2>
+  <h2 id="email" class="text-lg text-teal-700">{{email}}</h2>
+  <img
+    src="{{avatar}}"
+    alt="Profile Picture"
+    id="avatar"
+    class="w-40 h-40 rounded-full mt-4"
+  />
   {{#if auth}}
-    <a href="/profile/{{username}}/change-password" class="change-password">Change Password</a>
-    <form action="/profile-picture" method="post" enctype="multipart/form-data">
-      <input type="file" name="profilePicture" accept="image/*" />
-      <button type="submit">Upload Profile Picture</button>
-    </form>
+    <button
+      id="openEditProfile"
+      class="bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded mt-3"
+    >
+      Edit Profile
+    </button>
+    <dialog id="editProfileModal" class="bg-teal-900 text-white rounded-md p-4 mt-10">
+      <div class="text-right">
+        <button id="closeEditProfile" class="mr-3">x</button>
+      </div>
+      <div>
+        <form
+          action="/profile-picture"
+          method="post"
+          enctype="multipart/form-data"
+          class="mt-4 flex flex-col"
+        >
+          <input
+            type="file"
+            name="profilePicture"
+            accept="image/*"
+            class="border border-gray-300 p-2 mb-2"
+          />
+          <button
+            type="submit"
+            class="bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded"
+          >Upload Profile Picture</button>
+        </form>
+      </div>
+      <div class="text-teal-700">
+        {{#if message}}
+          <p>{{message}}</p>
+        {{else}}
+          <div>
+            <h2 class="text-lg font-bold mt-4 text-teal-500">Change Password</h2>
+            <form
+              action="/change-password"
+              method="post"
+              class="mt-2 flex flex-col"
+            >
+              <label>
+                <input
+                  type="password"
+                  name="currentPassword"
+                  placeholder="Current Password"
+                  required
+                  class="border border-gray-300 p-2 mb-2 w-full"
+                />
+              </label>
+              <label>
+                <input
+                  type="password"
+                  name="newPassword"
+                  placeholder="New Password"
+                  required
+                  class="border border-gray-300 p-2 mb-2 w-full"
+                />
+              </label>
+              <button
+                type="submit"
+                class="bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded"
+              >Change Password</button>
+            </form>
+          </div>
+        {{/if}}
+        {{#if errorMessage}}
+          <p class="mt-2">{{errorMessage}}</p>
+        {{/if}}
+      </div>
+    </dialog>
+
   {{/if}}
 </div>
+
+<script>
+  const openProfileButton = document.getElementById("openEditProfile"); const
+  closeProfileButton = document.getElementById("closeEditProfile"); const
+  editProfileModal = document.getElementById("editProfileModal");
+  openProfileButton.addEventListener('click', () => { editProfileModal.show() })
+  closeProfileButton.addEventListener("click", () => { editProfileModal.close();
+  });
+</script>
