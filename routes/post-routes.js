@@ -1,21 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const postController = require("../controllers/postController");
-const { getEditPost, editPost, delPost } = require('../middleware/post-guards')
-const { isLoggedIn } = require('../middleware/route-guard')
+const { editPost, delPost, createPost, likePost } = require("../middleware/post-guards");
 
-router
-  .route("/:threadId")
-  .post(postController.createPost);
-
-router
-  .route("/:postId/edit")
-  .get(getEditPost, postController.getPost)
-  .post(editPost, postController.updatePost)
-
-router.route('/:postId/delete')
-  .post(delPost, postController.deletePost);
-
-router.post('/:postId/like', isLoggedIn, postController.likePost)
+router.post("/:threadId", createPost, postController.createPost);
+router.post("/:postId/edit", editPost, postController.updatePost);
+router.post("/:postId/delete", delPost, postController.deletePost);
+router.post("/:postId/like", likePost, postController.likePost);
 
 module.exports = router;

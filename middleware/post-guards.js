@@ -1,20 +1,15 @@
-const User = require("../models/User.model");
-const Thread = require("../models/Thread.model");
+const e = require("express");
 const Post = require("../models/Post.model");
+const Thread = require("../models/Thread.model");
 
-const getEditPost = async (req, res, next) => {
+const createPost = async (req, res, next) => {
   try {
-    const { postId } = req.params;
-    const post = await Post.findById(postId)
-      .populate("author")
-      .populate("threadParent");
-    if (
-      post.author.username === req.session.currentUser.username ||
-      req.session.currentUser.role === "admin"
-    ) {
+    const { currentUser } = req.session;
+    const { threadId } = req.params;
+    if (currentUser) {
       next();
     } else {
-      return res.redirect(`/threads/${post.threadParent._id}`);
+      res.redirect(`/threads/${threadId}`);
     }
   } catch (error) {
     console.log(error);
@@ -59,8 +54,23 @@ const delPost = async (req, res, next) => {
   }
 };
 
+const likePost = async (req, res, next) => {
+  try {
+    const { postId } = req.params;
+    const thread = await Thread.findOne({ posts: postId });
+    if (!req.session.currentUser) {
+      return res.redirect(`/threads/${thread._id}`);
+    } else {
+      next();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
+  likePost,
+  createPost,
   delPost,
   editPost,
-  getEditPost,
 };
