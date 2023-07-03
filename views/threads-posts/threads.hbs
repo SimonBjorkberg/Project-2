@@ -9,7 +9,7 @@
         alt="PP"
       />
     </div>
-    <div class="flex-grow">
+    <div>
       <div class="flex items-center justify-between">
         <p>
           Posted by:
@@ -53,7 +53,7 @@
   </div>
 
   {{#each thread.posts}}
-    <div class="bg-teal-900 p-4 rounded-md mb-4 m-auto sm:w-3/5">
+    <div class="bg-teal-900 p-4 rounded-md mb-4 m-auto md:w-3/5">
       <div class="flex justify-between">
         <div class="flex items-center mb-2">
           <img
@@ -72,66 +72,67 @@
             </span>
           </p>
         </div>
-        <div class="flex items-center mb-2 text-white">
-          <p>
-            Posted: {{this.createdAt}}
+        <div class="flex mb-2 text-white flex-col md:flex-row">
+          <p class="m-auto mr-2">
+            Posted:
+            {{this.createdAt}}
           </p>
+          <div class="flex items-center justify-end mr-2 md:mr-0">
+            {{#if auth}}
+              <button
+                id="editPostButtonOpen-{{this._id}}"
+                class="text-teal-500 mr-2"
+              >Edit</button>
+              <dialog
+                id="editPostModal-{{this._id}}"
+                class="bg-white rounded-lg p-4 w-full sm:w-3/4"
+              >
+                <div>
+                  <div class="flex justify-between mb-4">
+                    <h2 class="text-xl font-bold ml-3">Edit Post</h2>
+                    <button
+                      id="editPostButtonClose-{{this._id}}"
+                      class="text-gray-600 text-xl w-max text-center font-bold mr-3"
+                    >x</button>
+                  </div>
+                  <div>
+                    <form action="/post/{{this._id}}/edit" method="post">
+                      <div class="mb-4">
+                        <textarea
+                          name="content"
+                          required
+                          class="w-full border border-gray-400 rounded py-1 px-2 h-32"
+                        >{{this.content}}</textarea>
+                      </div>
+                      <div class="flex justify-between">
+                        <button
+                          type="submit"
+                          class="bg-teal-700 text-white rounded px-4 py-2"
+                        >Edit</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </dialog>
+              <form action="/post/{{this._id}}/delete" method="post">
+                <button type="submit" class="text-teal-500 mr-2">Delete</button>
+              </form>
+            {{/if}}
+            <form action="/post/{{this._id}}/like" method="post">
+              <button
+                type="submit"
+                class="text-teal-500 px-2 py-0.5 border border-teal-500"
+              >
+                {{this.likes.length}}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
       <div class="flex justify-between">
         <div>
           <p class="text-white">{{this.content}}</p>
         </div>
-        <div class="flex items-center">
-        {{#if auth}}
-          <button
-            id="editPostButtonOpen-{{this._id}}"
-            class="text-teal-500 mr-2"
-          >Edit</button>
-          <dialog
-            id="editPostModal-{{this._id}}"
-            class="bg-white rounded-lg p-4"
-          >
-            <div>
-              <div class="flex justify-between mb-4">
-                <h2 class="text-xl font-bold ml-3">Edit Post</h2>
-                <button
-                  id="editPostButtonClose-{{this._id}}"
-                  class="text-gray-600 text-xl w-max text-center font-bold mr-3"
-                >x</button>
-              </div>
-              <div>
-                <form action="/post/{{this._id}}/edit" method="post">
-                  <div class="mb-4">
-                    <textarea
-                      name="content"
-                      required
-                      class="w-full border border-gray-400 rounded px-3 py-2"
-                    >{{this.content}}</textarea>
-                  </div>
-                  <div class="flex justify-between">
-                    <button
-                      type="submit"
-                      class="bg-teal-700 text-white rounded px-4 py-2"
-                    >Edit</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </dialog>
-          <form action="/post/{{this._id}}/delete" method="post">
-            <button type="submit" class="text-teal-500 mr-2">Delete</button>
-          </form>
-        {{/if}}
-        <form action="/post/{{this._id}}/like" method="post">
-          <button
-            type="submit"
-            class="mr-2 text-teal-500 px-2 py-0.5 border border-teal-500"
-          >
-            {{this.likes.length}}
-          </button>
-        </form>
-      </div>
       </div>
     </div>
   {{/each}}

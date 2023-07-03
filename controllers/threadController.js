@@ -88,7 +88,7 @@ const updateThread = async (req, res, next) => {
     const { title, content } = req.body;
     const { threadId } = req.params;
     const thread = await Thread.findById(threadId).populate("author");
-    if (thread.author.username === req.session.currentUser.username) {
+    if (thread.author.username === req.session.currentUser.username || req.session.currentUser.role === 'admin') {
       if (title === "") {
         await Thread.findByIdAndUpdate(threadId, { content: content });
         return res.redirect(`/threads/${threadId}`);
