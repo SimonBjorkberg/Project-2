@@ -6,7 +6,10 @@
     <div class="conversation space-y-4">
       {{#each conversation}}
         <div class="message bg-white p-4 rounded shadow">
-          <p class="font-semibold">{{ sender.username }}</p>
+          <div class="flex items-center">
+            <img src="{{ sender.profilePicture }}" alt="{{ sender.username }}'s Profile Picture" class="w-10 h-10 rounded-full mr-2">
+            <p class="font-semibold">{{ sender.username }}</p>
+          </div>
           <p>{{ content }}</p>
           <p class="text-sm text-gray-500">{{ createdAt }}</p>
         </div>

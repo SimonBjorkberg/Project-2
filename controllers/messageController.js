@@ -32,8 +32,8 @@ const chatController = async (req, res) => {
         { sender: currentUser._id, recipient: recipientUser._id },
         { sender: recipientUser._id, recipient: currentUser._id }
       ] // MongoDB query operators "or" to get the messages without problems
-    }).sort('createdAt');
-    // Will add colors later
+    }).populate('sender', 'username profilePicture').sort('createdAt');
+  
     res.render('dm/chat', { currentUser, recipientUser, conversation, userInSession: req.session.currentUser });
   } catch (error) {
     console.error(error);
