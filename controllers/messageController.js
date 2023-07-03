@@ -70,30 +70,8 @@ const sendMessage = async (req, res) => {
   }
 };
 
-const displayChat = async (req, res) => {
-  try {
-    const { recipient } = req.params;
-    const currentUser = req.session.currentUser._id;
-
-    // Fetch the conversation messages between the current user and the recipient
-    const conversation = await Message.find({
-      $or: [
-        { sender: currentUser, recipient },
-        { sender: recipient, recipient: currentUser }
-      ]
-    }).sort('createdAt');
-
-    // Render the chat template with the conversation messages
-    res.render('chat', { conversation, recipientUser: { username: recipient } });
-  } catch (error) {
-    console.error(error);
-    return res.redirect('/error');
-  }
-};
-
 module.exports = {
   displayUsers,
   chatController,
   sendMessage,
-  displayChat
 };
