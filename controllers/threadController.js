@@ -41,7 +41,8 @@ const getThread = async (req, res) => {
           path: "author",
         },
       })
-      .populate("likes");
+      .populate("likes")
+      .populate("topicParent")
     if (currentUser) {
       const auth =
         thread.author.username === currentUser.username ||
@@ -70,7 +71,6 @@ const getThread = async (req, res) => {
 // ##########################################
 // FUNCTION THAT DELETES A THREAD BY IT'S ID
 // ##########################################
-
 const deleteThread = async (req, res, next) => {
   try {
     await Thread.findByIdAndDelete(req.params.threadId);

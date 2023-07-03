@@ -8,13 +8,11 @@ const Topic = require("../models/Topic.model");
 const index = async (req, res, next) => {
   try {
     const user = req.session.currentUser;
-    const thread = await Thread.find({}).populate("author");
     const topic = await Topic.find({});
     if (user && user.role === "admin") {
       admin = true;
       return res.render("index", {
         userInSession: user,
-        thread,
         topic,
         admin,
       });
@@ -22,7 +20,6 @@ const index = async (req, res, next) => {
       admin = false;
       res.render("index", {
         userInSession: req.session.currentUser,
-        thread,
         topic,
         admin,
       });
@@ -99,8 +96,7 @@ const getTopic = async (req, res, next) => {
           path: "author",
         },
       });
-    const thread = topic.threads;
-    console.log(thread);
+    const thread = topic.threads
     res.render("threads-posts/topics", {
       topic: topic,
       thread: thread,
