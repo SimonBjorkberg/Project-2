@@ -2,49 +2,45 @@
   <div
     class="border border-teal-500 rounded-lg p-4 flex flex-col md:w-2/3 my-5 mx-auto"
   >
-    <div>
-      <div class="flex-shrink-0">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
         <img
-          class="h-10 w-10 rounded-full"
+          class="h-8 w-8 rounded-full"
           src="{{thread.author.profilePicture}}"
           alt="PP"
         />
-      </div>
-      <div class="flex items-center justify-between">
-        <p>
-          Posted by:
+        <p class="ml-2">Posted by:
           <span>
             <a
               href="/profile/{{thread.author.username}}"
               class="text-teal-900 hover:underline font-bold"
-            >{{thread.author.username}}</a>
+            >
+              {{thread.author.username}}
+            </a>
           </span>
         </p>
-        <p>Posted: {{thread.createdAt}}</p>
       </div>
-      <div class="flex items-center justify-between">
-        <div>
-          <h2 class="text-lg font-bold">{{thread.title}}</h2>
-        </div>
-        <div class="flex items-center space-x-2">
-          {{#if thread.auth}}
-            <button
-              id="editThreadButtonOpen"
-              class="text-teal-500"
-            >Edit</button>
-            <form action="/threads/{{thread._id}}/delete" method="post">
-              <button type="submit" class="text-teal-500">Delete</button>
-            </form>
-          {{/if}}
-          <form action="/threads/{{thread._id}}/like" method="post">
-            <button
-              type="submit"
-              class="text-teal-500 px-2 py-0.5 border border-teal-500"
-            >
-              {{thread.likes.length}}
-            </button>
+      <p>Posted: {{thread.createdAt}}</p>
+    </div>
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-lg font-bold">{{thread.title}}</h2>
+      </div>
+      <div class="flex items-center space-x-2">
+        {{#if thread.auth}}
+          <button id="editThreadButtonOpen" class="text-teal-500">Edit</button>
+          <form action="/threads/{{thread._id}}/delete" method="post">
+            <button type="submit" class="text-teal-500">Delete</button>
           </form>
-        </div>
+        {{/if}}
+        <form action="/threads/{{thread._id}}/like" method="post">
+          <button
+            type="submit"
+            class="text-teal-500 px-2 py-0.5 border border-teal-500"
+          >
+            {{thread.likes.length}}
+          </button>
+        </form>
       </div>
     </div>
     <div class="ml-0">
