@@ -4,6 +4,7 @@ const Message = require('../models/Message.model');
 const displayUsers = async (req, res) => {
   try {
     const userInSession = req.session.currentUser;
+    // MongoDB query operator "ne" to exclude something from the search
     const users = await User.find({ _id: { $ne: userInSession._id } }).select('username profilePicture');
     res.render('dm/messages', { users, userInSession: req.session.currentUser });
   } catch (error) {
@@ -30,7 +31,7 @@ const chatController = async (req, res) => {
       $or: [
         { sender: currentUser._id, recipient: recipientUser._id },
         { sender: recipientUser._id, recipient: currentUser._id }
-      ]
+      ] // MongoDB query operators "or" to get the messages without problems
     }).sort('createdAt');
     // Will add colors later
     res.render('dm/chat', { currentUser, recipientUser, conversation, userInSession: req.session.currentUser });
