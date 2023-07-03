@@ -1,15 +1,15 @@
 <section>
   <div
-    class="border border-teal-500 rounded-lg p-4 flex items-start space-x-4 sm:w-2/3 mx-auto my-5"
+    class="border border-teal-500 rounded-lg p-4 flex flex-col md:w-2/3 my-5 mx-auto"
   >
-    <div class="flex-shrink-0">
-      <img
-        class="h-10 w-10 rounded-full"
-        src="{{thread.author.profilePicture}}"
-        alt="PP"
-      />
-    </div>
     <div>
+      <div class="flex-shrink-0">
+        <img
+          class="h-10 w-10 rounded-full"
+          src="{{thread.author.profilePicture}}"
+          alt="PP"
+        />
+      </div>
       <div class="flex items-center justify-between">
         <p>
           Posted by:
@@ -46,9 +46,9 @@
           </form>
         </div>
       </div>
-      <div class="mt-2">
-        {{thread.content}}
-      </div>
+    </div>
+    <div class="ml-0">
+      {{thread.content}}
     </div>
   </div>
 
@@ -138,7 +138,7 @@
   {{/each}}
 </section>
 
-<div class="bg-teal-900 p-4 rounded-md mb-4 sm:w-1/2 w-4/5 mx-auto my-32">
+<div class="bg-teal-900 p-4 rounded-md mb-4 sm:w-1/2 w-4/5 mx-auto my-10">
   <form action="/post/{{thread._id}}" method="post">
     <div class="grid grid-cols-1 gap-4">
       <div>
@@ -162,7 +162,7 @@
   </form>
 </div>
 
-<dialog id="editThreadModal" class="bg-white rounded-lg p-4">
+<dialog id="editThreadModal" class="bg-white rounded-lg p-4 w-full sm:w-3/4">
   <div>
     <div class="flex justify-between mb-4">
       <p class="font-bold">Edit Thread</p>
@@ -177,13 +177,13 @@
           type="text"
           name="title"
           value="{{thread.title}}"
-          class="w-full border border-gray-400 rounded px-3 py-2"
+          class="w-full border border-gray-400 rounded py-1 px-2"
         />
       </div>
       <div class="mb-4">
         <textarea
           name="content"
-          class="w-full border border-gray-400 rounded px-3 py-2"
+          class="w-full border border-gray-400 rounded py-1 px-2 h-32"
         >{{thread.content}}</textarea>
       </div>
       <div class="flex justify-end">
