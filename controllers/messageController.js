@@ -1,70 +1,99 @@
-const mongoose = require('mongoose');
-const Message = require('../models/Message.model');
 const User = require('../models/User.model');
+const Message = require('../models/Message.model');
 
-const getInbox = async (req, res) => {
-    try {
-        res.render('dms/dmpage', { userInSession: req.session.currentUser })
+const displayUsers = async (req, res) => {
+  try {
+    const userInSession = req.session.currentUser;
+    const users = await User.find({ _id: { $ne: userInSession._id } }).select('username profilePicture');
+    res.render('dm/messages', { users, userInSession: req.session.currentUser });
+  } catch (error) {
+    console.error(error);
+    return res.redirect('/error');
+  }
+};
+
+const chatController = async (req, res) => {
+  try {
+    const currentUser = req.session.currentUser;
+    const recipientUsername = req.params.username;
+
+    // Find the recipient user
+    const recipientUser = await User.findOne({ username: recipientUsername });
+
+    if (!recipientUser) {
+      console.log('Recipient user not found');
+      return res.redirect('/error');
     }
-    catch (error) {
-        console.log(error)
-    }
-}
+
+    // Find the conversation between the current user and the recipient user
+    const conversation = await Message.find({
+      $or: [
+        { sender: currentUser._id, recipient: recipientUser._id },
+        { sender: recipientUser._id, recipient: currentUser._id }
+      ]
+    }).sort('createdAt');
+
+    res.render('dm/chat', { currentUser, recipientUser, conversation, userInSession: req.session.currentUser });
+  } catch (error) {
+    console.error(error);
+    return res.redirect('/error');
+  }
+};
 
 const sendMessage = async (req, res) => {
-    const { content, recipient } = req.body;
-    
-    try {
-      const recipientUser = await User.findOne({ username: recipient });
-      if (!recipientUser) {
-        console.log('Recipient doesnt exist');
-        res.redirect('/error');
-        return;
-      }
-  
-      // create a new message
-      const message = new Message({
-        sender: req.session.currentUser._id,
-        recipient: recipientUser._id,
-        content: content
-      });
-      // save it in the database
-      await message.save();
-  
-      return res.json({ message: 'Message was sent successfully' });
-    } catch (error) {
-      console.log(error);
+  const { content, recipient } = req.body;
+
+  try {
+    // Find the recipient user by username
+    const recipientUser = await User.findOne({ username: recipient });
+
+    if (!recipientUser) {
+      console.log('Recipient user not found');
+      return res.redirect('/error');
     }
-  };
 
-const recievedMessage = async (req, res) => {
-    try {
-      const userId = req.session.currentUser._id
-      console.log(userId)
+    // Create a new message
+    const message = new Message({
+      sender: req.session.currentUser._id,
+      recipient: recipientUser._id, // Use recipientUser._id instead of recipient
+      content
+    });
 
-      const receivedMessages = await Message.find({ recipient: userId }).populate('sender', 'username')
-      // console.log(receivedMessages)
+    // Save the message in the database
+    await message.save();
 
-      const messages = receivedMessages.map(message => ({
-        sender: message.sender?.username || 'Unknown User',
-        content: message.content,
-      }));
-      console.log(messages)
+    // Redirect back to the chat page
+    res.redirect(`/chat/${recipient}`);
+  } catch (error) {
+    console.error(error);
+    return res.redirect('/error');
+  }
+};
 
-      res.render('dms/dmpage', { messages, userInSession: req.session.currentUser });
+const displayChat = async (req, res) => {
+  try {
+    const { recipient } = req.params;
+    const currentUser = req.session.currentUser._id;
 
-      if (receivedMessages.length === 0) {
-        console.log('No messages were recieved')
-      }
+    // Fetch the conversation messages between the current user and the recipient
+    const conversation = await Message.find({
+      $or: [
+        { sender: currentUser, recipient },
+        { sender: recipient, recipient: currentUser }
+      ]
+    }).sort('createdAt');
 
-    }
-    catch (error) {
-        console.log(error)
-    }
-}
+    // Render the chat template with the conversation messages
+    res.render('chat', { conversation, recipientUser: { username: recipient } });
+  } catch (error) {
+    console.error(error);
+    return res.redirect('/error');
+  }
+};
 
 module.exports = {
-    getInbox,
-    sendMessage,
-    recievedMessage
-}
+  displayUsers,
+  chatController,
+  sendMessage,
+  displayChat
+};

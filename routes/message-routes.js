@@ -3,8 +3,10 @@ const router = express.Router();
 const messageController = require("../controllers/messageController");
 const { inboxGuard } = require("../middleware/inbox-guard");
 
-router.get("/inbox", inboxGuard, messageController.getInbox);
-router.post("/message/send", inboxGuard, messageController.sendMessage);
-router.get("/message/recieve", inboxGuard, messageController.recievedMessage);
+
+router.get("/messages", inboxGuard, messageController.displayUsers);
+router.get("/chat/:username", inboxGuard, messageController.chatController);
+router.post("/send-message", inboxGuard, messageController.sendMessage)
+
 
 module.exports = router;
