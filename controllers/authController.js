@@ -52,22 +52,22 @@ const updatePostPassword = async (req, res, next) => {
 // ############################
 const updateProfilePicture = async (req, res) => {
   try {
-    const userId = req.session.currentUser;
+    const user = req.session.currentUser;
     const file = req.file; // Get the uploaded file from the request
     if (!file) {
-      return res.redirect("/");
+      return res.redirect(`/profile/${user.username}`);
     }
     // Upload the file to Cloudinary
     const result = await cloudinary.uploader.upload(file.path);
 
     // Update the user's profile picture URL in the database
     await User.findByIdAndUpdate(
-      userId,
+      user,
       { profilePicture: result.secure_url },
       { new: true }
     );
 
-    return res.redirect("/");
+    return res.redirect(`/profile/${user.username}`);
   } catch (error) {
     console.log(error);
   }

@@ -12,11 +12,11 @@
     <div class="flex-grow">
       <div class="flex items-center justify-between">
         <p>
-          Posted by
+          Posted by:
           <span>
             <a
               href="/profile/{{thread.author.username}}"
-              class="text-teal-500"
+              class="text-teal-900 hover:underline font-bold"
             >{{thread.author.username}}</a>
           </span>
         </p>
@@ -54,27 +54,35 @@
 
   {{#each thread.posts}}
     <div class="bg-teal-900 p-4 rounded-md mb-4 m-auto sm:w-3/5">
-      <div class="flex items-center mb-2">
-        <img
-          src="{{this.author.profilePicture}}"
-          alt="PP"
-          class="w-8 h-8 rounded-full mr-2"
-        />
-        <p class="text-white">Posted by:
-          <span>
-            <a
-              href="/profile/{{this.author.username}}"
-              class="text-teal-500 hover:underline"
-            >
-              {{this.author.username}}
-            </a>
-          </span>
-        </p>
+      <div class="flex justify-between">
+        <div class="flex items-center mb-2">
+          <img
+            src="{{this.author.profilePicture}}"
+            alt="PP"
+            class="w-8 h-8 rounded-full mr-2"
+          />
+          <p class="text-white">Posted by:
+            <span>
+              <a
+                href="/profile/{{this.author.username}}"
+                class="text-teal-500 hover:underline font-bold"
+              >
+                {{this.author.username}}
+              </a>
+            </span>
+          </p>
+        </div>
+        <div class="flex items-center mb-2 text-white">
+          <p>
+            Posted: {{this.createdAt}}
+          </p>
+        </div>
       </div>
-      <div>
-        <p class="text-white">{{this.content}}</p>
-      </div>
-      <div class="flex items-center mt-2 justify-end">
+      <div class="flex justify-between">
+        <div>
+          <p class="text-white">{{this.content}}</p>
+        </div>
+        <div class="flex items-center">
         {{#if auth}}
           <button
             id="editPostButtonOpen-{{this._id}}"
@@ -123,6 +131,7 @@
             {{this.likes.length}}
           </button>
         </form>
+      </div>
       </div>
     </div>
   {{/each}}
