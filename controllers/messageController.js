@@ -32,7 +32,7 @@ const chatController = async (req, res) => {
         { sender: recipientUser._id, recipient: currentUser._id }
       ]
     }).sort('createdAt');
-
+    // Will add colors later
     res.render('dm/chat', { currentUser, recipientUser, conversation, userInSession: req.session.currentUser });
   } catch (error) {
     console.error(error);
@@ -55,7 +55,7 @@ const sendMessage = async (req, res) => {
     // Create a new message
     const message = new Message({
       sender: req.session.currentUser._id,
-      recipient: recipientUser._id, // Use recipientUser._id instead of recipient
+      recipient: recipientUser._id, // Used recipientUser._id instead of recipient
       content
     });
 
