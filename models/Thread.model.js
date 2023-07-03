@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const { model, Schema } = require("mongoose");
 
-const threadSchema = new mongoose.Schema({
+const threadSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -10,39 +10,42 @@ const threadSchema = new mongoose.Schema({
     required: true,
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
-  comments: [
+  posts: [
     {
-      content: {
-        type: String,
-        required: true,
-      },
-      author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
-      createdAt: {
-        type: Date,
-        default: Date.now,
-      },
+      type: Schema.Types.ObjectId,
+      ref: "Post",
     },
   ],
-  likes: {
-    type: Number,
-    default: 0,
+  likes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  topicParent: {
+    type: Schema.Types.ObjectId,
+    ref: "Topic",
   },
   createdAt: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: () => {
+      const now = new Date();
+      const options = { year: "numeric", month: "short", day: "2-digit" };
+      return now.toLocaleDateString(undefined, options);
+    },
   },
   updatedAt: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: () => {
+      const now = new Date();
+      const options = { year: "numeric", month: "short", day: "2-digit" };
+      return now.toLocaleDateString(undefined, options);
+    },
   },
 });
 
-module.exports = mongoose.model("Thread", threadSchema);
+module.exports = model("Thread", threadSchema);

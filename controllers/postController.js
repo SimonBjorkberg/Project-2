@@ -1,87 +1,95 @@
 const Post = require("../models/Post.model");
+const Thread = require("../models/Thread.model");
 
-// ###################################
-// function that creates a new post
-// ###################################
+// #################################
+// FUNCTION THAT CREATES A NEW POST
+// #################################
 
 const createPost = async (req, res) => {
   try {
-    const { content, thread } = req.body;
-    console.log("req.body:", req.body);
-    const newPost = new Post({ content, author: req.session.currentUser, thread });
-    const savedPost = await newPost.save();
-    res.redirect("/");
-  } catch (error) {
-    console.log(error);
-    res.redirect("/error");
-  }
-};
-
-// ###################################
-// function that gets a post by its ID
-// ###################################
-
-const getPost = async (req, res) => {
-  try {
-    const { postId } = req.params;
-    const post = await Post.findById(postId).populate("author");
-    if (!post) {
-      console.log("Post not found")
-      return res.redirect("/not-found");
-    }
-    res.render("add post route when you create it", {
-      userInSession: req.session.currentUser,
-      post,
-      populatePost: post,
+    const { content } = req.body;
+    const post = await Post.create({
+      content: content,
+      author: req.session.currentUser,
+      threadParent: req.params.threadId,
     });
+    const thread = await Thread.findByIdAndUpdate(
+      req.params.threadId,
+      { $push: { posts: post } },
+      { new: true }
+    );
+    res.redirect(`/threads/${thread._id}`);
   } catch (error) {
     console.log(error);
     res.redirect("/error");
   }
 };
 
-// ###################################
-// function that updates a post
-// ###################################
+// #############################
+// FUNCTION THAT UPDATES A POST
+// #############################
 
 const updatePost = async (req, res) => {
   try {
     const { postId } = req.params;
+    const post = await Post.findById(postId).populate("threadParent");
     const { content } = req.body;
-    const updatedPost = await Post.findByIdAndUpdate(postId, { content }, { new: true });
-    if (!updatedPost) {
-      console.log("Post not found")
-      return res.redirect("/not-found");
+    if (content === "") {
+      return res.redirect(`/threads/${post.threadParent._id}`);
+    } else {
+      await Post.findByIdAndUpdate(
+        postId,
+        { content: content },
+        { new: true }
+      ).populate("threadParent");
+      return res.redirect(`/threads/${post.threadParent._id}`);
     }
-    res.redirect("/posts");
   } catch (error) {
     console.log(error);
     res.redirect("/error");
   }
 };
 
-// ###################################
-// function that deletes a post
-// ###################################
+// #############################
+// FUNCTION THAT DELETES A POST
+// #############################
 
 const deletePost = async (req, res) => {
   try {
     const { postId } = req.params;
-    const deletedPost = await Post.findByIdAndDelete(postId);
-    if (!deletedPost) {
-      console.log("Post not found")
-      return res.redirect("/not-found");
-    }
-    console.log("Post deleted successfully");
+    const thread = await Thread.findOne({ posts: postId });
+    await Post.findByIdAndDelete(postId);
+    res.redirect(`/threads/${thread._id}`);
   } catch (error) {
     console.log(error);
     res.redirect("/error");
   }
 };
 
+const likePost = async (req, res, next) => {
+  try {
+    const { postId } = req.params;
+    const thread = await Thread.findOne({ posts: postId });
+    const post = await Post.findById(postId);
+    userId = req.session.currentUser._id;
+
+    const hasLiked = post.likes.indexOf(userId);
+    if (hasLiked !== -1) {
+      post.likes.splice(hasLiked, 1);
+      await post.save();
+    } else {
+      post.likes.push(userId);
+      await post.save();
+    }
+    res.redirect(`/threads/${thread._id}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
-  getPost,
+  likePost,
   createPost,
   updatePost,
-  deletePost
-}
+  deletePost,
+};

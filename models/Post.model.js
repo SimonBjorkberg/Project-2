@@ -1,34 +1,41 @@
-const mongoose = require("mongoose");
+const { model, Schema } = require("mongoose");
 
-const postSchema = new mongoose.Schema({
+const postSchema = new Schema({
   content: {
     type: String,
     required: true,
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
-    required: true,
-  },
-  comment: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Thread",
     required: true,
   },
   likes: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
     },
   ],
   createdAt: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: () => {
+      const now = new Date();
+      const options = { year: "numeric", month: "short", day: "2-digit" };
+      return now.toLocaleDateString(undefined, options);
+    },
   },
   updatedAt: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: () => {
+      const now = new Date();
+      const options = { year: "numeric", month: "short", day: "2-digit" };
+      return now.toLocaleDateString(undefined, options);
+    },
+  },
+  threadParent: {
+    type: Schema.Types.ObjectId,
+    ref: "Thread",
   },
 });
 
-module.exports = mongoose.model("Post", postSchema);
+module.exports = model("Post", postSchema);

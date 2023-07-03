@@ -1,39 +1,221 @@
-<nav>
-  <form action="/search" method="post" id="search-form">
-    <input type="text" name="search" id="search-input" required />
-    <button type="submit" id="search-button">Search</button>
-  </form>
-  {{#if userInSession}}
-    <a href="/">Home Page</a>
-    <a href="/profile/{{userInSession.username}}">Profile</a>
-    <form id="logout-form" action="/logout" method="POST">
-      <button class="logout-button">Logout</button>
-    </form>
-  {{else}}
-    <a href="/">Home Page</a>
-    <a href="/signup">Sign up</a>
-    <a href="/login" class="login-button">Log in</a>
-  {{/if}}
-</nav>
-
 <section>
-  <div class="thread-container">
-    <div class="thread">
-      <h2 class="thread-title">{{thread.title}}</h2>
-      <p class="thread-content">{{thread.content}}</p>
-      <div class="thread-info-div">
-        <p class="thread-info">Posted by
-          <span
-            style="font-weight: bolder;"
-          >{{populateThread.author.username}}</span></p>
-        <p class="thread-info">Posted: {{thread.createdAt}}</p>
+  <div
+    class="border border-teal-500 rounded-lg p-4 flex items-start space-x-4 sm:w-2/3 mx-auto my-5"
+  >
+    <div class="flex-shrink-0">
+      <img
+        class="h-10 w-10 rounded-full"
+        src="{{thread.author.profilePicture}}"
+        alt="PP"
+      />
+    </div>
+    <div class="flex-grow">
+      <div class="flex items-center justify-between">
+        <p>
+          Posted by:
+          <span>
+            <a
+              href="/profile/{{thread.author.username}}"
+              class="text-teal-900 hover:underline font-bold"
+            >{{thread.author.username}}</a>
+          </span>
+        </p>
+        <p>Posted: {{thread.createdAt}}</p>
+      </div>
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold">{{thread.title}}</h2>
+        </div>
+        <div class="flex items-center space-x-2">
+          {{#if thread.auth}}
+            <button
+              id="editThreadButtonOpen"
+              class="text-teal-500"
+            >Edit</button>
+            <form action="/threads/{{thread._id}}/delete" method="post">
+              <button type="submit" class="text-teal-500">Delete</button>
+            </form>
+          {{/if}}
+          <form action="/threads/{{thread._id}}/like" method="post">
+            <button
+              type="submit"
+              class="text-teal-500 px-2 py-0.5 border border-teal-500"
+            >
+              {{thread.likes.length}}
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="mt-2">
+        {{thread.content}}
       </div>
     </div>
   </div>
+
+  {{#each thread.posts}}
+    <div class="bg-teal-900 p-4 rounded-md mb-4 m-auto sm:w-3/5">
+      <div class="flex justify-between">
+        <div class="flex items-center mb-2">
+          <img
+            src="{{this.author.profilePicture}}"
+            alt="PP"
+            class="w-8 h-8 rounded-full mr-2"
+          />
+          <p class="text-white">Posted by:
+            <span>
+              <a
+                href="/profile/{{this.author.username}}"
+                class="text-teal-500 hover:underline font-bold"
+              >
+                {{this.author.username}}
+              </a>
+            </span>
+          </p>
+        </div>
+        <div class="flex items-center mb-2 text-white">
+          <p>
+            Posted: {{this.createdAt}}
+          </p>
+        </div>
+      </div>
+      <div class="flex justify-between">
+        <div>
+          <p class="text-white">{{this.content}}</p>
+        </div>
+        <div class="flex items-center">
+        {{#if auth}}
+          <button
+            id="editPostButtonOpen-{{this._id}}"
+            class="text-teal-500 mr-2"
+          >Edit</button>
+          <dialog
+            id="editPostModal-{{this._id}}"
+            class="bg-white rounded-lg p-4"
+          >
+            <div>
+              <div class="flex justify-between mb-4">
+                <h2 class="text-xl font-bold ml-3">Edit Post</h2>
+                <button
+                  id="editPostButtonClose-{{this._id}}"
+                  class="text-gray-600 text-xl w-max text-center font-bold mr-3"
+                >x</button>
+              </div>
+              <div>
+                <form action="/post/{{this._id}}/edit" method="post">
+                  <div class="mb-4">
+                    <textarea
+                      name="content"
+                      required
+                      class="w-full border border-gray-400 rounded px-3 py-2"
+                    >{{this.content}}</textarea>
+                  </div>
+                  <div class="flex justify-between">
+                    <button
+                      type="submit"
+                      class="bg-teal-700 text-white rounded px-4 py-2"
+                    >Edit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </dialog>
+          <form action="/post/{{this._id}}/delete" method="post">
+            <button type="submit" class="text-teal-500 mr-2">Delete</button>
+          </form>
+        {{/if}}
+        <form action="/post/{{this._id}}/like" method="post">
+          <button
+            type="submit"
+            class="mr-2 text-teal-500 px-2 py-0.5 border border-teal-500"
+          >
+            {{this.likes.length}}
+          </button>
+        </form>
+      </div>
+      </div>
+    </div>
+  {{/each}}
+</section>
+
+<div class="bg-teal-900 p-4 rounded-md mb-4 sm:w-1/2 w-4/5 mx-auto my-32">
+  <form action="/post/{{thread._id}}" method="post">
+    <div class="grid grid-cols-1 gap-4">
+      <div>
+        <textarea
+          id="content"
+          name="content"
+          placeholder="Create a Post!"
+          required
+          class="w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:border-teal-500 resize-y"
+        ></textarea>
+      </div>
+    </div>
+    <div class="mt-4">
+      <button
+        type="submit"
+        class="bg-teal-700 text-white py-2 px-4 rounded-md hover:bg-teal-600 hover:border-teal-600 transition-colors"
+      >
+        Post
+      </button>
+    </div>
+  </form>
+</div>
+
+<dialog id="editThreadModal" class="bg-white rounded-lg p-4">
   <div>
-    <form action="/post" method="post">
-      <input type="text" name="post" id="" />
-      <button type="submit">Post</button>
+    <div class="flex justify-between mb-4">
+      <p class="font-bold">Edit Thread</p>
+      <button
+        id="editThreadButtonClose"
+        class="text-gray-600 text-xl font-bold"
+      >x</button>
+    </div>
+    <form action="/threads/{{thread._id}}/update" method="post">
+      <div class="mb-4">
+        <input
+          type="text"
+          name="title"
+          value="{{thread.title}}"
+          class="w-full border border-gray-400 rounded px-3 py-2"
+        />
+      </div>
+      <div class="mb-4">
+        <textarea
+          name="content"
+          class="w-full border border-gray-400 rounded px-3 py-2"
+        >{{thread.content}}</textarea>
+      </div>
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="bg-teal-700 text-white rounded px-4 py-2"
+        >Edit</button>
+      </div>
     </form>
   </div>
-</section>
+</dialog>
+
+<script>
+  const editThreadButtonOpen = document.getElementById('editThreadButtonOpen')
+  const editThreadButtonClose = document.getElementById('editThreadButtonClose')
+  editThreadButtonOpen.addEventListener('click', () => {
+  editThreadModal.showModal(); })
+  editThreadButtonClose.addEventListener('click', () => {
+  editThreadModal.close(); })
+</script>
+
+<script>
+  {{#each thread.posts}}
+    const editPostButtonOpen_{{this._id}}
+    = document.getElementById('editPostButtonOpen-{{this._id}}'); const
+    editPostButtonClose_{{this._id}}
+    = document.getElementById('editPostButtonClose-{{this._id}}');
+    editPostButtonOpen_{{this._id}}.addEventListener('click', () => { const
+    editPostModal_{{this._id}}
+    = document.getElementById('editPostModal-{{this._id}}'); editPostModal_{{this._id}}.showModal();
+    }); editPostButtonClose_{{this._id}}.addEventListener('click', () => { const
+    editPostModal_{{this._id}}
+    = document.getElementById('editPostModal-{{this._id}}'); editPostModal_{{this._id}}.close();
+    });
+  {{/each}}
+</script>

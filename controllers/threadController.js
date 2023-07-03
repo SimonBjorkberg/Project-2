@@ -1,85 +1,138 @@
 const Thread = require("../models/Thread.model");
+const Topic = require("../models/Topic.model");
 
 // ###################################
-// function that creates a new thread
+// FUNCTION THAT CREATES A NEW THREAD
 // ###################################
 
 const createThread = async (req, res) => {
   try {
     const { title, content } = req.body;
-    const newThread = new Thread({ title, content, author: req.session.currentUser });
-    await newThread.save();
-    res.redirect("/");
+    const thread = await Thread.create({
+      title: title,
+      content: content,
+      author: req.session.currentUser,
+      topicParent: req.params.topicId,
+    });
+    const topic = await Topic.findByIdAndUpdate(
+      req.params.topicId,
+      { $push: { threads: thread } },
+      { new: true }
+    );
+    res.redirect(`/topic/${topic.title}`);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.redirect("/error");
   }
 };
 
-// ######################################
-// function that gets a thread by its ID
-// ######################################
-
+// #######################################
+// FUNCTION THAT GETS A THREAD BY IT'S ID
+// #######################################
 const getThread = async (req, res) => {
   try {
+    const currentUser = req.session.currentUser;
     const { threadId } = req.params;
-    const thread = await Thread.findById(threadId).populate("author");
-    if (!thread) {
-      console.log("Thread not found")
-      return res.redirect("/not-found");
+    const thread = await Thread.findById(threadId)
+      .populate("author")
+      .populate({
+        path: "posts",
+        populate: {
+          path: "author",
+        },
+      })
+      .populate("likes");
+    if (currentUser) {
+      const auth =
+        thread.author.username === currentUser.username ||
+        (currentUser.role === "admin" && "moderator");
+      thread.auth = auth;
+
+      posts = thread.posts.map((post) => {
+        const auth =
+          post.author.username === currentUser.username ||
+          (currentUser.role === "admin" && "moderator");
+        post.auth = auth;
+        return post;
+      });
     }
-    res.render("threads-posts/threads", {
+
+    return res.render("threads-posts/threads", {
       userInSession: req.session.currentUser,
-      thread,
-      populateThread: thread,
+      thread: thread,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.redirect("/error");
   }
 };
-// ###################################
-// function that updates thread by ID
-// ###################################
 
-const updateThread = async (req, res) => {
+// ##########################################
+// FUNCTION THAT DELETES A THREAD BY IT'S ID
+// ##########################################
+
+const deleteThread = async (req, res, next) => {
   try {
-    const { threadId } = req.params;
+    await Thread.findByIdAndDelete(req.params.threadId);
+    res.redirect("/");
+  } catch (err) {
+    console.log("err", err);
+  }
+};
+
+//################################
+// FUNCTION THAT UPDATES A THREAD
+//################################
+const updateThread = async (req, res, next) => {
+  try {
     const { title, content } = req.body;
-    const updatedThread = await Thread.findByIdAndUpdate(threadId, { title, content }, { new: true });
-    if (!updatedThread) {
-      console.log("Thread not found")
-      return res.redirect("/not-found");
+    const { threadId } = req.params;
+    const thread = await Thread.findById(threadId).populate("author");
+    if (thread.author.username === req.session.currentUser.username) {
+      if (title === "") {
+        await Thread.findByIdAndUpdate(threadId, { content: content });
+        return res.redirect(`/threads/${threadId}`);
+      } else if (content === "") {
+        await Thread.findByIdAndUpdate(threadId, { title: title });
+        return res.redirect(`/threads/${threadId}`);
+      } else {
+        await Thread.findByIdAndUpdate(
+          threadId,
+          { title: title, content: content },
+          { new: true }
+        );
+        return res.redirect(`/threads/${threadId}`);
+      }
     }
-    res.redirect("/threads");
   } catch (error) {
-    console.log(error)
-    res.redirect("/error");
+    console.log(error);
   }
 };
 
-// ###################################
-// function that deletes thread by ID
-// ###################################
-
-const deleteThread = async (req, res) => {
+const likeThread = async (req, res, next) => {
   try {
     const { threadId } = req.params;
-    const deletedThread = await Thread.findByIdAndDelete(threadId);
-    if (!deletedThread) {
-      console.log("Thread not found")
-      return res.redirect("/not-found");
+    userId = req.session.currentUser._id;
+    const thread = await Thread.findById(threadId);
+
+    const hasLiked = thread.likes.indexOf(userId);
+    if (hasLiked !== -1) {
+      thread.likes.splice(hasLiked, 1);
+      await thread.save();
+    } else {
+      thread.likes.push(userId);
+      await thread.save();
     }
-    console.log("Thread deleted successfully")
+    res.redirect(`/threads/${threadId}`);
   } catch (error) {
-    console.log(error)
-    res.redirect("/error");
+    console.log(error);
   }
 };
 
 module.exports = {
+  likeThread,
   createThread,
   getThread,
+  deleteThread,
   updateThread,
-  deleteThread
-}
+};
