@@ -41,7 +41,8 @@ const getThread = async (req, res) => {
           path: "author",
         },
       })
-      .populate("likes");
+      .populate("likes")
+      .populate("topicParent")
     if (currentUser) {
       const auth =
         thread.author.username === currentUser.username ||
@@ -70,7 +71,6 @@ const getThread = async (req, res) => {
 // ##########################################
 // FUNCTION THAT DELETES A THREAD BY IT'S ID
 // ##########################################
-
 const deleteThread = async (req, res, next) => {
   try {
     await Thread.findByIdAndDelete(req.params.threadId);
@@ -88,7 +88,7 @@ const updateThread = async (req, res, next) => {
     const { title, content } = req.body;
     const { threadId } = req.params;
     const thread = await Thread.findById(threadId).populate("author");
-    if (thread.author.username === req.session.currentUser.username) {
+    if (thread.author.username === req.session.currentUser.username || req.session.currentUser.role === 'admin') {
       if (title === "") {
         await Thread.findByIdAndUpdate(threadId, { content: content });
         return res.redirect(`/threads/${threadId}`);

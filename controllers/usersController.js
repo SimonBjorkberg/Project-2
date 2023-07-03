@@ -9,7 +9,7 @@ const getAllUsers = async (req, res) => {
     }
     catch (error) {
         console.log(error)
-        return res.redirect('/error')
+        return res.render('error', { userInSession: req.session.currentUser })
     }
 }
 
@@ -22,7 +22,7 @@ const deleteUser = async (req, res) => {
     }
     catch (error) {
         console.log(error)
-        return res.redirect('/error')
+        return res.render('error', { userInSession: req.session.currentUser })
     }
 }
 
