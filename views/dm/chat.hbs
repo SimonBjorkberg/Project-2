@@ -4,10 +4,10 @@
 
     <div class="conversation">
       {{#each conversation}}
-        <div class="message bg-white p-2 rounded shadow">
+        <div class="message bg-white p-2 rounded shadow my-1">
           <div class="flex items-center">
-            <img src="{{ sender.profilePicture }}" alt="{{ sender.username }}'s Profile Picture" class="w-10 h-10 rounded-full mr-2">
-            <p class="font-semibold">{{ sender.username }}</p>
+            <img src="{{ sender.profilePicture }}" alt="{{ sender.username }}'s Profile Picture" class="w-6 h-6 rounded-full mr-2">
+            <p class="font-semibold">{{ sender.username }}:</p>
           </div>
           <p>{{ content }}</p>
           <p class="text-sm text-gray-500">{{ createdAt }}</p>

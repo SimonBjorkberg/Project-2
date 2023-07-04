@@ -21,7 +21,9 @@ const loginPost = async (req, res, next) => {
       req.session.currentUser = user;
       req.session.userId = user._id;
 
-      return res.redirect(`/profile/${username}`);
+      const referer = req.headers.referer
+      res.redirect(referer)
+      return res.redirect(referer);
     } else {
       return res.render("index", {
         loginErrorMessage: "Incorrect password",

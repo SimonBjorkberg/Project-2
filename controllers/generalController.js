@@ -66,7 +66,8 @@ const logOut = async (req, res, next) => {
   try {
     req.session.destroy((err) => {
       if (err) next(err);
-      res.redirect("/");
+      const referer = req.headers.referer;
+      return res.redirect(referer);
     });
   } catch (err) {
     console.log("err", err);
@@ -96,7 +97,7 @@ const getTopic = async (req, res, next) => {
           path: "author",
         },
       });
-    const thread = topic.threads
+    const thread = topic.threads;
     res.render("threads-posts/topics", {
       topic: topic,
       thread: thread,

@@ -1,14 +1,14 @@
-<div class="py-4 mt-5 w-96 m-auto border-2 rounded-md bg-teal-800">
+<div class="py-4 mt-10 w-96 m-auto border-2 border-teal-800 rounded-md bg-teal-700">
   <p class="text-white text-center text-2xl font-bold">{{topic.title}}</p>
 </div>
 
-<div class="rounded-md w-4/5 sm:w-2/3 mb-5 mx-auto mt-5 md:mt-0">
+<div class="rounded-md mx-3 mx-3 md:w-2/3 md:mx-auto mb-5 mt-5 md:mt-0">
   <a href="/" class="text-teal-900 hover:underline font-bold">Go Back</a>
 </div>
 
 {{#each thread}}
   <section
-    class="bg-teal-700 shadow-md p-4 rounded-md mb-4 w-4/5 sm:w-2/3 m-auto hover:bg-teal-600 hover:border-teal-500 transition-colors border-teal-500 border"
+    class="mb-4 mx-3 md:w-2/3 md:m-auto hover:bg-teal-800 transition-colors border-teal-800 border-2 bg-teal-900 shadow-md p-4 rounded-md"
   >
     <div onclick="threadClick('{{this._id}}')" class="cursor-pointer">
       <div>
@@ -16,7 +16,7 @@
         <p class="text-white">{{thread.likes.length}}</p>
       </div>
       <p class="text-white truncate">{{this.content}}</p>
-      <div class="flex sm:flex-row mt-2 justify-between flex-col">
+      <div class="flex flex-row mt-2 justify-between">
         <div class="flex items-center">
           <img
             src="{{this.author.profilePicture}}"
@@ -44,9 +44,9 @@
 {{/each}}
 
 {{#if userInSession}}
-  <div class="bg-teal-900 p-4 rounded-md mb-5 w-96 lg:w-3/6 2xl:w-1/3 mx-auto my-10">
+  <div class="w-[352px] lg:w-[565px] mx-auto my-10">
     <form action="/threads/create/{{topic._id}}" method="post">
-      <div class="grid grid-cols-1 gap-4">
+      <div class="rounded-md grid grid-cols-1 gap-4 bg-teal-900 p-4">
         <div>
           <input
             type="text"
@@ -67,10 +67,10 @@
           ></textarea>
         </div>
       </div>
-      <div class="mt-4">
+      <div class="mt-1">
         <button
           type="submit"
-          class="bg-teal-700 text-white py-2 px-4 rounded-md hover:bg-teal-600 hover:border-teal-600 transition-colors"
+          class="bg-teal-900 text-white py-2 px-4 rounded-md hover:bg-teal-800 hover:border-teal-600 transition-colors"
         >
           Create Thread
         </button>
