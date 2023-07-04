@@ -152,10 +152,10 @@
 
 {{#if userInSession}}
 <div
-  class="w-[352px] lg:w-[565px] mx-auto my-10"
+  class="w-[352px] lg:w-[565px] mx-auto my-10 p-4 bg-teal-900 rounded-md"
 >
   <form action="/post/{{thread._id}}" method="post">
-    <div class="rounded-md p-4 bg-teal-900 grid grid-cols-1 gap-4">
+    <div class="grid grid-cols-1 gap-4">
       <div>
         <textarea
           id="content"
@@ -166,10 +166,10 @@
         ></textarea>
       </div>
     </div>
-    <div class="mt-1">
+    <div class="mt-4">
       <button
         type="submit"
-        class="bg-teal-900 text-white py-2 px-4 rounded-md hover:bg-teal-600 hover:border-teal-600 transition-colors"
+        class="bg-teal-900 text-white py-2 px-4 rounded-md border-teal-600 border hover:bg-teal-800 hover:border-teal-600 transition-colors"
       >
         Post
       </button>
