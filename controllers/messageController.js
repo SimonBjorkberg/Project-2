@@ -6,7 +6,11 @@ const displayUsers = async (req, res) => {
     const userInSession = req.session.currentUser;
     // MongoDB query operator "ne" to exclude something from the search
     const users = await User.find({ _id: { $ne: userInSession._id } }).select('username profilePicture');
-    res.render('dm/messages', { users, userInSession: req.session.currentUser });
+    if (req.session.currentUser.role === "admin") {
+      res.render('dm/messages', { users, userInSession: req.session.currentUser, isAdmin: true });
+    } else {
+      res.render('dm/messages', { users, userInSession: req.session.currentUser});
+    }
   } catch (error) {
     console.error(error);
     return res.redirect('/error');
@@ -33,8 +37,13 @@ const chatController = async (req, res) => {
         { sender: recipientUser._id, recipient: currentUser._id }
       ] // MongoDB query operators "or" to get the messages without problems
     }).populate('sender', 'username profilePicture').sort('createdAt');
-  
-    res.render('dm/chat', { currentUser, recipientUser, conversation, userInSession: req.session.currentUser });
+    
+    if (req.session.currentUser.role === "admin") {
+      res.render('dm/chat', { currentUser, recipientUser, conversation, userInSession: req.session.currentUser, isAdmin: true });
+    } else {
+      res.render('dm/chat', { currentUser, recipientUser, conversation, userInSession: req.session.currentUser });
+    }
+    
   } catch (error) {
     console.error(error);
     return res.redirect('/error');
