@@ -20,16 +20,19 @@ if (loginButton) {
     loginModal.showModal();
   });
 }
+
 if (signupButton) {
   signupButton.addEventListener("click", () => {
     signupModal.showModal();
   });
 }
+
 if (loginCloseButton) {
   loginCloseButton.addEventListener("click", () => {
     loginModal.close();
   });
 }
+
 if (signupCloseButton) {
   signupCloseButton.addEventListener("click", () => {
     signupModal.close();

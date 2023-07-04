@@ -151,13 +151,17 @@
 </dialog>
 
 <script>
-  const loginError =
-  {{loginError}}; if (loginError) { const loginModal =
-  document.getElementById('loginModal'); loginModal.showModal(); };
+  const loginError = {{loginError}}
+  if (loginError) {
+    const loginModal = document.getElementById('loginModal')
+    loginModal.showModal()
+  }
 </script>
 
 <script>
-  const signupError =
-  {{signupError}}; if (signupError) { const signupModal =
-  document.getElementById('signupModal'); signupModal.showModal(); };
+  const signupError = {{signupError}} 
+  if (signupError) { 
+    const signupModal = document.getElementById('signupModal') 
+    signupModal.showModal() 
+  }
 </script>
