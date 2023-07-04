@@ -1,24 +1,28 @@
-<div class="profile flex flex-col items-center justify-center mt-6">
-  <h2
-    id="username"
-    class="text-2xl font-bold text-teal-700"
-  >{{user.username}}</h2>
-  <h2 id="email" class="text-lg text-teal-700">{{user.email}}</h2>
-  <img
-    src="{{user.profilePicture}}"
-    alt="Profile Picture"
-    id="avatar"
-    class="w-40 h-40 rounded-full mt-4"
-  />
-  {{#if auth}}
-    <button
-      id="openEditProfile"
-      class="bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded mt-4"
-    >
-      Edit Profile
-    </button>
-  {{/if}}
-</div>
+<section class="flex justify-center mt-6">
+  <div
+    class="profile flex flex-col items-center justify-center mt-6 bg-teal-900 w-96 shadow-md border rounded-lg py-[50px]"
+  >
+    <h2
+      id="username"
+      class="text-2xl font-bold text-teal-600"
+    >{{user.username}}</h2>
+    <h2 id="email" class="text-lg text-teal-600">{{user.email}}</h2>
+    <img
+      src="{{user.profilePicture}}"
+      alt="Profile Picture"
+      id="avatar"
+      class="w-40 h-40 rounded-full mt-4"
+    />
+    {{#if auth}}
+      <button
+        id="openEditProfile"
+        class="bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded mt-4"
+      >
+        Edit Profile
+      </button>
+    {{/if}}
+  </div>
+</section>
 
 <dialog
   id="editProfileModal"

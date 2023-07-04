@@ -1,11 +1,10 @@
-<div class="container mx-auto">
-  <h2 class="text-2xl font-bold mb-4">Users</h2>
+<div class="container mx-auto mt-6">
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
     {{#each users}}
       <div class="bg-white rounded-lg shadow-md p-4">
         <img src="{{this.profilePicture}}" alt="Profile Picture" class="w-24 h-24 rounded-full mx-auto mb-2">
         <span class="block text-center font-bold">{{this.username}}</span>
-        <a href="/chat/{{this.username}}" class="block text-center mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Chat</a>
+        <a href="/chat/{{this.username}}" class="block text-center mt-2 bg-teal-600 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded">Chat</a>
       </div>
     {{/each}}
   </div>
