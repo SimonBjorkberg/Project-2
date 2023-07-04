@@ -1,85 +1,158 @@
 <section class="mx-5 md:mx-0">
-  <div class="rounded-md mb-4 w-full ml-2 md:w-2/3 md:m-auto md:mb-5 md:mt-5 mt-5">
-    <a href="/topic/{{thread.topicParent.title}}" class="text-teal-900 hover:underline font-bold">Go Back</a>
+  <div
+    class="rounded-md mb-4 w-full ml-2 md:w-2/3 md:m-auto md:mb-5 md:mt-5 mt-5"
+  >
+    <a
+      href="/topic/{{thread.topicParent.title}}"
+      class="text-teal-900 hover:underline font-bold"
+    >Go Back</a>
   </div>
-<div class="bg-teal-900 p-4 rounded-md mb-4 m-auto md:w-2/3">
-  <div class="flex justify-between">
-    <div class="flex items-center mb-2">
-      <img src="{{thread.author.profilePicture}}" alt="PP" class="w-8 h-8 rounded-full mr-2" />
-      <p class="text-white">Posted by:
-        <span>
-          <a href="/profile/{{thread.author.username}}" class="text-teal-500 hover:underline font-bold">
-            {{thread.author.username}}
-          </a>
-        </span>
-      </p>
+  <div class="bg-teal-900 p-4 rounded-md mb-4 m-auto md:w-2/3">
+    <div class="flex justify-between">
+      <div class="flex items-center mb-2">
+        <img
+          src="{{thread.author.profilePicture}}"
+          alt="PP"
+          class="w-8 h-8 rounded-full mr-2"
+        />
+        <p class="text-white">Posted by:
+          <span>
+            <a
+              href="/profile/{{thread.author.username}}"
+              class="text-teal-500 hover:underline font-bold"
+            >
+              {{thread.author.username}}
+            </a>
+          </span>
+        </p>
+      </div>
+      <p class="text-white">Posted: {{thread.createdAt}}</p>
     </div>
-    <p class="text-white">Posted: {{thread.createdAt}}</p>
-  </div>
-  <div class="flex justify-between">
-    <div>
-      <h2 class="text-lg font-bold text-white">{{thread.title}}</h2>
-    </div>
-    <div class="flex items-center space-x-2">
-      {{#if thread.auth}}
-        <button id="editThreadButtonOpen" class="text-teal-500 hover:underline font-bold">Edit</button>
-        <form action="/threads/{{thread._id}}/delete" method="post">
-          <button type="submit" class="text-teal-500 hover:underline font-bold">Delete</button>
+    <div class="flex justify-between">
+      <div>
+        <h2 class="text-lg font-bold text-white">{{thread.title}}</h2>
+      </div>
+      <div class="flex items-center space-x-2">
+        {{#if thread.auth}}
+          <button
+            id="editThreadButtonOpen"
+            class="text-teal-500 hover:underline font-bold"
+          >Edit</button>
+          <form action="/threads/{{thread._id}}/delete" method="post">
+            <button
+              type="submit"
+              class="text-teal-500 hover:underline font-bold"
+            >Delete</button>
+          </form>
+        {{/if}}
+        <form action="/threads/{{thread._id}}/like" method="post">
+          <button
+            type="submit"
+            class="text-teal-500 px-2 py-0.5 border-2 border-teal-500 font-bold"
+          >
+            {{thread.likes.length}}
+          </button>
         </form>
-      {{/if}}
-      <form action="/threads/{{thread._id}}/like" method="post">
-        <button type="submit" class="text-teal-500 px-2 py-0.5 border-2 border-teal-500  font-bold">
-          {{thread.likes.length}}
-        </button>
-      </form>
+      </div>
+    </div>
+    <div class="ml-0 text-white">
+      {{thread.content}}
     </div>
   </div>
-  <div class="ml-0 text-white">
-    {{thread.content}}
-  </div>
-</div>
 
   {{#each thread.posts}}
-<div class="bg-[#d1dbdb] border border-teal-500 rounded-lg p-4 flex flex-col md:w-2/3 my-5 mx-auto">
-  <div class="flex items-center justify-between">
-    <div class="flex items-center">
-      <img class="h-8 w-8 rounded-full" src="{{this.author.profilePicture}}" alt="PP" />
-      <p class="ml-2">Posted by:
-        <span>
-          <a href="/profile/{{this.author.username}}" class="text-teal-700 hover:underline font-bold">
-            {{this.author.username}}
-          </a>
-        </span>
-      </p>
+    <div
+      class="bg-[#d1dbdb] border border-teal-500 rounded-lg p-4 flex flex-col md:w-2/3 my-5 mx-auto"
+    >
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <img
+            class="h-8 w-8 rounded-full"
+            src="{{this.author.profilePicture}}"
+            alt="PP"
+          />
+          <p class="ml-2">Posted by:
+            <span>
+              <a
+                href="/profile/{{this.author.username}}"
+                class="text-teal-700 hover:underline font-bold"
+              >
+                {{this.author.username}}
+              </a>
+            </span>
+          </p>
+        </div>
+        <p>Posted: {{this.createdAt}}</p>
+      </div>
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold">{{this.title}}</h2>
+        </div>
+        <div class="flex items-center space-x-2">
+          {{#if this.auth}}
+            <button
+              id="editPostButtonOpen-{{this._id}}"
+              class="text-teal-700 hover:underline font-bold"
+            >Edit</button>
+            <form action="/post/{{this._id}}/delete" method="post">
+              <button
+                type="submit"
+                class="text-teal-700 hover:underline font-bold"
+              >Delete</button>
+            </form>
+          {{/if}}
+          <form action="/post/{{this._id}}/like" method="post">
+            <button
+              type="submit"
+              class="text-teal-700 px-2 py-0.5 border-2 border-teal-700 font-bold"
+            >
+              {{this.likes.length}}
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="ml-0">
+        {{this.content}}
+      </div>
+      <dialog
+        id="editPostModal-{{this._id}}"
+        class="bg-white rounded-lg p-4 w-full sm:w-[566]"
+      >
+        <div>
+          <div class="flex justify-between mb-4">
+            <h2 class="text-xl font-bold ml-3">Edit Post</h2>
+            <button
+              id="editPostButtonClose-{{this._id}}"
+              class="text-gray-600 text-xl w-max text-center font-bold mr-3"
+            >x</button>
+          </div>
+          <div>
+            <form action="/post/{{this._id}}/edit" method="post">
+              <div class="mb-4">
+                <textarea
+                  name="content"
+                  required
+                  class="w-full border border-gray-400 rounded py-1 px-2 h-26"
+                >{{this.content}}</textarea>
+              </div>
+              <div class="flex justify-between">
+                <button
+                  type="submit"
+                  class="bg-teal-700 text-white rounded px-4 py-2"
+                >Edit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
-    <p>Posted: {{this.createdAt}}</p>
-  </div>
-  <div class="flex items-center justify-between">
-    <div>
-      <h2 class="text-lg font-bold">{{this.title}}</h2>
-    </div>
-    <div class="flex items-center space-x-2">
-      {{#if this.auth}}
-        <button id="editPostButtonOpen-{{this._id}}" class="text-teal-700 hover:underline font-bold">Edit</button>
-        <form action="/post/{{this._id}}/delete" method="post">
-          <button type="submit" class="text-teal-700 hover:underline font-bold">Delete</button>
-        </form>
-      {{/if}}
-      <form action="/post/{{this._id}}/like" method="post">
-        <button type="submit" class="text-teal-700 px-2 py-0.5 border-2 border-teal-700 font-bold">
-          {{this.likes.length}}
-        </button>
-      </form>
-    </div>
-  </div>
-  <div class="ml-0">
-    {{this.content}}
-  </div>
-</div>
+
   {{/each}}
 </section>
 
-<div class="bg-teal-900 p-4 rounded-md mb-5 w-96 lg:w-3/6 2xl:w-1/3 mx-auto my-10">
+<div
+  class="bg-teal-900 p-4 rounded-md mb-5 w-96 lg:w-3/6 2xl:w-1/3 mx-auto my-10"
+>
   <form action="/post/{{thread._id}}" method="post">
     <div class="grid grid-cols-1 gap-4">
       <div>
@@ -103,7 +176,7 @@
   </form>
 </div>
 
-<dialog id="editThreadModal" class="bg-white rounded-lg p-4 w-full sm:w-3/4">
+<dialog id="editThreadModal" class="bg-white rounded-lg p-4 w-full sm:w-[566]">
   <div>
     <div class="flex justify-between mb-4">
       <p class="font-bold">Edit Thread</p>
@@ -124,7 +197,7 @@
       <div class="mb-4">
         <textarea
           name="content"
-          class="w-full border border-gray-400 rounded py-1 px-2 h-32"
+          class="w-full border border-gray-400 rounded py-1 px-2 h-26"
         >{{thread.content}}</textarea>
       </div>
       <div class="flex justify-end">
