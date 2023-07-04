@@ -16,8 +16,12 @@ const messageSchema = new Schema({
     required: true
   },
   timestamp: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: () => {
+      const now = new Date();
+      const options = { year: "numeric", month: "short", day: "2-digit" };
+      return now.toLocaleDateString(undefined, options);
+    },
   },
 });
 
