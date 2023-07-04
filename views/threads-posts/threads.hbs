@@ -1,6 +1,6 @@
 <section class="mx-5 md:mx-0">
   <div class="rounded-md md:mb-4 w-full ml-2 md:w-2/3 md:m-auto md:mt-5 mt-5">
-    <a href="/topic/{{thread.topicParent.title}}" class="text-teal-900 hover:underline">Go Back</a>
+    <a href="/topic/{{thread.topicParent.title}}" class="text-teal-900 hover:underline font-bold">Go Back</a>
   </div>
 <div class="bg-teal-900 p-4 rounded-md mb-4 m-auto md:w-2/3">
   <div class="flex justify-between">
@@ -22,13 +22,13 @@
     </div>
     <div class="flex items-center space-x-2">
       {{#if thread.auth}}
-        <button id="editThreadButtonOpen" class="text-teal-500 hover:underline">Edit</button>
+        <button id="editThreadButtonOpen" class="text-teal-500 hover:underline font-bold">Edit</button>
         <form action="/threads/{{thread._id}}/delete" method="post">
-          <button type="submit" class="text-teal-500 hover:underline">Delete</button>
+          <button type="submit" class="text-teal-500 hover:underline font-bold">Delete</button>
         </form>
       {{/if}}
       <form action="/threads/{{thread._id}}/like" method="post">
-        <button type="submit" class="text-teal-500 px-2 py-0.5 border border-teal-500">
+        <button type="submit" class="text-teal-500 px-2 py-0.5 border-2 border-teal-500  font-bold">
           {{thread.likes.length}}
         </button>
       </form>
@@ -40,13 +40,13 @@
 </div>
 
   {{#each thread.posts}}
-<div class="bg-white border border-teal-500 rounded-lg p-4 flex flex-col md:w-2/3 my-5 mx-auto">
+<div class="bg-[#d1dbdb] border border-teal-500 rounded-lg p-4 flex flex-col md:w-2/3 my-5 mx-auto">
   <div class="flex items-center justify-between">
     <div class="flex items-center">
       <img class="h-8 w-8 rounded-full" src="{{this.author.profilePicture}}" alt="PP" />
       <p class="ml-2">Posted by:
         <span>
-          <a href="/profile/{{this.author.username}}" class="text-teal-500 hover:underline font-bold">
+          <a href="/profile/{{this.author.username}}" class="text-teal-700 hover:underline font-bold">
             {{this.author.username}}
           </a>
         </span>
@@ -60,13 +60,13 @@
     </div>
     <div class="flex items-center space-x-2">
       {{#if this.auth}}
-        <button id="editPostButtonOpen-{{this._id}}" class="text-teal-500 hover:underline">Edit</button>
+        <button id="editPostButtonOpen-{{this._id}}" class="text-teal-700 hover:underline font-bold">Edit</button>
         <form action="/post/{{this._id}}/delete" method="post">
-          <button type="submit" class="text-teal-500 hover:underline">Delete</button>
+          <button type="submit" class="text-teal-700 hover:underline font-bold">Delete</button>
         </form>
       {{/if}}
       <form action="/post/{{this._id}}/like" method="post">
-        <button type="submit" class="text-teal-500 px-2 py-0.5 border border-teal-500">
+        <button type="submit" class="text-teal-700 px-2 py-0.5 border-2 border-teal-700 font-bold">
           {{this.likes.length}}
         </button>
       </form>
