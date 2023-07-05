@@ -20,6 +20,15 @@
       >
         Edit Profile
       </button>
+      {{#if isAdmin}}
+      <button
+        id="openUsers"
+        class="bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded mt-4"
+        onclick="location.href='/users';"
+      >
+        Users
+      </button>
+      {{/if}}
     {{/if}}
   </div>
 </section>
