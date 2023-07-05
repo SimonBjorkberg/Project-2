@@ -1,6 +1,10 @@
 body {
   margin: 0;
-  background-color: rgb(210, 216, 206);
+  background-image: url('/images/website-background-test.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
 }
 form {
   margin: 0;
