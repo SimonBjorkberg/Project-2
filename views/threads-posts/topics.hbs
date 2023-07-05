@@ -2,13 +2,13 @@
   <p class="text-white text-center text-2xl font-bold">{{topic.title}}</p>
 </div>
 
-<div class="rounded-md mx-3 mx-3 md:w-2/3 md:mx-auto mb-5 mt-5 md:mt-0">
-  <a href="/" class="text-teal-900 hover:underline font-bold ml-5">Go Back</a>
+<div class="rounded-md mx-3 md:w-2/3 md:mx-auto mb-5 mt-5 md:mt-0">
+  <a href="/" class="text-teal-900 hover:text-teal-800 font-bold ml-5">Go Back</a>
 </div>
 
 {{#each thread}}
   <section
-    class="mb-4 mx-3 md:w-2/3 md:mx-auto hover:bg-teal-800 transition-colors border-teal-800 border-2 bg-teal-900 shadow-md p-4 rounded-md"
+    class="mb-1 mx-3 md:w-2/3 md:mx-auto hover:bg-teal-800 transition-colors border-teal-800 border-2 bg-teal-900 shadow-md p-4 rounded-md"
   >
     <div onclick="threadClick('{{this._id}}')" class="cursor-pointer">
       <div>
@@ -23,7 +23,7 @@
             alt="PP"
             class="w-8 h-8 rounded-full mr-2"
           />
-          <p class="text-white">Posted by
+          <p class="text-white">Posted by:
             <span class="font-semibold">
               <a
                 href="/profile/{{this.author.username}}"

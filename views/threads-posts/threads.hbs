@@ -1,10 +1,10 @@
 <section class="mx-5 md:mx-0">
   <div
-    class="rounded-md mb-4 w-full ml-2 md:w-2/3 md:m-auto md:mb-5 md:mt-5 mt-5"
+    class="rounded-md w-full ml-5 md:w-2/3 md:m-auto md:mb-5 md:mt-5 mt-5"
   >
     <a
       href="/topic/{{thread.topicParent.title}}"
-      class="text-teal-900 hover:underline font-bold"
+      class="text-teal-900 hover:text-teal-800 font-bold"
     >Go Back</a>
   </div>
   <div class="bg-teal-900 p-4 rounded-md mb-4 m-auto md:w-2/3">
@@ -60,9 +60,10 @@
     </div>
   </div>
 
+
   {{#each thread.posts}}
     <div
-      class="bg-[#d1dbdb] border border-teal-900 rounded-lg p-4 flex flex-col md:w-2/3 my-5 mx-auto"
+      class="bg-[#d1dbdb] border border-teal-900 p-4 flex flex-col md:w-2/3 mx-auto"
     >
       <div class="flex items-center justify-between">
         <div class="flex items-center">
@@ -146,8 +147,9 @@
         </div>
       </dialog>
     </div>
-
   {{/each}}
+
+
 </section>
 
 {{#if userInSession}}
