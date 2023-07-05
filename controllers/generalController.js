@@ -14,14 +14,12 @@ const index = async (req, res, next) => {
       return res.render("index", {
         userInSession: user,
         topic,
-        admin,
       });
     } else {
       admin = false;
       res.render("index", {
         userInSession: req.session.currentUser,
         topic,
-        admin,
       });
     }
   } catch (err) {
@@ -42,11 +40,21 @@ const userProfile = async (req, res, next) => {
       req.session.currentUser &&
       req.session.currentUser.username === user.username
     ) {
-      return res.render("users/user-profile", {
-        auth: true,
-        user: user,
-        userInSession: req.session.currentUser,
-      });
+      if (req.session.currentUser.role === "admin") {
+        return res.render("users/user-profile", {
+          auth: true,
+          user: user,
+          userInSession: req.session.currentUser,
+          isAdmin: true
+        });
+      } else {
+        return res.render("users/user-profile", {
+          auth: true,
+          user: user,
+          userInSession: req.session.currentUser,
+        });
+      }
+
     }
     res.render("users/user-profile", {
       auth: false,
