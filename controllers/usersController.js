@@ -6,7 +6,11 @@ const getAllUsers = async (req, res) => {
     try {
         const userInSession = req.session.currentUser;
         const users = await User.find({ _id: { $ne: userInSession._id } }).select('username profilePicture')
-        res.render('users/allUsers', { users, userInSession: req.session.currentUser })
+        if (req.session.currentUser.role === "admin") {
+            res.render('users/allUsers', { users, isAdmin: true , userInSession: req.session.currentUser })
+        } else {
+            res.render('users/allUsers', { users, userInSession: req.session.currentUser })
+        }
     }
     catch (error) {
         console.log(error)
