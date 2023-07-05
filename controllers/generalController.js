@@ -14,14 +14,12 @@ const index = async (req, res, next) => {
       return res.render("index", {
         userInSession: user,
         topic,
-        admin,
       });
     } else {
       admin = false;
       res.render("index", {
         userInSession: req.session.currentUser,
         topic,
-        admin,
       });
     }
   } catch (err) {
