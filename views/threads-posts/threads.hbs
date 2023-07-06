@@ -57,7 +57,8 @@
   </div>
 </div>
 
-{{#each thread.posts}}
+<section class="mb-3">
+  {{#each thread.posts}}
   <div
     class="bg-[#d1dbdb] border rounded-lg border-teal-900 p-4 flex flex-col md:w-2/3 md:mx-auto mx-3"
   >
@@ -143,6 +144,8 @@
     </dialog>
   </div>
 {{/each}}
+</section>
+
 
 {{#if userInSession}}
   <div class="w-[352px] lg:w-[565px] mx-auto my-10 p-4 bg-teal-900 rounded-md">
