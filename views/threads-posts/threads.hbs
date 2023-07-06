@@ -81,32 +81,34 @@
       </div>
       <p>Posted: {{this.createdAt}}</p>
     </div>
-     <div class="ml-0 flex flex-row justify-between">
+    <div class="ml-0 flex flex-row justify-between">
       <p class="my-auto">{{this.content}}</p>
-      <aside class="h-[33px]">
-        <div class="flex items-center space-x-2">
-          {{#if this.auth}}
-            <button
-              id="editPostButtonOpen-{{this._id}}"
-              class="text-teal-700 hover:underline font-bold"
-            >Edit</button>
-            <form action="/post/{{this._id}}/delete" method="post">
-              <button
-                type="submit"
-                class="text-teal-700 hover:underline font-bold"
-              >Delete</button>
-            </form>
-          {{/if}}
-          <form action="/post/{{this._id}}/like" method="post">
+    </div>
+    <div class="flex items-center space-x-2 justify-between">
+      <div class="flex flex-row w-[85px] justify-between">
+        {{#if this.auth}}
+          <button
+            id="editPostButtonOpen-{{this._id}}"
+            class="text-teal-700 hover:underline font-bold"
+          >Edit</button>
+          <form action="/post/{{this._id}}/delete" method="post">
             <button
               type="submit"
-              class="text-teal-700 px-2 py-0.5 border-2 border-teal-700 font-bold"
-            >
-              {{this.likes.length}}
-            </button>
+              class="text-teal-700 hover:underline font-bold"
+            >Delete</button>
           </form>
-        </div>
-      </aside>
+        {{/if}}
+      </div>
+      <div>
+        <form action="/post/{{this._id}}/like" method="post">
+          <button
+            type="submit"
+            class="text-teal-700 px-2 py-0.5 border-2 border-teal-700 font-bold"
+          >
+            {{this.likes.length}}
+          </button>
+        </form>
+      </div>
     </div>
     <dialog
       id="editPostModal-{{this._id}}"
