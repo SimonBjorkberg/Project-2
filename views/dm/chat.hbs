@@ -1,6 +1,9 @@
-  <div class="container mt-6 mx-auto px-4 py-4 w-[370px] bg-teal-800 border border-teal-600 shadow-md rounded-lg">
+  <div class="container mt-6 mx-auto px-4 py-4 w-[320px] bg-[#d1dbdb] border-2 border-teal-800 shadow-md rounded-lg">
 
-    <h2 class="text-2xl font-bold mb-4">Conversation with {{ recipientUser.username }}</h2>
+    <h2 class="text-2xl font-bold mb-4 text-black">Conversation with: <br>
+    <span class="text-teal-900">
+      <a href="/profile/{{recipientUser.username}}" class="hover:underline">{{recipientUser.username}}</a>
+    </span></h2>
 
     <div class="conversation">
       {{#each conversation}}
@@ -17,7 +20,7 @@
 
     <form action="/send-message" method="POST" class="mt-8">
       <input type="hidden" name="recipient" value="{{ recipientUser.username }}">
-      <textarea name="content" class="w-full p-2 rounded shadow" placeholder="Type your message"></textarea>
+      <textarea name="content" class="w-full p-2 rounded shadow border-teal-800 border" placeholder="Type your message"></textarea>
       <button type="submit" class="mt-4 px-4 py-2 bg-teal-600 text-white font-semibold rounded hover:bg-teal-500">Send</button>
     </form>
   </div>
