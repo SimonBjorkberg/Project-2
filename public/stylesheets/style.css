@@ -5,6 +5,16 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
+  overflow-y: scroll;
+}
+body::-webkit-scrollbar {
+  width: 0.5em;
+}
+body::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
 form {
   margin: 0;
