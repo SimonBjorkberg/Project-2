@@ -206,23 +206,24 @@
   const editThreadButtonOpen = document.getElementById('editThreadButtonOpen')
   const editThreadButtonClose = document.getElementById('editThreadButtonClose')
   editThreadButtonOpen.addEventListener('click', () => {
-  editThreadModal.showModal(); })
+    editThreadModal.showModal(); 
+  })
   editThreadButtonClose.addEventListener('click', () => {
-  editThreadModal.close(); })
+    editThreadModal.close(); 
+  })
 </script>
 
 <script>
   {{#each thread.posts}}
-    const editPostButtonOpen_{{this._id}}
-    = document.getElementById('editPostButtonOpen-{{this._id}}'); const
-    editPostButtonClose_{{this._id}}
-    = document.getElementById('editPostButtonClose-{{this._id}}');
-    editPostButtonOpen_{{this._id}}.addEventListener('click', () => { const
-    editPostModal_{{this._id}}
-    = document.getElementById('editPostModal-{{this._id}}'); editPostModal_{{this._id}}.showModal();
-    }); editPostButtonClose_{{this._id}}.addEventListener('click', () => { const
-    editPostModal_{{this._id}}
-    = document.getElementById('editPostModal-{{this._id}}'); editPostModal_{{this._id}}.close();
+    const editPostButtonOpen_{{this._id}} = document.getElementById('editPostButtonOpen-{{this._id}}'); 
+    const editPostButtonClose_{{this._id}} = document.getElementById('editPostButtonClose-{{this._id}}');
+    editPostButtonOpen_{{this._id}}.addEventListener('click', () => { 
+      const editPostModal_{{this._id}} = document.getElementById('editPostModal-{{this._id}}'); 
+      editPostModal_{{this._id}}.showModal();
+    }); 
+    editPostButtonClose_{{this._id}}.addEventListener('click', () => {
+      const editPostModal_{{this._id}} = document.getElementById('editPostModal-{{this._id}}'); 
+      editPostModal_{{this._id}}.close();
     });
   {{/each}}
 </script>
