@@ -4,7 +4,7 @@ const isAdmin = (req, res, next) => {
   } else if (!req.session.currentUser) {
     return res.redirect('/')
   } else {
-    return res.render('error', { userInSession: req.session.currentUser })
+    return res.render('unauthorized', { userInSession: req.session.currentUser })
   }
 };
 
