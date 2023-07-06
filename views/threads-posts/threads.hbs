@@ -48,7 +48,7 @@
       <form action="/threads/{{thread._id}}/like" method="post">
         <button
           type="submit"
-          class="text-teal-500 px-2 py-0.5 border-2 border-teal-500 font-bold mt-2"
+          class="text-teal-500 px-2 py-0.5 border-2 border-teal-500 font-bold mt-2 border-dashed hover:border-solid hover:bg-teal-700"
         >
           Likes: {{thread.likes.length}}
         </button>
@@ -103,7 +103,7 @@
         <form action="/post/{{this._id}}/like" method="post">
           <button
             type="submit"
-            class="text-teal-700 px-2 py-0.5 border-2 border-teal-700 font-bold mt-2"
+            class="text-teal-700 px-2 py-0.5 border-2 border-teal-700 font-bold mt-2 border-dashed hover:border-solid hover:bg-[#b9c1c1]"
           >
             Likes: {{this.likes.length}}
           </button>
