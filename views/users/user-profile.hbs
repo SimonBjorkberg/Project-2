@@ -33,13 +33,13 @@
   </div>
 </section>
 
-<section class="w-full my-5 py-5">
-  <div class="py-4 w-96 m-auto border-2 border-teal-600 rounded-md bg-teal-900">
+<section class="w-full my-2">
+  <div id="threads" class="py-4 w-96 m-auto border-2 border-teal-600 rounded-md bg-teal-900 hover:bg-teal-800 hover:cursor-pointer">
     <p class="text-white text-center font-bold">
       Most recent Threads from {{user.username}}
     </p>
   </div>
-  <div class="mt-2 w-96 mx-auto">
+  <div id="recentThreads" class="mt-2 w-96 mx-auto hidden">
     {{#each recentThreads}}
       <div onclick="threadClick('{{this._id}}')" class="cursor-pointer mb-1 mx-3 hover:bg-teal-700 transition-colors border-teal-900 border-2 bg-teal-800 shadow-md p-2 rounded-md">
         <p class="text-white truncate">{{this.title}}</p>
@@ -48,18 +48,18 @@
   </div>
 </section>
 
-<section class="w-full my-5 py-5">
-  <div class="py-4 w-96 m-auto border-2 border-teal-600 rounded-md bg-teal-900">
+<section class="w-full mb-2">
+  <div id="posts" class="py-4 w-96 m-auto border-2 border-teal-600 rounded-md bg-teal-900 hover:bg-teal-800 hover:cursor-pointer">
     <p class="text-white text-center font-bold">
       Most recent Posts from {{user.username}}
     </p>
   </div>
-  <div class="mt-2 w-96 mx-auto">
+  <div id="recentPosts" class="mt-2 w-96 mx-auto hidden">
     {{#each recentPosts}}
-      <div onclick="threadClick('{{this.threadParent._id}}')" class="cursor-pointer mb-1 mx-3 hover:bg-teal-700 transition-colors border-teal-900 border-2 bg-teal-800 shadow-md p-2 rounded-md">
-        <p class="text-white truncate">{{this.content}}</p>
-      </div>
-    {{/each}}
+    <div onclick="threadClick('{{this.threadParent._id}}')" class="cursor-pointer mb-1 mx-3 hover:bg-teal-700 transition-colors border-teal-900 border-2 bg-teal-800 shadow-md p-2 rounded-md">
+      <p class="text-white truncate">{{this.content}}</p>
+    </div>
+  {{/each}}
   </div>
 </section>
 

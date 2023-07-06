@@ -59,3 +59,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const recentThreads = document.getElementById('recentThreads');
+  const threadDiv = document.getElementById('threads')
+  let isHidden = true;
+  threadDiv.addEventListener('click', () => {
+    if (isHidden) {
+      recentThreads.classList.remove('hidden')
+    }
+    else {
+      recentThreads.classList.add('hidden')
+    }
+    isHidden = !isHidden
+  })
+})
+
+document.addEventListener('DOMContentLoaded', function() {
+  const recentPosts = document.getElementById('recentPosts');
+  const postDiv = document.getElementById('posts')
+  let isHidden = true;
+  postDiv.addEventListener('click', () => {
+    if (isHidden) {
+      recentPosts.classList.remove('hidden')
+    }
+    else {
+      recentPosts.classList.add('hidden')
+    }
+    isHidden = !isHidden
+  })
+})
