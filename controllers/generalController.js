@@ -122,6 +122,7 @@ const getTopic = async (req, res, next) => {
         },
       });
     const thread = topic.threads;
+    thread.reverse()
     res.render("threads-posts/topics", {
       topic: topic,
       thread: thread,
