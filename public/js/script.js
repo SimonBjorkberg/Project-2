@@ -38,3 +38,20 @@ if (signupCloseButton) {
     signupModal.close();
   });
 }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const post = document.getElementsByClassName('bg-[#d1dbdb]');
+  if (post.length > 1) {
+    const firstPost = post[0]
+    const lastPost = post[post.length - 1]
+
+    firstPost.classList.add('rounded-t-lg')
+    firstPost.classList.add('border-b-0')
+    lastPost.classList.add('rounded-b-lg')
+
+    for (let i = 0; i < post.length - 1; i++) {
+      post[i].classList.add('border-b-0')
+    }
+  }
+});
