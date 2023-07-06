@@ -39,8 +39,7 @@ const signUpPost = async (req, res, next) => {
       email: email,
       password: hashedPassword,
     });
-    const referer = req.headers.referer
-    return res.redirect(referer);
+    return res.redirect('/')
   } catch (err) {
     console.log("err", err);
   }

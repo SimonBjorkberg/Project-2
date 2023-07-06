@@ -19,10 +19,18 @@ const updatePostPassword = async (req, res, next) => {
         user: user,
         errorMessage: "Can not change to the same password",
         changePasswordError: true,
-        userInSession: user,
+        userInSession: req.session.currentUser,
       });
     }
-
+    if (newPassword.length < 6) {
+      return res.render(`users/user-profile`, {
+        errorMessage: "New password needs to be at least 6 characters long",
+        changePasswordError: true,
+        auth: true,
+        user: user,
+        userInSession: req.session.currentUser,
+      });
+    }
     if (bcrypt.compareSync(currentPassword, user.password)) {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(newPassword, salt);
@@ -31,14 +39,14 @@ const updatePostPassword = async (req, res, next) => {
         message: "Password Changed",
         auth: true,
         user: user,
-        userinSession: req.session.currentUser,
+        userInSession: req.session.currentUser,
       });
     } else {
       res.render("users/user-profile", {
         auth: true,
         user: user,
         errorMessage: "Incorrect Current Password",
-        userInSession: user,
+        userInSession: req.session.currentUser,
         changePasswordError: true,
       });
     }
