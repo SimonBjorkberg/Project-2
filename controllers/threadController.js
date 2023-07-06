@@ -1,5 +1,6 @@
 const Thread = require("../models/Thread.model");
 const Topic = require("../models/Topic.model");
+const Post = require('../models/Post.model')
 
 // ###################################
 // FUNCTION THAT CREATES A NEW THREAD
@@ -73,7 +74,9 @@ const getThread = async (req, res) => {
 // ##########################################
 const deleteThread = async (req, res, next) => {
   try {
-    await Thread.findByIdAndDelete(req.params.threadId);
+    const thread = await Thread.findById(req.params.threadId)
+    await Post.deleteMany({threadParent: thread._id})
+    await Thread.findByIdAndDelete(req.params.threadId)
     res.redirect("/");
   } catch (err) {
     console.log("err", err);

@@ -37,10 +37,12 @@ const userProfile = async (req, res, next) => {
     const user = await User.findOne({ username });
 
     const threads = await Thread.find({ author: user._id }).populate()
-    const recentThreads = threads.slice(0, 5)
+    const recentThreads = threads.slice(1).slice(-5)
+    recentThreads.reverse()
 
     const posts = await Post.find({ author: user._id })
-    const recentPosts = posts.slice(0, 5)
+    const recentPosts = posts.slice(1).slice(-5)
+    recentPosts.reverse()
     if (!user) {
       return res.render("not-found");
     }
