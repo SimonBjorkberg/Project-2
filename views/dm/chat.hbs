@@ -2,7 +2,7 @@
 
     <h2 class="text-2xl font-bold mb-4 text-black">Conversation with: <br>
     <span class="text-teal-900">
-      <a href="/profile/{{recipientUser.username}}" class="hover:underline">{{recipientUser.username}}</a>
+      <a href="/profile/{{recipientUser.username}}" class="hover:text-teal-700">{{recipientUser.username}}</a>
     </span></h2>
 
     <div class="conversation">
@@ -21,6 +21,6 @@
     <form action="/send-message" method="POST" class="mt-8">
       <input type="hidden" name="recipient" value="{{ recipientUser.username }}">
       <textarea name="content" class="w-full p-2 rounded shadow border-teal-800 border" placeholder="Type your message"></textarea>
-      <button type="submit" class="mt-4 px-4 py-2 bg-teal-600 text-white font-semibold rounded hover:bg-teal-500">Send</button>
+      <button type="submit" class="mt-4 px-4 py-2 bg-teal-800 text-white font-semibold rounded hover:bg-teal-700">Send</button>
     </form>
   </div>
