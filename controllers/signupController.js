@@ -25,6 +25,13 @@ const signUpPost = async (req, res, next) => {
         });
       }
     }
+    if (password.length < 6) {
+      return res.render("index", {
+        signupErrorMessage: "Password needs at least 6 characters",
+        signupError: true,
+        topic,
+      });
+    }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     User.create({
