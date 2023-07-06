@@ -63,29 +63,29 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
   const recentThreads = document.getElementById('recentThreads');
   const threadDiv = document.getElementById('threads')
-  let isHidden = true;
+  let hidden = true;
   threadDiv.addEventListener('click', () => {
-    if (isHidden) {
+    if (hidden) {
       recentThreads.classList.remove('hidden')
     }
     else {
       recentThreads.classList.add('hidden')
     }
-    isHidden = !isHidden
+    hidden = !hidden
   })
 })
 
 document.addEventListener('DOMContentLoaded', function() {
   const recentPosts = document.getElementById('recentPosts');
   const postDiv = document.getElementById('posts')
-  let isHidden = true;
+  let hidden = true;
   postDiv.addEventListener('click', () => {
-    if (isHidden) {
+    if (hidden) {
       recentPosts.classList.remove('hidden')
     }
     else {
       recentPosts.classList.add('hidden')
     }
-    isHidden = !isHidden
+    hidden = !hidden
   })
 })
