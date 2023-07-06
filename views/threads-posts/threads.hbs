@@ -1,13 +1,13 @@
-<section class="mx-5 md:mx-0">
+
   <div
-    class="rounded-md w-full ml-5 md:w-2/3 md:m-auto md:mb-5 md:mt-5 mt-5"
+    class="rounded-md md:w-2/3 md:mx-auto mb-5 mt-5 ml-5"
   >
     <a
       href="/topic/{{thread.topicParent.title}}"
-      class="text-teal-900 hover:text-teal-800 font-bold"
+      class="text-teal-900 hover:text-white font-bold md:ml-5"
     >Go Back</a>
   </div>
-  <div class="bg-teal-900 p-4 rounded-md mb-4 m-auto md:w-2/3">
+  <div class="bg-teal-900 p-4 rounded-md mb-4 m-auto md:w-2/3 mx-3 md:mx-auto">
     <div class="flex justify-between">
       <div class="flex items-center mb-2">
         <img
@@ -60,10 +60,9 @@
     </div>
   </div>
 
-
-  {{#each thread.posts}}
+    {{#each thread.posts}}
     <div
-      class="bg-[#d1dbdb] border border-teal-900 p-4 flex flex-col md:w-2/3 mx-auto"
+      class="bg-[#d1dbdb] border border-teal-900 p-4 flex flex-col md:w-2/3 md:mx-auto mx-3"
     >
       <div class="flex items-center justify-between">
         <div class="flex items-center">
@@ -149,8 +148,6 @@
     </div>
   {{/each}}
 
-
-</section>
 
 {{#if userInSession}}
 <div
