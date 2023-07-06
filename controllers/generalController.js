@@ -1,6 +1,7 @@
 const Thread = require("../models/Thread.model");
 const User = require("../models/User.model");
 const Topic = require("../models/Topic.model");
+const Post = require('../models/Post.model')
 
 // ###########
 // INDEX ROUTE
@@ -32,7 +33,16 @@ const index = async (req, res, next) => {
 // ###################
 const userProfile = async (req, res, next) => {
   try {
-    const user = await User.findOne({ username: req.params.username });
+    const { username } = req.params
+    const user = await User.findOne({ username });
+
+    const threads = await Thread.find({ author: user._id }).populate()
+    const recentThreads = threads.slice(1).slice(-5)
+    recentThreads.reverse()
+
+    const posts = await Post.find({ author: user._id })
+    const recentPosts = posts.slice(1).slice(-5)
+    recentPosts.reverse()
     if (!user) {
       return res.render("not-found");
     }
@@ -45,13 +55,17 @@ const userProfile = async (req, res, next) => {
           auth: true,
           user: user,
           userInSession: req.session.currentUser,
-          isAdmin: true
+          isAdmin: true,
+          recentThreads,
+          recentPosts,
         });
       } else {
         return res.render("users/user-profile", {
           auth: true,
           user: user,
           userInSession: req.session.currentUser,
+          recentThreads,
+          recentPosts,
         });
       }
 
@@ -60,6 +74,8 @@ const userProfile = async (req, res, next) => {
       auth: false,
       user: user,
       userInSession: req.session.currentUser,
+      recentThreads,
+      recentPosts,
     });
   } catch (err) {
     console.log("err", err);
@@ -106,6 +122,7 @@ const getTopic = async (req, res, next) => {
         },
       });
     const thread = topic.threads;
+    thread.reverse()
     res.render("threads-posts/topics", {
       topic: topic,
       thread: thread,

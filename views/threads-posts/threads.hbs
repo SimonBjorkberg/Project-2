@@ -1,10 +1,10 @@
-<div class="rounded-md md:w-2/3 md:mx-auto mb-5 mt-5 ml-5">
+<div class="rounded-md md:w-2/3 mx-3 md:mx-auto mb-5 mt-5">
   <a
     href="/topic/{{thread.topicParent.title}}"
-    class="bg-teal-900 text-white font-bold py-2 px-4 rounded-md hover:bg-white hover:text-teal-900 md:ml-5"
+    class="bg-teal-700 text-white font-bold py-2 px-4 rounded-md hover:bg-teal-600 border-2 border-teal-900"
   >Go Back</a>
 </div>
-<div class="bg-teal-900 p-4 rounded-md mb-4 m-auto md:w-2/3 mx-3 md:mx-auto">
+<div class="bg-teal-800 p-4 rounded-md mb-4 m-auto md:w-2/3 mx-3 md:mx-auto">
   <div class="flex justify-between">
     <div class="flex items-center mb-2">
       <img
@@ -25,11 +25,12 @@
     </div>
     <p class="text-white">Posted: {{thread.createdAt}}</p>
   </div>
-  <div class="flex justify-between">
-    <div>
       <h2 class="text-lg font-bold text-white">{{thread.title}}</h2>
-    </div>
-    <div class="flex items-center space-x-2">
+  <p class="ml-0 text-white">
+    {{thread.content}}
+  </p>
+  <div class="flex items-center space-x-2 justify-between">
+    <div class="flex flex-row w-[85px] justify-between">
       {{#if thread.auth}}
         <button
           id="editThreadButtonOpen"
@@ -42,24 +43,24 @@
           >Delete</button>
         </form>
       {{/if}}
+    </div>
+    <div>
       <form action="/threads/{{thread._id}}/like" method="post">
         <button
           type="submit"
-          class="text-teal-500 px-2 py-0.5 border-2 border-teal-500 font-bold"
+          class="text-teal-500 px-2 py-0.5 border-2 border-teal-500 font-bold mt-2 border-dashed hover:border-solid hover:bg-teal-700"
         >
-          {{thread.likes.length}}
+          Likes: {{thread.likes.length}}
         </button>
       </form>
     </div>
   </div>
-  <div class="ml-0 text-white">
-    {{thread.content}}
-  </div>
 </div>
 
-{{#each thread.posts}}
+<section class="mb-3">
+  {{#each thread.posts}}
   <div
-    class="bg-[#d1dbdb] border border-teal-900 p-4 flex flex-col md:w-2/3 md:mx-auto mx-3"
+    class="bg-[#d1dbdb] border rounded-lg border-teal-900 p-4 flex flex-col md:w-2/3 md:mx-auto mx-3"
   >
     <div class="flex items-center justify-between">
       <div class="flex items-center">
@@ -81,32 +82,34 @@
       </div>
       <p>Posted: {{this.createdAt}}</p>
     </div>
-     <div class="ml-0 flex flex-row justify-between">
-      <p class="my-auto">{{this.content}}</p>
-      <aside class="h-[33px]">
-        <div class="flex items-center space-x-2">
-          {{#if this.auth}}
-            <button
-              id="editPostButtonOpen-{{this._id}}"
-              class="text-teal-700 hover:underline font-bold"
-            >Edit</button>
-            <form action="/post/{{this._id}}/delete" method="post">
-              <button
-                type="submit"
-                class="text-teal-700 hover:underline font-bold"
-              >Delete</button>
-            </form>
-          {{/if}}
-          <form action="/post/{{this._id}}/like" method="post">
+    <div class="ml-0 flex flex-row justify-between">
+      <p class="my-auto whitespace-pre-line">{{this.content}}</p>
+    </div>
+    <div class="flex items-center space-x-2 justify-between">
+      <div class="flex flex-row w-[85px] justify-between">
+        {{#if this.auth}}
+          <button
+            id="editPostButtonOpen-{{this._id}}"
+            class="text-teal-700 hover:underline font-bold"
+          >Edit</button>
+          <form action="/post/{{this._id}}/delete" method="post">
             <button
               type="submit"
-              class="text-teal-700 px-2 py-0.5 border-2 border-teal-700 font-bold"
-            >
-              {{this.likes.length}}
-            </button>
+              class="text-teal-700 hover:underline font-bold"
+            >Delete</button>
           </form>
-        </div>
-      </aside>
+        {{/if}}
+      </div>
+      <div>
+        <form action="/post/{{this._id}}/like" method="post">
+          <button
+            type="submit"
+            class="text-teal-700 px-2 py-0.5 border-2 border-teal-700 font-bold mt-2 border-dashed hover:border-solid hover:bg-[#b9c1c1]"
+          >
+            Likes: {{this.likes.length}}
+          </button>
+        </form>
+      </div>
     </div>
     <dialog
       id="editPostModal-{{this._id}}"
@@ -141,6 +144,8 @@
     </dialog>
   </div>
 {{/each}}
+</section>
+
 
 {{#if userInSession}}
   <div class="w-[352px] lg:w-[565px] mx-auto my-10 p-4 bg-teal-900 rounded-md">
