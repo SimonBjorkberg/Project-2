@@ -21,15 +21,45 @@
         Edit Profile
       </button>
       {{#if isAdmin}}
-      <button
-        id="openUsers"
-        class="bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded mt-4 w-[120px]"
-        onclick="location.href='/users';"
-      >
-        Users
-      </button>
+        <button
+          id="openUsers"
+          class="bg-teal-700 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded mt-4 w-[120px]"
+          onclick="location.href='/users';"
+        >
+          Users
+        </button>
       {{/if}}
     {{/if}}
+  </div>
+</section>
+
+<section class="w-full my-5 py-5">
+  <div class="py-4 w-96 m-auto border-2 border-teal-600 rounded-md bg-teal-900">
+    <p class="text-white text-center font-bold">
+      Most recent Threads from {{user.username}}
+    </p>
+  </div>
+  <div class="mt-2 w-96 mx-auto">
+    {{#each recentThreads}}
+      <div onclick="threadClick('{{this._id}}')" class="cursor-pointer mb-1 mx-3 hover:bg-teal-700 transition-colors border-teal-900 border-2 bg-teal-800 shadow-md p-2 rounded-md">
+        <p class="text-white truncate">{{this.title}}</p>
+      </div>
+    {{/each}}
+  </div>
+</section>
+
+<section class="w-full my-5 py-5">
+  <div class="py-4 w-96 m-auto border-2 border-teal-600 rounded-md bg-teal-900">
+    <p class="text-white text-center font-bold">
+      Most recent Posts from {{user.username}}
+    </p>
+  </div>
+  <div class="mt-2 w-96 mx-auto">
+    {{#each recentPosts}}
+      <div onclick="threadClick('{{this.threadParent._id}}')" class="cursor-pointer mb-1 mx-3 hover:bg-teal-700 transition-colors border-teal-900 border-2 bg-teal-800 shadow-md p-2 rounded-md">
+        <p class="text-white truncate">{{this.content}}</p>
+      </div>
+    {{/each}}
   </div>
 </section>
 
