@@ -25,11 +25,7 @@
     </div>
     <p class="text-white">Posted: {{thread.createdAt}}</p>
   </div>
-  <div class="flex justify-between">
-    <div>
       <h2 class="text-lg font-bold text-white">{{thread.title}}</h2>
-    </div>
-  </div>
   <p class="ml-0 text-white">
     {{thread.content}}
   </p>
@@ -52,7 +48,7 @@
       <form action="/threads/{{thread._id}}/like" method="post">
         <button
           type="submit"
-          class="text-teal-500 px-2 py-0.5 border-2 border-teal-500 font-bold"
+          class="text-teal-500 px-2 py-0.5 border-2 border-teal-500 font-bold mt-2"
         >
           Likes: {{thread.likes.length}}
         </button>
@@ -63,7 +59,7 @@
 
 {{#each thread.posts}}
   <div
-    class="bg-[#d1dbdb] border border-teal-900 p-4 flex flex-col md:w-2/3 md:mx-auto mx-3"
+    class="bg-[#d1dbdb] border rounded-lg border-teal-900 p-4 flex flex-col md:w-2/3 md:mx-auto mx-3"
   >
     <div class="flex items-center justify-between">
       <div class="flex items-center">
@@ -86,7 +82,7 @@
       <p>Posted: {{this.createdAt}}</p>
     </div>
     <div class="ml-0 flex flex-row justify-between">
-      <p class="my-auto">{{this.content}}</p>
+      <p class="my-auto whitespace-pre-line">{{this.content}}</p>
     </div>
     <div class="flex items-center space-x-2 justify-between">
       <div class="flex flex-row w-[85px] justify-between">
@@ -107,7 +103,7 @@
         <form action="/post/{{this._id}}/like" method="post">
           <button
             type="submit"
-            class="text-teal-700 px-2 py-0.5 border-2 border-teal-700 font-bold"
+            class="text-teal-700 px-2 py-0.5 border-2 border-teal-700 font-bold mt-2"
           >
             Likes: {{this.likes.length}}
           </button>

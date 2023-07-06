@@ -8,9 +8,9 @@
 
 {{#each thread}}
   <section
-    class="mb-1 mx-3 md:w-2/3 md:mx-auto hover:bg-teal-700 transition-colors border-teal-900 border-2 bg-teal-800 shadow-md p-4 rounded-md"
+    onclick="threadClick('{{this._id}}')" class="cursor-pointer mb-1 mx-3 md:w-2/3 md:mx-auto hover:bg-teal-700 transition-colors border-teal-900 border-2 bg-teal-800 shadow-md p-4 rounded-md"
   >
-    <div onclick="threadClick('{{this._id}}')" class="cursor-pointer">
+    <div>
       <div>
         <h2 class="text-2xl text-white font-bold mb-1">{{this.title}}</h2>
         <p class="text-white">{{thread.likes.length}}</p>
