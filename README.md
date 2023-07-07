@@ -30,17 +30,17 @@ Description: Upgrade the chat page to offer improved real-time messaging capabil
 
 ## Technologies used
 
--TailwindCSS
--Node.js
--Cookies
--Handlebars
--Express
--CSS
--JavaScript
--Cloudinary
--LoginLimiter
--MongoDB
--BcryptJS
+- TailwindCSS
+- Node.js
+- Cookies
+- Handlebars
+- Express
+- CSS
+- JavaScript
+- Cloudinary
+- LoginLimiter
+- MongoDB
+- BcryptJS
 
 ## (Optional) Routes
 
