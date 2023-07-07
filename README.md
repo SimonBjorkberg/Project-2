@@ -19,13 +19,13 @@ The website we have developed is designed as a versatile forum that can be custo
 
 ## Backlog Functionalities
 
-#Email Confirmation on Account Creation
+# Email Confirmation on Account Creation
         Description: Implement an email confirmation feature that sends a verification email to newly registered users, allowing them to confirm their email address and activate their account.
-#Friends List on Profile Page
+# Friends List on Profile Page
         Description: Enhance the profile page to include a section where users can view and manage their list of friends or connections within the web app.
-#Improved Admin Page
+# Improved Admin Page
         Description: Revamp the admin page with a more intuitive and user-friendly interface, providing administrators with enhanced functionality and control over the web app's settings, user management, and content moderation.
-#Improved Chat Page
+# Improved Chat Page
         Description: Upgrade the chat page to offer improved real-time messaging capabilities, including features such as message notifications, typing indicators, message search, and the ability to share multimedia content.
 
 ## Technologies used
