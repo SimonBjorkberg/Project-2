@@ -19,7 +19,7 @@ The website we have developed is designed as a versatile forum that can be custo
 
 - ### Email Confirmation on Account Creation
 Description: Implement an email confirmation feature that sends a verification email to newly registered users, allowing them to confirm their email address and activate their account.
-- ### Friends List on Profile Page
+- ### Friends List
 Description: Enhance the profile page to include a section where users can view and manage their list of friends or connections within the web app.
 - ### Improved Admin Page
 Description: Revamp the admin page with a more intuitive and user-friendly interface, providing administrators with enhanced functionality and control over the web app's settings, user management, and content moderation.
