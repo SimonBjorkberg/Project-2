@@ -1,6 +1,4 @@
-# Monkee Hub
-
-## [See the App](https://monkee-hub.cyclic.app/)
+# [Monkee Hub](https://monkee-hub.cyclic.app/)
 
 ## Description
 
