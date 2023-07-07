@@ -2,11 +2,9 @@
 
 ## [See the App!](https://monkee-hub.cyclic.app/)
 
-![App Logo](your-image-logo-path-or-name)
-
 ## Description
 
-**NOTE -** Describe your project in one/two lines.
+**NOTE -** The website we have developed is designed as a versatile forum that can be customized to cater to diverse communities.
  
 ## User Stories
 
