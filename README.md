@@ -94,12 +94,12 @@ timestamp: Date
 
 ## Collaborators
 
-[Simon]((https://github.com/SimonBjorkberg))
+[Simon](https://github.com/SimonBjorkberg)
 
-[Achref]((https://github.com/achref95))
+[Achref](https://github.com/achref95)
 
 ### Project
 
-[Repository Link]((https://github.com/SimonBjorkberg/Project-2))
+[Repository Link](https://github.com/SimonBjorkberg/Project-2)
 
 [Deploy Link](https://monkee-hub.cyclic.app/)
