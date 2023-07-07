@@ -30,8 +30,17 @@ Description: Upgrade the chat page to offer improved real-time messaging capabil
 
 ## Technologies used
 
-**NOTE -** List here all technologies used in the project like HTML, CSS, Javascript, Node, Express, Handlebars, Sessions & Cookies, etc.
-
+TailwindCSS
+Node.js
+Cookies
+Handlebars
+Express
+CSS
+JavaScript
+Cloudinary
+LoginLimiter
+MongoDB
+BcryptJS
 
 ## (Optional) Routes
 
