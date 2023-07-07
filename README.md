@@ -28,17 +28,22 @@ Description: Upgrade the chat page to offer improved real-time messaging capabil
 
 ## Technologies used
 
-- TailwindCSS
-- Node.js
-- Cookies
-- Handlebars
-- Express
-- CSS
-- JavaScript
+- Bcryptjs
 - Cloudinary
-- LoginLimiter
 - MongoDB
-- BcryptJS
+- Cookies
+- Dotenv
+- Express
+- Express-rate-limit
+- Express-session
+- Handlebars
+- Mongoose
+- Morgan
+- Multer
+- Serve-favicon
+- TailwindCSS
+- Nodemon
+
 
 ## Models
 
