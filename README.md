@@ -79,42 +79,64 @@ Description: Upgrade the chat page to offer improved real-time messaging capabil
 
 ## Models
 
-**NOTE -** List here all the models & Schemas of your Database Structure. Example: 
-
 User model
- 
 ```
 username: String
+email: String
 password: String
+role: String, types: admin, moderator, user
+profilePicture: String
+timestamps: true
+```
+
+Topic model
+```
+title: String
+desc: String
+threads: ObjectId
+timestamps: true
+```
+
+Thread model
+```
+title: String
+content: String
+author: ObjectId<User>
+posts: [ ObjectId<Post> ]
+likes: [ ObjectId<User> ]
+topicParent: ObjectId<Topic>
+createdAt: Date
+updatedAt: Date
+```
+
+Post model
+```
+author: ObjectId<User>
+content: String
+likes: [ ObjectId<User> ]
+createdAt: Date
+updatedAt: Date
+threadParent: ObjectId<Thread>
 ```
 
 Event model
-
 ```
-owner: ObjectId<User>
-name: String
-description: String
-date: Date
+sender: ObjectId<User>
+recipient: ObjectId<User>
+content: String
+timestamp: Date
 ``` 
 
 ## Links
 
 ## Collaborators
 
-[Developer 1 name](www.github-url.com)
+[Simon]((https://github.com/SimonBjorkberg))
 
-[Developer 2 name](www.github-url.com)
+[Achref]((https://github.com/achref95))
 
 ### Project
 
-[Repository Link](www.your-github-url-here.com)
+[Repository Link]((https://github.com/SimonBjorkberg/Project-2))
 
-[Deploy Link](www.your-deploy-url-here.com)
-
-### Trello
-
-[Link to your trello board](www.your-trello-url-here.com)
-
-### Slides
-
-[Slides Link](www.your-slides-url-here.com)
+[Deploy Link](https://monkee-hub.cyclic.app/)
