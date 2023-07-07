@@ -84,7 +84,7 @@ updatedAt: Date
 threadParent: ObjectId<Thread>
 ```
 
-Event model
+Message model
 ```
 sender: ObjectId<User>
 recipient: ObjectId<User>
