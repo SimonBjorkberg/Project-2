@@ -15,6 +15,9 @@ const topicSchema = new Schema({
       ref: "Thread",
     },
   ],
+},
+{
+  timestamps: true,
 });
 
 module.exports = model("Topic", topicSchema);
