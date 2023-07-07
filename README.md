@@ -1,4 +1,4 @@
-# Project Name
+# Monkee Hub
 
 ## [See the App!](https://monkee-hub.cyclic.app/)
 
