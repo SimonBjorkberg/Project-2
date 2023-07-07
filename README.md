@@ -42,41 +42,6 @@ Description: Upgrade the chat page to offer improved real-time messaging capabil
 - MongoDB
 - BcryptJS
 
-## (Optional) Routes
-
-**NOTE -** List here all the routes of your server. Example:
-
-- GET / 
-  - renders the homepage
-- GET /auth/signup
-  - redirects to / if user logged in
-  - renders the signup form (with flash msg)
-- POST /auth/signup
-  - redirects to / if user logged in
-  - body:
-    - username
-    - email
-    - password
-- GET /auth/login
-  - redirects to / if user logged in
-  - renders the login form (with flash msg)
-- POST /auth/login
-  - redirects to / if user logged in
-  - body:
-    - username
-    - password
-
-- GET /events
-  - renders the event list + the create form
-- POST /events/create 
-  - redirects to / if user is anonymous
-  - body: 
-    - name
-    - date
-    - location
-    - description
-
-
 ## Models
 
 User model
