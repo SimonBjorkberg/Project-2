@@ -36,16 +36,31 @@ const userProfile = async (req, res, next) => {
     const { username } = req.params
     const user = await User.findOne({ username });
 
+    // ACTIVITY LOG THREADS
     const threads = await Thread.find({ author: user._id }).populate()
-    const recentThreads = threads.slice(1).slice(-5)
-    recentThreads.reverse()
-
+    let recentThreads = threads
+    if (recentThreads.length > 5) {
+      recentThreads = threads.slice(1).slice(-5);
+      recentThreads.reverse();
+    }
+    else {
+      recentThreads.reverse();
+    }
+    // ACTIVITY LOG POSTS
     const posts = await Post.find({ author: user._id })
-    const recentPosts = posts.slice(1).slice(-5)
-    recentPosts.reverse()
+    let recentPosts = posts
+    if (recentPosts.length > 5) {
+      recentPosts = posts.slice(1).slice(-5);
+      recentPosts.reverse();
+    }
+    else {
+      recentPosts.reverse();
+    }
+    // IF NO USER FOUND
     if (!user) {
       return res.render("not-found");
     }
+    // IF USER FOUND
     if (
       req.session.currentUser &&
       req.session.currentUser.username === user.username
