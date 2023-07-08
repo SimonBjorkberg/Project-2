@@ -3,14 +3,28 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Project-2 JS imported successfully!");
 });
 
+// CLICKABLE DIV
 function threadClick(threadId) {
   window.location.href = "/threads/" + threadId;
 }
 
+//SIGN UP MODAL
 const signupButton = document.getElementById("signup-modal-button");
 const signupModal = document.getElementById("signupModal");
 const signupCloseButton = document.getElementById("signup-close-modal");
 
+if (signupButton) {
+  signupButton.addEventListener("click", () => {
+    signupModal.showModal();
+  });
+}
+if (signupCloseButton) {
+  signupCloseButton.addEventListener("click", () => {
+    signupModal.close();
+  });
+}
+
+//LOG IN MODAL
 const loginButton = document.getElementById("login-modal-button");
 const loginModal = document.getElementById("loginModal");
 const loginCloseButton = document.getElementById("login-close-modal");
@@ -21,25 +35,14 @@ if (loginButton) {
   });
 }
 
-if (signupButton) {
-  signupButton.addEventListener("click", () => {
-    signupModal.showModal();
-  });
-}
-
 if (loginCloseButton) {
   loginCloseButton.addEventListener("click", () => {
     loginModal.close();
   });
 }
 
-if (signupCloseButton) {
-  signupCloseButton.addEventListener("click", () => {
-    signupModal.close();
-  });
-}
 
-
+// POST BORDER CHANGES
 document.addEventListener('DOMContentLoaded', function() {
   const post = document.getElementsByClassName('bg-[#d1dbdb]');
   if (post.length > 1) {
@@ -60,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+// ACTIVITY LOG ON USER PROFILE PAGE
 document.addEventListener('DOMContentLoaded', function() {
   const recentThreads = document.getElementById('recentThreads');
   const threadDiv = document.getElementById('threads')
