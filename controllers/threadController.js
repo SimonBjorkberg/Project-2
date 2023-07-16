@@ -1,6 +1,6 @@
 const Thread = require("../models/Thread.model");
 const Topic = require("../models/Topic.model");
-const Post = require('../models/Post.model')
+const Post = require("../models/Post.model");
 
 // ###################################
 // FUNCTION THAT CREATES A NEW THREAD
@@ -43,7 +43,10 @@ const getThread = async (req, res) => {
         },
       })
       .populate("likes")
-      .populate("topicParent")
+      .populate("topicParent");
+
+    let posts = [];
+
     if (currentUser) {
       const auth =
         thread.author.username === currentUser.username ||
@@ -52,8 +55,7 @@ const getThread = async (req, res) => {
 
       posts = thread.posts.map((post) => {
         const auth =
-          post.author.username === currentUser.username ||
-          (currentUser.role === "admin" && "moderator");
+          currentUser && post.author.username === currentUser.username || currentUser.role === 'admin'
         post.auth = auth;
         return post;
       });
@@ -62,6 +64,7 @@ const getThread = async (req, res) => {
     return res.render("threads-posts/threads", {
       userInSession: req.session.currentUser,
       thread: thread,
+      posts: posts,
     });
   } catch (error) {
     console.log(error);
@@ -74,9 +77,9 @@ const getThread = async (req, res) => {
 // ##########################################
 const deleteThread = async (req, res, next) => {
   try {
-    const thread = await Thread.findById(req.params.threadId)
-    await Post.deleteMany({threadParent: thread._id})
-    await Thread.findByIdAndDelete(req.params.threadId)
+    const thread = await Thread.findById(req.params.threadId);
+    await Post.deleteMany({ threadParent: thread._id });
+    await Thread.findByIdAndDelete(req.params.threadId);
     res.redirect("/");
   } catch (err) {
     console.log("err", err);
@@ -91,7 +94,10 @@ const updateThread = async (req, res, next) => {
     const { title, content } = req.body;
     const { threadId } = req.params;
     const thread = await Thread.findById(threadId).populate("author");
-    if (thread.author.username === req.session.currentUser.username || req.session.currentUser.role === 'admin') {
+    if (
+      thread.author.username === req.session.currentUser.username ||
+      req.session.currentUser.role === "admin"
+    ) {
       if (title === "") {
         await Thread.findByIdAndUpdate(threadId, { content: content });
         return res.redirect(`/threads/${threadId}`);

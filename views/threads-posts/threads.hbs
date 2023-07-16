@@ -58,7 +58,7 @@
 </div>
 
 <section class="mb-3">
-  {{#each thread.posts}}
+  {{#each posts}}
   <div
     class="bg-[#d1dbdb] border rounded-lg border-teal-900 p-4 flex flex-col md:w-2/3 md:mx-auto mx-3"
   >
@@ -220,15 +220,19 @@
 
 <script>
   {{#each thread.posts}}
-    const editPostButtonOpen_{{this._id}} = document.getElementById('editPostButtonOpen-{{this._id}}'); 
+  document.addEventListener("DOMContentLoaded", () => {
+    const editPostButtonOpen_{{this._id}} = document.getElementById('editPostButtonOpen-{{this._id}}');
     const editPostButtonClose_{{this._id}} = document.getElementById('editPostButtonClose-{{this._id}}');
-    editPostButtonOpen_{{this._id}}.addEventListener('click', () => { 
-      const editPostModal_{{this._id}} = document.getElementById('editPostModal-{{this._id}}'); 
+
+    editPostButtonOpen_{{this._id}}.addEventListener('click', () => {
+      const editPostModal_{{this._id}} = document.getElementById('editPostModal-{{this._id}}');
       editPostModal_{{this._id}}.showModal();
-    }); 
+    });
+
     editPostButtonClose_{{this._id}}.addEventListener('click', () => {
-      const editPostModal_{{this._id}} = document.getElementById('editPostModal-{{this._id}}'); 
+      const editPostModal_{{this._id}} = document.getElementById('editPostModal-{{this._id}}');
       editPostModal_{{this._id}}.close();
     });
+  });
   {{/each}}
 </script>

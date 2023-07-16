@@ -39,12 +39,17 @@ const signUpPost = async (req, res, next) => {
       email: email,
       password: hashedPassword,
     });
-    return res.redirect('/')
+    return res.redirect('/signup/accountCreated')
   } catch (err) {
     console.log("err", err);
   }
 };
 
+const signUpDone = async (req, res, next) => {
+   res.render('../views/accountCreate.hbs')
+}
+
 module.exports = {
   signUpPost,
+  signUpDone
 };
